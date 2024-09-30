@@ -9,7 +9,9 @@
 	import { catalogueText, getStaticCatalogue } from './services/catalogue.service';
 
 	let catalogueopen = false;
-	let catalogueDataPromise = getStaticCatalogue('catalogues/catalogue-example.json');
+	let catalogueDataPromise = getStaticCatalogue(
+		'catalogues/dzif-such-und-kerndatensatz.json'
+	);
 
 	let dataPasser: LensDataPasser;
 
@@ -49,7 +51,7 @@
 	<div>
 		<!-- Add logo here -->
 	</div>
-	<h1>Lens2 Example (Title Here)</h1>
+	<h1>DZIF-COREDATASET-EXPLORER</h1>
 	<div>
 		<!-- Add logo here -->
 	</div>

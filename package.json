@@ -43,6 +43,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@samply/lens": "^0.2.2"
+		"@samply/lens": "^0.3.1"
 	}
 }
