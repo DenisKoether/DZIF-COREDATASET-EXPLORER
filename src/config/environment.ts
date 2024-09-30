@@ -3,12 +3,7 @@
 import type { MeasureGroup, MeasureItem } from '@samply/lens'
 
 import {
-	dktkDiagnosisMeasure,
-	dktkMedicationStatementsMeasure,
-	dktkPatientsMeasure,
-	dktkProceduresMeasure,
-	dktkSpecimenMeasure,
-	dktkHistologyMeasure
+	patientsMeasure
 } from '../measures';
 
 
@@ -28,14 +23,9 @@ export const measures: MeasureGroup[] = [
 	{
 		name: "DKTK",
 		measures: [
-			dktkPatientsMeasure as MeasureItem,
-			dktkDiagnosisMeasure as MeasureItem,
-			dktkSpecimenMeasure as MeasureItem,
-			dktkProceduresMeasure as MeasureItem,
-			dktkMedicationStatementsMeasure as MeasureItem,
-			dktkHistologyMeasure as MeasureItem,
+			patientsMeasure as MeasureItem,
 		],
 	},
 ];
 
-export const backendMeasures = `DKTK_STRAT_DEF_IN_INITIAL_POPULATION`;
+export const backendMeasures = `define InInitialPopulation:\n`;

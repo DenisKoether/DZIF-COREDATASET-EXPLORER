@@ -21,7 +21,8 @@
         "wuerzburg": "Würzburg",
         "mannheim": "Mannheim",
         "dktk-test": "DKTK-Test",
-        "hamburg": "Hamburg"
+        "hamburg": "Hamburg",
+        "DKTK": "Denisburg"
     },
     "chartOptions": {
         "patients": {
@@ -41,7 +42,8 @@
                 "wuerzburg": "Würzburg",
                 "mannheim": "Mannheim",
                 "dktk-test": "DKTK-Test",
-                "hamburg": "Hamburg"
+                "hamburg": "Hamburg",
+                "DKTK": "Denisburg"
             }
         },
         "gender": {
@@ -203,66 +205,17 @@
         "infoButtonText": "Um eine Re-Identifizierung zu erschweren, werden Standortergebnisse modifiziert und auf Zehnerstellen gerundet. Meldet ein Standort keinen Treffer, wird für diesen null angezeigt.",
         "dataTypes": [
             {
-                "title": "Standorte",
-                "dataKey": "collections"
-            },
-            {
                 "title": "Patienten",
                 "dataKey": "patients"
             }
         ]
     },
     "backends": {
-        "spots": [
+        "blazes": [
             {
                 "name": "DKTK",
-                "backendMeasures": "DKTK_STRAT_DEF_IN_INITIAL_POPULATION",
-                "url": "http://localhost:8055",
-                "sites": [
-                    "berlin-test",
-                    "dresden",
-                    "essen",
-                    "frankfurt",
-                    "freiburg",
-                    "hannover",
-                    "mainz",
-                    "muenchen-lmu",
-                    "muenchen-tum",
-                    "ulm",
-                    "wuerzburg",
-                    "mannheim",
-                    "hamburg"
-                ],
-                "catalogueKeyToResponseKeyMap": [
-                    [
-                        "gender",
-                        "Gender"
-                    ],
-                    [
-                        "age_at_diagnosis",
-                        "Age"
-                    ],
-                    [
-                        "diagnosis",
-                        "diagnosis"
-                    ],
-                    [
-                        "medicationStatements",
-                        "MedicationType"
-                    ],
-                    [
-                        "sample_kind",
-                        "sample_kind"
-                    ],
-                    [
-                        "therapy_of_tumor",
-                        "ProcedureType"
-                    ],
-                    [
-                        "75186-7",
-                        "75186-7"
-                    ]
-                ]
+                "backendMeasures": "define InInitialPopulation:\n",
+                "url": "http://localhost:8082/fhir"
             }
         ]
     }

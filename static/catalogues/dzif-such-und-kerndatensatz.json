@@ -484,7 +484,7 @@
 					{
 						"key": "CONSENT_SIGNDATE",
 						"name": "Date of declaration of consent(TODO)",
-						"controlType": "date"
+						"fieldType": "date"
 					},
 					{
 						"key": "CONSENT_VERSDATE",
