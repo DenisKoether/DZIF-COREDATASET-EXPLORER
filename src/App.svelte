@@ -1,19 +1,25 @@
 <script lang="ts">
-	import options from './config/options.json';
 	import {
 		barChartBackgroundColors,
 		genderHeaders,
 		measures
 	} from './config/environment';
 	import type { LensDataPasser } from '@samply/lens';
-	import { catalogueText, getStaticCatalogue } from './services/catalogue.service';
+	import { fetchData, catalogueText } from './services/catalogue.service';
 
 	let catalogueopen = false;
-	let catalogueDataPromise = getStaticCatalogue(
-		'catalogues/dzif-such-und-kerndatensatz.json'
-	);
-
+	
 	let dataPasser: LensDataPasser;
+
+
+	const catalogueUrl = 'catalogues/dzif-such-und-kerndatensatz.json'
+	const optionsFilePath = 'config/options.json';
+	
+	const jsonPromises: Promise<{
+		catalogueJSON: string;
+		optionsJSON: string;
+	}> = fetchData(catalogueUrl, optionsFilePath);
+
 
 	/**
 	 * The following functions are the API to the library stores (state)
@@ -158,12 +164,16 @@
 	</div>
 </footer>
 </div>
-{#await catalogueDataPromise}
-	Loading catalogue...
-{:then catalogueData}
-	<lens-options {options} {catalogueData} {measures}></lens-options>
+
+<!-- here it waits on all promises to resolve and fills in the parameters -->
+{#await jsonPromises}
+    Loading data...
+{:then { optionsJSON, catalogueJSON }}
+    {console.log(optionsJSON)}
+	{console.log(catalogueJSON)}
+    <lens-options {catalogueJSON} {optionsJSON} {measures}></lens-options>
 {:catch someError}
-	System error: {someError.message}.
+    System error: {someError.message}
 {/await}
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
