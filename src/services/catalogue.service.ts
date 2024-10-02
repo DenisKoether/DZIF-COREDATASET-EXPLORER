@@ -7,24 +7,8 @@ export async function getStaticCatalogue<T>(path: string): Promise<T> {
 	return data;
 }
 
-// Daten für Catalogue holen?
-export async function getCatalogueFromServer<T>(
-	blazeServerUrl = 'http://localhost:8082'
-): Promise<T> {
-	try {
-		const response = await fetch(blazeServerUrl);
-		if (!response.ok) {
-			throw new Error(
-				`Fehler beim Abrufen der Daten vom Blaze-Server: ${response.statusText}`
-			);
-		}
-
-		const data = await response.json(); // JSON-Daten parsen und zurückgeben
-		return data;
-	} catch (error) {
-		console.error('Fehler beim Abrufen des Katalogs vom Blaze-Server:', error);
-		throw error;
-	}
+export function getCatalogueFromServer() {
+    // TODO: Implement
 }
 
 export const catalogueText = {

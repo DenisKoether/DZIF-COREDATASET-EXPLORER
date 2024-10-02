@@ -46,15 +46,10 @@
 	// 	getQuery();
 	// };
 </script>
-
+<div class="page">
 <header>
-	<div>
-		<!-- Add logo here -->
-	</div>
-	<h1>DZIF-COREDATASET-EXPLORER</h1>
-	<div>
-		<!-- Add logo here -->
-	</div>
+		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF"/>
+		<h1>DZIF-COREDATASET-EXPLORER</h1>
 </header>
 
 <main>
@@ -75,8 +70,7 @@
 				<h2>Suchkriterien</h2>
 				<lens-info-button
 					message="{[
-						`Bei Patienten mit mehreren onkologischen Diagnosen, können sich ausgewählte Suchkriterien nicht nur auf eine Erkrankung beziehen, sondern auch auf Weitere.`,
-						`Innerhalb einer Kategorie werden verschiedene Ausprägungen mit einer „Oder-Verknüpfung“ gesucht; bei der Suche über mehrere Kategorien mit einer „Und-Verknüpfung“.`
+						`Information hinzufügen(TODO)`
 					]}"
 				></lens-info-button>
 				<lens-catalogue
@@ -159,11 +153,11 @@
 	<div class="made_with">
 		Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
 	</div>
-	<div class="logo">
-		<img src="../Deutsches_Krebsforschungszentrum_Logo.svg" alt="Logo des DKFZ" />
+	<div class="logo-dzg">
+		<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
 	</div>
 </footer>
-
+</div>
 {#await catalogueDataPromise}
 	Loading catalogue...
 {:then catalogueData}

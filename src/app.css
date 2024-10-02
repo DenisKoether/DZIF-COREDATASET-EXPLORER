@@ -8,6 +8,7 @@
 }
 
 :root {
+  --color-site-background: #001e50;
   --white: #ffffff;
   --ghost-white: #f8f8ff;
   --black: #000000;
@@ -59,7 +60,7 @@
 
 body {
   margin: 0px;
-  background-color: var(--ghost-white);
+  background-color: var(--color-site-background);
   font-family: var(--font-family);
 }
 
@@ -70,54 +71,52 @@ button {
 header {
   background-color: var(--ghost-white);
   position: sticky;
-  top: 0px;
   z-index: 1;
-  padding: var(--gap-xs);
+  margin: 1em;
+  border-radius: var(--border-radius-small);
+  display: grid;
+  grid-template-columns:25% 50% 25%;
+  
+}
+
+header img{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 15px;
+  width: 85px;
+}
+
+.page {
+  margin: 1em;
 }
 
 .header-wrapper {
-  background-color: var(--white);
+  background-color: var(--color-site-background);
   padding: var(--gap-xs);
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
   border-radius: var(--border-radius-small);
   border: solid 1px var(--lightest-gray);
-  
-}
-
-.logo img {
-  height: 40px;
-}
-
-.logo-dkfz {
-  justify-self: end;
-}
-
-.logo-dkfz img {
-  height: 30px;
 }
 
 header h1 {
   text-align: center;
+  font-family: 'freight-big-pro';
   font-size: var(--font-size-xxl);
-  font-weight: lighter;
+  font-weight: 500;
+  text-shadow: 1px black;
   color: var(--blue);
-  margin: 0;
 }
 
-/* .grid,
-footer {
-  margin: var(--gap-xs);
-} */
-
 .search {
-  padding: var(--gap-xs) var(--gap-xs) var(--gap-s);
   background-color: var(--ghost-white);
-  position: sticky;
+  /*position: sticky; */
   position: -webkit-sticky;
   top: 63px;
   z-index: 1;
+  margin: 1em;
+  border-radius: var(--border-radius-small);
 }
 
 .search-wrapper {
@@ -125,7 +124,7 @@ footer {
   grid-template-columns: minmax(0, 1fr) auto auto;
   grid-gap: var(--gap-s);
   /* padding: var(--gap-xxs) 0; */
-  background-color: var(--ghost-white);
+  background-color: var(--color-site-background);
 }
 
 .grid {
@@ -134,6 +133,7 @@ footer {
   grid-template-columns: 400px 1fr;
   grid-gap: var(--gap-m);
   padding: 0 var(--gap-xs) var(--gap-xs);
+  margin: var(--gap-xxs);
 }
 
 .catalogue-wrapper {
@@ -243,15 +243,18 @@ footer {
 }
 
 
-
 footer {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin: 1em;
   padding: var(--gap-s);
   background-color: var(--white);
   border-radius: var(--border-radius-small);
-  border: solid 1px var(--lightest-gray);
+}
+
+.logo-dzg img{
+  height: 30px;
 }
 
 footer a {
@@ -403,7 +406,6 @@ lens-catalogue::part(number-input-formfield) {
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
   appearance: textfield !important;
-
 }
 
 lens-catalogue::part(number-input-formfield):focus {
