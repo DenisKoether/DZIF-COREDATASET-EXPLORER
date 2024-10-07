@@ -34,6 +34,14 @@
             "Age"
         ],
         [
+            "smoker",
+            "Smoker"
+        ],
+        [
+            "diabetes",
+            "Diabetes"
+        ],
+        [
             "diagnosis",
             "diagnosis"
         ],
@@ -82,6 +90,14 @@
                 "female": "Weiblich",
                 "unknown": "Unbekannt",
                 "other": "Divers"
+            }
+        },
+        "smoker": {
+            "legendMapping": {
+                "Y": "Yes",
+                "N": "No",
+                "FS": "Ehemalig",
+                "X": "Keine Information"
             }
         },
         "diagnosis": {
@@ -181,7 +197,7 @@
                 "rna": "RNA",
                 "derivative-other": "Derivat, Andere"
             },
-            "legendMapping":{
+            "legendMapping": {
                 "ffpe-tissue": "Gewebe FFPE",
                 "frozen-tissue": "Gewebe schockgefroren",
                 "tissue-other": "Gewebe, Andere Konservierungsart",

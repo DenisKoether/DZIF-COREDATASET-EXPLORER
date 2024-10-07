@@ -158,10 +158,10 @@
 					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper smoker">
+				<div class="chart-wrapper Diabetes">
 					<lens-chart
-						title="Raucher"
-						catalogueGroupCode="smoker"
+						title="Diabetes"
+						catalogueGroupCode="diabetes"
 						chartType="pie"
 						displayLegends="{true}"
 					>
