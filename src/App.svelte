@@ -126,7 +126,7 @@
 				<div class="chart-wrapper chart-age-distribution">
 					<lens-chart
 						title="Alter bei Erstdiagnose"
-						catalogueGroupCode="age_at_diagnosis"
+						catalogueGroupCode="age"
 						chartType="bar"
 						groupRange="{10}"
 						filterRegex="^(1*[12]*[0-9])"
