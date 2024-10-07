@@ -512,25 +512,25 @@
 						"name": "Other sex (biological at birth)(TODO: STRING)"
 					},
 					{
-						"key": "GENDER",
+						"key": "Gender",
 						"name": "Gender",
 						"fieldType": "single-select",
 						"type": "EQUALS",
 						"criteria": [
 							{
-								"key": "M",
+								"key": "male",
 								"name": "Männlich"
 							},
 							{
-								"key": "F",
+								"key": "female",
 								"name": "Weiblich"
 							},
 							{
-								"key": "D",
+								"key": "other",
 								"name": "Divers"
 							},
 							{
-								"key": "X",
+								"key": "unknown",
 								"name": "Unbestimmt"
 							}
 						]

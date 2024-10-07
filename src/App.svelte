@@ -114,7 +114,7 @@
 						</div>
 					</lens-result-table>
 				</div>
-				<div class="chart-wrapper">
+				<div class="chart-wrapper gender">
 					<lens-chart
 						title="Geschlecht"
 						catalogueGroupCode="gender"
@@ -126,7 +126,7 @@
 				<div class="chart-wrapper chart-age-distribution">
 					<lens-chart
 						title="Alter bei Erstdiagnose"
-						catalogueGroupCode="age_at_diagnosis"
+						catalogueGroupCode="age"
 						chartType="bar"
 						groupRange="{10}"
 						filterRegex="^(1*[12]*[0-9])"
@@ -135,7 +135,7 @@
 						backgroundColor="{JSON.stringify(barChartBackgroundColors)}"
 					></lens-chart>
 				</div>
-				<div class="chart-wrapper">
+				<div class="chart-wrapper samples">
 					<lens-chart
 						title="Proben"
 						catalogueGroupCode="sample_kind"
@@ -147,16 +147,42 @@
 					>
 					</lens-chart>
 				</div>
+				<div class="chart-wrapper biosamples">
+					<lens-chart
+						title="Bioproben"
+						catalogueGroupCode="biosample"
+						chartType="bar"
+						xAxisTitle="Test1"
+						yAxisTitle="Test2"
+						backgroundColor="{JSON.stringify(barChartBackgroundColors)}"
+					>
+					</lens-chart>
+				</div>
+				<div class="chart-wrapper smoker">
+					<lens-chart
+						title="Raucher"
+						catalogueGroupCode="smoker"
+						chartType="pie"
+						displayLegends="{true}"
+					>
+					</lens-chart>
+				</div>
 			</div>
 		</div>
 	</main>
 
-	<footer>
-		<div class="made_with">
-			Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
+	<footer class="footer">
+		<div class="footer__left-section">
+			<div class="footer__made-with">
+				Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
+			</div>
+			<div class="footer__logo">
+				<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
+			</div>
 		</div>
-		<div class="logo-dzg">
-			<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
+		<div class="footer__links">
+			<a href="/impressum">Impressum</a>
+			<a href="/kontakt">Kontakt</a>
 		</div>
 	</footer>
 </div>

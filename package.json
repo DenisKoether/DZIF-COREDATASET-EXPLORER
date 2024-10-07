@@ -43,6 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@samply/lens": "^0.4.2"
+		"@samply/lens": "^0.4.2",
+		"svelte-routing": "^2.13.0"
 	}
 }
