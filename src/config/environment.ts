@@ -2,7 +2,12 @@
 
 import type { MeasureGroup, MeasureItem } from '@samply/lens';
 
-import { anamneseMeasure, specimenMeasure, patientsMeasure } from '../measures';
+import {
+	anamneseMeasure,
+	patientsMeasure,
+	specimenMeasure
+} from '../measures';
+
 
 export const genderHeaders: Map<string, string> = new Map<string, string>()
 	.set('male', 'männlich')
@@ -22,8 +27,8 @@ export const measures: MeasureGroup[] = [
 			patientsMeasure as MeasureItem,
 			anamneseMeasure as MeasureItem,
 			specimenMeasure as MeasureItem
-		]
-	}
+		],
+	},
 ];
 
 export const backendMeasures = `define InInitialPopulation:\n`;
