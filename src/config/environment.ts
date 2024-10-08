@@ -1,19 +1,14 @@
 // VITE_TARGET_ENVIRONMENT should be set by the ci pipeline
 
-import type { MeasureGroup, MeasureItem } from '@samply/lens'
+import type { MeasureGroup, MeasureItem } from '@samply/lens';
 
-import {
-	anamneseMeasure,
-	patientsMeasure
-} from '../measures';
-
+import { anamneseMeasure, specimenMeasure, patientsMeasure } from '../measures';
 
 export const genderHeaders: Map<string, string> = new Map<string, string>()
 	.set('male', 'männlich')
 	.set('female', 'weiblich')
 	.set('other', 'Divers, Intersexuell')
 	.set('unknown', 'unbekannt');
-
 
 export const barChartBackgroundColors: string[] = ['#4dc9f6', '#3da4c7'];
 
@@ -22,12 +17,13 @@ export const barChartBackgroundColors: string[] = ['#4dc9f6', '#3da4c7'];
  */
 export const measures: MeasureGroup[] = [
 	{
-		name: "DKTK",
+		name: 'DKTK',
 		measures: [
 			patientsMeasure as MeasureItem,
 			anamneseMeasure as MeasureItem,
-		],
-	},
+			specimenMeasure as MeasureItem
+		]
+	}
 ];
 
 export const backendMeasures = `define InInitialPopulation:\n`;

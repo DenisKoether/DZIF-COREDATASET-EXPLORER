@@ -6,23 +6,22 @@
  */
 export const fetchData = async (
 	catalogueUrl: string,
-	optionsUrl: string,
+	optionsUrl: string
 ): Promise<{ catalogueJSON: string; optionsJSON: string }> => {
-	const cataloguePromise: string = await fetch(catalogueUrl).then(
-		(response) => response.text(),
+	const cataloguePromise: string = await fetch(catalogueUrl).then((response) =>
+		response.text()
 	);
 
-	const optionsPromise: string = await fetch(optionsUrl).then(
-		(response) => response.text(),
+	const optionsPromise: string = await fetch(optionsUrl).then((response) =>
+		response.text()
 	);
 
 	return Promise.all([cataloguePromise, optionsPromise]).then(
 		([catalogueJSON, optionsJSON]) => {
 			return { catalogueJSON, optionsJSON };
-		},
+		}
 	);
 };
-
 
 export const catalogueText = {
 	group: 'Group',

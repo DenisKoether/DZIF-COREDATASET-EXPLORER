@@ -1,4 +1,6 @@
 <script lang="ts">
+	import CustomChart from './CustomChart.svelte';
+	import type { TooltipItem } from 'chart.js';
 	import {
 		barChartBackgroundColors,
 		genderHeaders,
@@ -49,6 +51,24 @@
 	// 	dataPasser.removeValueFromQueryAPI({ queryItem, value });
 	// 	getQuery();
 	// };
+
+	let labels = ['Standort 1', 'Standort 2', 'Standort 3', 'Standort 4'];
+	let datasets = [
+		{
+			label: 'Männer',
+			data: [120, 150, 100, 80],
+			backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+			borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+			borderWidth: 1
+		},
+		{
+			label: 'Frauen',
+			data: [130, 90, 140, 60],
+			backgroundColor: ['#FF9F40', '#FFCD56', '#4BC0C0', '#36A2EB'],
+			borderColor: ['#FF9F40', '#FFCD56', '#4BC0C0', '#36A2EB'],
+			borderWidth: 1
+		}
+	];
 </script>
 
 <div class="page">
@@ -124,27 +144,19 @@
 					></lens-chart>
 				</div>
 				<div class="chart-wrapper chart-age-distribution">
-					<lens-chart
-						title="Alter bei Erstdiagnose"
-						catalogueGroupCode="age"
-						chartType="bar"
-						groupRange="{10}"
-						filterRegex="^(1*[12]*[0-9])"
-						xAxisTitle="Alter"
-						yAxisTitle="Anzahl der Primärdiagnosen"
-						backgroundColor="{JSON.stringify(barChartBackgroundColors)}"
+					<CustomChart
+						title="Patienten pro Standort"
+						chartType="doughnut"
+						{labels}
+						{datasets}
+					/>
+				</div>
+				<div class="chart-wrapper">
+					<lens-chart title="Alter bei Aufnahme" catalogueGroupCode="age" chartType="bar"
 					></lens-chart>
 				</div>
 				<div class="chart-wrapper samples">
-					<lens-chart
-						title="Proben"
-						catalogueGroupCode="sample_kind"
-						chartType="bar"
-						xAxisTitle="Probentypen"
-						yAxisTitle="Probenanzahl"
-						filterRegex="^(?!(tissue-other|buffy-coat|peripheral-blood-cells|dried-whole-blood|swab|ascites|stool-faeces|saliva|liquid-other|derivative-other))"
-						backgroundColor="{JSON.stringify(barChartBackgroundColors)}"
-					>
+					<lens-chart title="Proben" catalogueGroupCode="sample_kind" chartType="pie">
 					</lens-chart>
 				</div>
 				<div class="chart-wrapper biosamples">
@@ -158,10 +170,10 @@
 					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper Diabetes">
+				<div class="chart-wrapper smoker">
 					<lens-chart
-						title="Diabetes"
-						catalogueGroupCode="diabetes"
+						title="Raucher"
+						catalogueGroupCode="smoker"
 						chartType="pie"
 						displayLegends="{true}"
 					>

@@ -30,6 +30,10 @@
             "Gender"
         ],
         [
+            "sites",
+            "Sites"
+        ],
+        [
             "age",
             "Age"
         ],
@@ -85,6 +89,9 @@
             }
         },
         "gender": {
+            "hintText": [
+                "TODO"
+            ],
             "legendMapping": {
                 "male": "Männlich",
                 "female": "Weiblich",
@@ -92,42 +99,69 @@
                 "other": "Divers"
             }
         },
+        "sites": {
+            "hintText": [
+                "TODO"
+            ],
+            "legendMapping": {
+                "BN": "Bonn",
+                "BOR": "Borstel",
+                "BS": "Braunschweig",
+                "GI": "Gießen",
+                "H": "Hannover",
+                "HD": "Heidelberg",
+                "HH": "Hamburg Universität",
+                "HHBNI": "Hamburg (BNI)",
+                "HHUKE": "Hamburg (UKE)",
+                "HL": "Lübeck",
+                "K": "Köln",
+                "MLMU": "München (LMU)",
+                "MR": "Marburg",
+                "MTUM": "München (TUM)",
+                "RIEMS": "Riems",
+                "TUE": "Tübingen",
+                "OTHER": "Anderer Standort"
+              }
+        },
+        "diabetes": {
+            "hintText": [
+                "TODO"
+            ],
+            "legendMapping": {
+                "1": "Typ1",
+                "2A": "Typ2 ohne Insulin",
+                "2B": "Typ2 mit Insulin",
+                "3": "Typ3",
+                "4": "Typ4",
+                "N": "Nein",
+                "X": "Keine Information verfügbar"
+            }
+        },
         "smoker": {
+            "hintText": [
+                "TODO"
+            ],
             "legendMapping": {
                 "Y": "Yes",
                 "N": "No",
                 "FS": "Ehemalig",
-                "X": "Keine Information"
+                "X": "Keine Information verfügbar"
             }
         },
         "diagnosis": {
             "hintText": [
-                "Bei Patienten mit mehreren onkologischen Diagnosen werden auch Einträge angezeigt, die ggfs. nicht den ausgewählten Suchkriterien entsprechen."
-            ]
-        },
-        "age_at_diagnosis": {
-            "hintText": [
-                "Bei Patienten mit mehreren Erstdiagnosen werden auch Einträge angezeigt, die ggfs. außerhalb der Suchkriterien liegen. "
-            ]
-        },
-        "75186-7": {
-            "hintText": [
-                "\"verstorben\": ein Todesdatum ist dokumentiert oder das aktuelle Lebensalter ist größer 123 Jahre.",
-                "\"lebend\": wird angenommen, wenn kein Todesdatum dokumentiert ist oder das aktuelle Lebensalter nicht 123 Jahre überschritten hat.",
-                "\"unbekannt\": kein Geburtsdatum oder Todesdatum bekannt."
-            ]
-        },
-        "therapy_of_tumor": {
-            "hintText": [
-                "Bei Patienten mit mehreren onkologischen Diagnosen werden auch Einträge angezeigt, die ggfs. nicht den ausgewählten Suchkriterien entsprechen."
+                "TODO"
             ],
-            "aggregations": [
-                "medicationStatements"
+            "legendMapping": {
+                "Y": "Yes"
+            }
+        },
+        "age": {
+            "hintText": [
+                "TODO"
             ],
-            "tooltips": {
-                "OP": "Operationen",
-                "ST": "Strahlentherapien",
-                "medicationStatements": "Systemische Therapien"
+            "legendMapping": {
+                "Age": "Alter"
             }
         },
         "medicationStatements": {
@@ -155,69 +189,37 @@
             "hintText": [
                 "Verteilung der Probentypen die mit den identifizierten Patienten verbunden sind."
             ],
-            "accumulatedValues": [
-                {
-                    "name": "ffpe-tissue",
-                    "values": [
-                        "tissue-ffpe",
-                        "tumor-tissue-ffpe",
-                        "normal-tissue-ffpe",
-                        "other-tissue-ffpe"
-                    ]
-                },
-                {
-                    "name": "frozen-tissue",
-                    "values": [
-                        "tissue-frozen",
-                        "tumor-tissue-frozen",
-                        "normal-tissue-frozen",
-                        "other-tissue-frozen"
-                    ]
-                }
-            ],
-            "tooltips": {
-                "ffpe-tissue": "Gewebe FFPE",
-                "frozen-tissue": "Gewebe schockgefroren",
-                "tissue-other": "Gewebe, Andere Konservierungsart",
-                "whole-blood": "Vollblut",
-                "blood-serum": "Serum",
-                "blood-plasma": "Plasma",
-                "buffy-coat": "Buffy Coat",
-                "peripheral-blood-cells": "Periphere mononukleäre Blutzellen (PBMC)",
-                "dried-whole-blood": "Blutkarten",
-                "swab": "Abstrich",
-                "ascites": "Aszites",
-                "stool-faeces": "Stuhl",
-                "urine": "Urin",
-                "csf-liquor": "Liquor",
-                "bone-marrow": "Knochenmark",
-                "saliva": "Speichel",
-                "liquid-other": "Flüssigprobe, Andere",
-                "dna": "DNA",
-                "rna": "RNA",
-                "derivative-other": "Derivat, Andere"
-            },
             "legendMapping": {
-                "ffpe-tissue": "Gewebe FFPE",
-                "frozen-tissue": "Gewebe schockgefroren",
-                "tissue-other": "Gewebe, Andere Konservierungsart",
-                "whole-blood": "Vollblut",
-                "blood-serum": "Serum",
-                "blood-plasma": "Plasma",
-                "buffy-coat": "Buffy Coat",
-                "peripheral-blood-cells": "Periphere mononukleäre Blutzellen (PBMC)",
-                "dried-whole-blood": "Blutkarten",
-                "swab": "Abstrich",
-                "ascites": "Aszites",
-                "stool-faeces": "Stuhl",
-                "urine": "Urin",
-                "csf-liquor": "Liquor",
-                "bone-marrow": "Knochenmark",
-                "saliva": "Speichel",
-                "liquid-other": "Flüssigprobe, Andere",
-                "dna": "DNA",
-                "rna": "RNA",
-                "derivative-other": "Derivat, Andere"
+                "LIQUID_EDTA": "LIQUID_EDTA",
+                "LIQUID_HEP": "LIQUID_HEP",
+                "LIQUID_CIT": "LIQUID_CIT",
+                "LIQUID_RNA_PAX": "LIQUID_RNA_PAX",
+                "LIQUID_RNA_TEM": "LIQUID_RNA_TEM",
+                "LIQUID_SER": "LIQUID_SER",
+                "LIQUID_URI": "LIQUID_URI",
+                "LIQUID_STO_NAT": "LIQUID_STO_NAT",
+                "LIQUID_STO_STA": "LIQUID_STO_STA",
+                "LIQUID_SAL": "LIQUID_SAL",
+                "LIQUID_BAL": "LIQUID_BAL",
+                "LIQUID_BSW": "LIQUID_BSW",
+                "LIQUID_PSW": "LIQUID_PSW",
+                "LIQUID_PHL": "LIQUID_PHL",
+                "LIQUID_FEC": "LIQUID_FEC",
+                "TISSUE_FF": "TISSUE_FF",
+                "TISSUE_FFPE": "TISSUE_FFPE",
+                "TISSUE_PATH": "TISSUE_PATH",
+                "LIQUID_OTH": "LIQUID_OTH",
+                "TISSUE_OTH": "TISSUE_OTH",
+                "X": "X",
+                "LIQUID_TBS": "LIQUID_TBS",
+                "LIQUID_PLA": "LIQUID_PLA",
+                "LIQUID_CIT_BLU": "LIQUID_CIT_BLU",
+                "LIQUID_CIT_PLA": "LIQUID_CIT_PLA",
+                "LIQUID_BC": "LIQUID_BC",
+                "LIQUID_RNA": "LIQUID_RNA",
+                "LIQUID_DNA": "LIQUID_DNA",
+                "LIQUID_PBMC": "LIQUID_PBMC",
+                "LIQUID_URI_SED": "LIQUID_URI_SED"
             }
         }
     },

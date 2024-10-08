@@ -57,10 +57,10 @@ export const anamneseMeasure = {
 		code: {
 			text: 'anamnese'
 		},
-		"extension": [
+		extension: [
 			{
-				"url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
-				"valueCode": "Observation"
+				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
+				valueCode: 'Observation'
 			}
 		],
 		population: [
@@ -97,6 +97,15 @@ export const anamneseMeasure = {
 					language: 'text/cql',
 					expression: 'Anamnese_Diabetes'
 				}
+			},
+			{
+				code: {
+					text: 'diagnosis'
+				},
+				criteria: {
+					language: 'text/cql-identifier',
+					expression: 'DiagnosisCode'
+				}
 			}
 		]
 	},
@@ -109,5 +118,57 @@ anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Ana
 
 define function Anamnese_Diabetes(anamnese FHIR.Observation):
 anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES').code.first()
+
+define function DiagnosisCode(anamnese FHIR.Observation):
+anamnese.code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm').code.first()
+`
+};
+
+export const specimenMeasure = {
+	key: 'specimen',
+	measure: {
+		code: {
+			text: 'specimen'
+		},
+		extension: [
+			{
+				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
+				valueCode: 'Specimen'
+			}
+		],
+		population: [
+			{
+				code: {
+					coding: [
+						{
+							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
+							code: 'initial-population'
+						}
+					]
+				},
+				criteria: {
+					language: 'text/cql-identifier',
+					expression: 'Specimen'
+				}
+			}
+		],
+		stratifier: [
+			{
+				code: {
+					text: 'sample_kind'
+				},
+				criteria: {
+					language: 'text/cql',
+					expression: 'SampleType'
+				}
+			}
+		]
+	},
+	cql: `
+define Specimen:
+if InInitialPopulation then [Specimen] else {} as List<Specimen>
+
+define function SampleType(specimen FHIR.Specimen):
+specimen.type.coding.where(system = 'https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE').code.first()
 `
 };
