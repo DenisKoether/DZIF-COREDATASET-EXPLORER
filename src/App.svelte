@@ -1,6 +1,5 @@
 <script lang="ts">
 	import CustomChart from './CustomChart.svelte';
-	import type { TooltipItem } from 'chart.js';
 	import {
 		barChartBackgroundColors,
 		genderHeaders,
@@ -174,6 +173,15 @@
 					<lens-chart
 						title="Raucher"
 						catalogueGroupCode="smoker"
+						chartType="pie"
+						displayLegends="{true}"
+					>
+					</lens-chart>
+				</div>
+				<div class="chart-wrapper diabetes">
+					<lens-chart
+						title="Diabetes"
+						catalogueGroupCode="diabetes"
 						chartType="pie"
 						displayLegends="{true}"
 					>
