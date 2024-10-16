@@ -58,6 +58,70 @@
             "sample_kind"
         ],
         [
+            "cardvascHT",
+            "cardvascHT"
+        ],
+        [
+            "cardvascCHD",
+            "cardvascCHD"
+        ],
+        [
+            "cardvasc",
+            "cardvasc"
+        ],
+        [
+            "chrLung",
+            "chrLung"
+        ],
+        [
+            "chrKidneydSeverity",
+            "chrKidneydSeverity"
+        ],
+        [
+            "chrKidneyd",
+            "chrKidneyd"
+        ],
+        [
+            "chrLiverdis",
+            "chrLiverdis"
+        ],
+        [
+            "rheuImmu",
+            "rheuImmu"
+        ],
+        [
+            "chrMyobakt",
+            "chrMyobakt"
+        ],
+        [
+            "malaria",
+            "malaria"
+        ],
+        [
+            "chrVirusHIV",
+            "chrVirusHIV"
+        ],
+        [
+            "chrVirusHBV",
+            "chrVirusHBV"
+        ],
+        [
+            "chrVirusHCV",
+            "chrVirusHCV"
+        ],
+        [
+            "chrVirusOTHER",
+            "chrVirusOTHER"
+        ],
+        [
+            "neuro",
+            "neuro"
+        ],
+        [
+            "study",
+            "study"
+        ],
+        [
             "therapy_of_tumor",
             "ProcedureType"
         ],
@@ -151,18 +215,12 @@
         "diagnosis": {
             "hintText": [
                 "TODO"
-            ],
-            "legendMapping": {
-                "Y": "Yes"
-            }
+            ]
         },
         "age": {
             "hintText": [
                 "TODO"
-            ],
-            "legendMapping": {
-                "Age": "Alter"
-            }
+            ]
         },
         "medicationStatements": {
             "hintText": [
@@ -221,6 +279,11 @@
                 "LIQUID-PBMC": "LIQUID-PBMC",
                 "LIQUID-URI-SED": "LIQUID-URI-SED"
             }
+        },
+        "study": {
+            "hintText": [
+                "TODO"
+            ]
         }
     },
     "tableOptions": {

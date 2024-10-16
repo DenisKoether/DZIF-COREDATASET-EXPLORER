@@ -209,10 +209,19 @@ header h1 {
   grid-column: span 2;
 }
 
-.chart-diagnosis {
-  grid-row: span 2;
-  grid-column: 1/2;
+.chart-alter {
+  grid-column: span 2;
+}
+.chart-study {
+  grid-column: span 2;
+}
 
+.chart-diagnosis {
+  grid-column: span 4;
+}
+
+.chart-krankheiten {
+  grid-column: span 4;
 }
 
 .chart-age-distribution {
@@ -453,12 +462,6 @@ lens-catalogue::part(query-add-button) {
 lens-catalogue::part(number-input-formfield):focus {
   border-color: var(--light-blue);
   outline: none;
-}
-
-.chart-diagnosis lens-chart::part(chart-canvas) {
-  width: 100%;
-  max-height: 1000px;
-  height: 940px;
 }
 
 lens-catalogue::part(number-input-formfield) {

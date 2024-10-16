@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CustomChart from './CustomChart.svelte';
+	import MultiPieChart from './MultiPieChart.svelte';
 	import {
 		barChartBackgroundColors,
 		genderHeaders,
@@ -110,21 +111,6 @@
 						>Diagramme repräsentieren nicht mehr die aktuelle Suche!</lens-search-modified-display
 					>
 				</div>
-				<div class="chart-wrapper chart-diagnosis">
-					<lens-chart
-						title="Diagnose"
-						catalogueGroupCode="diagnosis"
-						chartType="bar"
-						indexAxis="y"
-						groupingDivider="."
-						groupingLabel=".%"
-						filterRegex="^[CD].*"
-						xAxisTitle="Anzahl der Diagnosen"
-						yAxisTitle="ICD-10-Codes"
-						backgroundColor="{JSON.stringify(barChartBackgroundColors)}"
-					></lens-chart>
-				</div>
-
 				<div class="chart-wrapper result-table">
 					<lens-result-table pageSize="10">
 						<div slot="above-pagination" class="result-table-hint-text">
@@ -132,6 +118,23 @@
 							(Schätzung) entspricht der Zahl der Diagnosen.
 						</div>
 					</lens-result-table>
+				</div>
+				<div class="chart-wrapper"><MultiPieChart></MultiPieChart></div>
+				<div class="chart-wrapper chart-age-distribution">
+					<CustomChart
+						title="Patienten pro Standort"
+						chartType="doughnut"
+						{labels}
+						{datasets}
+					/>
+				</div>
+				<div class="chart-wrapper chart-alter">
+					<lens-chart
+					title="Alter bei Aufnahme"
+					catalogueGroupCode="age"
+					chartType="bar"
+					>
+				</lens-chart>
 				</div>
 				<div class="chart-wrapper gender">
 					<lens-chart
@@ -142,30 +145,23 @@
 						headers="{genderHeaders}"
 					></lens-chart>
 				</div>
-				<div class="chart-wrapper chart-age-distribution">
-					<CustomChart
-						title="Patienten pro Standort"
-						chartType="doughnut"
-						{labels}
-						{datasets}
-					/>
-				</div>
-				<div class="chart-wrapper">
-					<lens-chart title="Alter bei Aufnahme" catalogueGroupCode="age" chartType="bar"
-					></lens-chart>
-				</div>
-				<div class="chart-wrapper samples">
-					<lens-chart title="Proben" catalogueGroupCode="sample_kind" chartType="pie">
+				<div class="chart-wrapper chart-samples">
+					<lens-chart
+					title="Material"
+					catalogueGroupCode="sample_kind"
+					chartType="pie"
+					displayLegends="{false}"
+					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper biosamples">
+				<div class="chart-wrapper chart-study">
 					<lens-chart
-						title="Bioproben"
-						catalogueGroupCode="biosample"
+						title="Studie"
+						catalogueGroupCode="study"
 						chartType="bar"
-						xAxisTitle="Test1"
-						yAxisTitle="Test2"
-						backgroundColor="{JSON.stringify(barChartBackgroundColors)}"
+						xAxisTitle="Zugehörigkeit"
+						yAxisTitle="Anzahl"
+						displayLegends="{false}"
 					>
 					</lens-chart>
 				</div>
@@ -184,6 +180,27 @@
 						catalogueGroupCode="diabetes"
 						chartType="pie"
 						displayLegends="{true}"
+					>
+					</lens-chart>
+				</div>
+				<div class="chart-wrapper chart-diagnosis">
+					<lens-chart
+						title="Diagnose"
+						catalogueGroupCode="diagnosis"
+						chartType="bar"
+						xAxisTitle="X"
+						yAxisTitle="Y"
+						displayLegends="{false}"
+					></lens-chart>
+				</div>
+				<div class="chart-wrapper chart-krankheiten">
+					<lens-chart
+						title="Krankheiten"
+						catalogueGroupCode="cardvascHT"
+						chartType="bar"
+						xAxisTitle="Krankheit"
+						yAxisTitle="Anzahl"
+						displayLegends="{false}"
 					>
 					</lens-chart>
 				</div>

@@ -5,7 +5,8 @@ import type { MeasureGroup, MeasureItem } from '@samply/lens';
 import {
 	anamneseMeasure,
 	patientsMeasure,
-	specimenMeasure
+	specimenMeasure,
+	studyMeasure
 } from '../measures';
 
 
@@ -26,7 +27,8 @@ export const measures: MeasureGroup[] = [
 		measures: [
 			patientsMeasure as MeasureItem,
 			anamneseMeasure as MeasureItem,
-			specimenMeasure as MeasureItem
+			specimenMeasure as MeasureItem,
+			studyMeasure as MeasureItem
 		],
 	},
 ];
