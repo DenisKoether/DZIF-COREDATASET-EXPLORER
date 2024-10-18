@@ -212,6 +212,11 @@ header h1 {
 .chart-alter {
   grid-column: span 2;
 }
+
+.chart-diseases {
+  grid-column: span 4;
+}
+
 .chart-study {
   grid-column: span 2;
 }

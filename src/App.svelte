@@ -1,6 +1,7 @@
 <script lang="ts">
-	import CustomChart from './CustomChart.svelte';
-	import MultiPieChart from './MultiPieChart.svelte';
+	import CustomChart from './charts/CustomChart.svelte';
+	import DiseasesChart from './charts/DiseasesChart.svelte';
+	import SitesChart from './charts/SitesChart.svelte';
 	import {
 		barChartBackgroundColors,
 		genderHeaders,
@@ -119,7 +120,6 @@
 						</div>
 					</lens-result-table>
 				</div>
-				<div class="chart-wrapper"><MultiPieChart></MultiPieChart></div>
 				<div class="chart-wrapper chart-age-distribution">
 					<CustomChart
 						title="Patienten pro Standort"
@@ -128,6 +128,12 @@
 						{datasets}
 					/>
 				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChart></DiseasesChart>
+				</div>
+					<div class="chart-wrapper chart-age-distribution">
+						<SitesChart></SitesChart>
+					</div>
 				<div class="chart-wrapper chart-alter">
 					<lens-chart
 					title="Alter bei Aufnahme"
@@ -147,7 +153,7 @@
 				</div>
 				<div class="chart-wrapper chart-samples">
 					<lens-chart
-					title="Material"
+					title="Samples"
 					catalogueGroupCode="sample_kind"
 					chartType="pie"
 					displayLegends="{false}"

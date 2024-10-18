@@ -88,7 +88,7 @@
 
 						return answer && !answer.includes('null') ? { answer, count } : null;
 					})
-					.filter((item) => item !== null);
+					.filter((item) => item !== null)
 
 				chartData.push(...resultChrLung);
 			}
@@ -102,7 +102,7 @@
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
 			chart.update();
 		} else {
-			const ctx = document.getElementById('krankheitenChart') as HTMLCanvasElement;
+			const ctx = document.getElementById('diseasesChart') as HTMLCanvasElement;
 			chart = new Chart(ctx.getContext('2d'), {
 				type: 'bar',
 				data: {
@@ -134,7 +134,7 @@
 	});
 </script>
 
-<canvas id="krankheitenChart" width="500" height="300"></canvas>
+<canvas id="diseasesChart"></canvas>
 
 <button on:click="{getResponse}"> getResponse </button>
 
