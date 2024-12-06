@@ -163,7 +163,7 @@ header h1 {
   border: solid 1px var(--lightest-gray);
   border-radius: var(--border-radius-small);
   }
-  
+
   .catalogue {
   border-radius: var(--border-radius-small);
   padding: var(--gap-s);
@@ -173,7 +173,7 @@ header h1 {
   height: calc(100vh - 226px);
   position: sticky;
   top: 131px;
-  
+
 }
 
 .catalogue h2 {
@@ -210,6 +210,18 @@ header h1 {
 }
 
 .chart-alter {
+  grid-column: span 4;
+}
+
+.chart-gender {
+  grid-column: span 2;
+}
+
+.chart-smoker {
+  grid-column: span 2;
+}
+
+.chart-sites {
   grid-column: span 2;
 }
 
@@ -218,6 +230,14 @@ header h1 {
 }
 
 .chart-study {
+  grid-column: span 2;
+}
+
+.chart-samples {
+  grid-column: span 2;
+}
+
+.chart-diabetes {
   grid-column: span 2;
 }
 
@@ -405,14 +425,14 @@ lens-search-bar-multiple::part(info-button-dialogue) {
   border-radius: var(--border-radius-small);
   text-align: left;
 }
-lens-search-bar::part(delete-button-icon-item), 
+lens-search-bar::part(delete-button-icon-item),
 lens-search-bar-multiple::part(delete-button-icon-item) {
   filter: invert(41%) sepia(43%) saturate(4610%) hue-rotate(357deg) brightness(96%) contrast(90%);
   transform: translate(-1px, -1px);
   width: 20px;
 }
 
-lens-search-bar::part(delete-button-icon-group), 
+lens-search-bar::part(delete-button-icon-group),
 lens-search-bar-multiple::part(delete-button-icon-group) {
   filter: invert(41%) sepia(43%) saturate(4610%) hue-rotate(357deg) brightness(96%) contrast(90%);
   transform: translate(0px, 2px);

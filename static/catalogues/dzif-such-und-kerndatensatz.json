@@ -11,71 +11,71 @@
 				"system": "",
 				"criteria": [
 					{
-						"key": "TI_AD",
+						"key": "TI-AD",
 						"name": "TI Academy"
 					},
 					{
-						"key": "TI_API",
+						"key": "TI-API",
 						"name": "TI African Partner Institutions"
 					},
 					{
-						"key": "TI_BB",
+						"key": "TI-BB",
 						"name": "TI Biobanking"
 					},
 					{
-						"key": "TI_BP",
+						"key": "TI-BP",
 						"name": "TI Bioinformatics Platform"
 					},
 					{
-						"key": "TI_CTU",
+						"key": "TI-CTU",
 						"name": "TI Clinical Trial Unit"
 					},
 					{
-						"key": "TI_EPI",
+						"key": "TI-EPI",
 						"name": "TI Epidemiology"
 					},
 					{
-						"key": "TI_NA",
+						"key": "TI-NA",
 						"name": "TI Novel Antivirals"
 					},
 					{
-						"key": "TI_PR",
+						"key": "TI-PR",
 						"name": "TI Pathogen Repository"
 					},
 					{
-						"key": "TTU_EI",
+						"key": "TTU-EI",
 						"name": "TTU Emerging Infections"
 					},
 					{
-						"key": "TTU_GII",
+						"key": "TTU-GII",
 						"name": "TTU Gasttrointestinal Infections"
 					},
 					{
-						"key": "TTU_HA",
+						"key": "TTU-HA",
 						"name": "TTU HAARBI"
 					},
 					{
-						"key": "TTU_HEP",
+						"key": "TTU-HEP",
 						"name": "TTU Hepatitis"
 					},
 					{
-						"key": "TTU_HIV",
+						"key": "TTU-HIV",
 						"name": "TTU HIV"
 					},
 					{
-						"key": "TTU_IICH",
+						"key": "TTU-IICH",
 						"name": "TTU Infections of immunocompromised Host"
 					},
 					{
-						"key": "TTU_MAL",
+						"key": "TTU-MAL",
 						"name": "TTU Malaria"
 					},
 					{
-						"key": "TTU_NA",
+						"key": "TTU-NA",
 						"name": "TTU Novel Antibiotics"
 					},
 					{
-						"key": "TTU_TUB",
+						"key": "TTU-TUB",
 						"name": "TTU Tuberculosis"
 					},
 					{
@@ -512,7 +512,7 @@
 						"name": "Other sex (biological at birth)(TODO: STRING)"
 					},
 					{
-						"key": "Gender",
+						"key": "gender",
 						"name": "Gender",
 						"fieldType": "single-select",
 						"type": "EQUALS",

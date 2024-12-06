@@ -255,7 +255,7 @@ define function Anamnese_Diabetes(anamnese FHIR.Observation):
 anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES').code.first()
 
 define function DiagnosisCode(anamnese FHIR.Observation):
-anamnese.code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm').code.first()
+anamnese.code.coding.where(system = 'https://fhir.de/CodeSystem/bfarm/icd-10-gm').code.first()
 
 define function Anamnese_CardvascHT(anamnese FHIR.Observation):
 anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-HT').code.first()
@@ -352,7 +352,6 @@ define function SampleType(specimen FHIR.Specimen):
 specimen.type.coding.where(system = 'https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE').code.first()
 `
 };
-
 
 export const studyMeasure = {
 	key: 'study',

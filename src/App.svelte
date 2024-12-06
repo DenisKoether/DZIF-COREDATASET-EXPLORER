@@ -2,17 +2,27 @@
 	import CustomChart from './charts/CustomChart.svelte';
 	import DiseasesChart from './charts/DiseasesChart.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
-	import {
-		barChartBackgroundColors,
-		genderHeaders,
-		measures
-	} from './config/environment';
+	import { requestBackend } from './services/backends/backend.service';
+	import { browser } from '$app/environment';
+	import { genderHeaders, measures } from './config/environment';
 	import type { LensDataPasser } from '@samply/lens';
 	import { fetchData, catalogueText } from './services/catalogue.service';
 
 	let catalogueopen = false;
 
 	let dataPasser: LensDataPasser;
+
+	if (browser) {
+		window.addEventListener('emit-lens-query', (e) => {
+			if (!dataPasser) return;
+
+			const event = e as CustomEvent;
+			const { ast, updateResponse, abortController } = event.detail;
+			const criteria: string[] = dataPasser.getCriteriaAPI('diagnosis');
+
+			requestBackend(ast, updateResponse, abortController, measures, criteria);
+		});
+	}
 
 	const catalogueUrl = 'catalogues/dzif-such-und-kerndatensatz.json';
 	const optionsFilePath = 'config/options.json';
@@ -52,24 +62,6 @@
 	// 	dataPasser.removeValueFromQueryAPI({ queryItem, value });
 	// 	getQuery();
 	// };
-
-	let labels = ['Standort 1', 'Standort 2', 'Standort 3', 'Standort 4'];
-	let datasets = [
-		{
-			label: 'Männer',
-			data: [120, 150, 100, 80],
-			backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-			borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-			borderWidth: 1
-		},
-		{
-			label: 'Frauen',
-			data: [130, 90, 140, 60],
-			backgroundColor: ['#FF9F40', '#FFCD56', '#4BC0C0', '#36A2EB'],
-			borderColor: ['#FF9F40', '#FFCD56', '#4BC0C0', '#36A2EB'],
-			borderWidth: 1
-		}
-	];
 </script>
 
 <div class="page">
@@ -120,29 +112,17 @@
 						</div>
 					</lens-result-table>
 				</div>
-				<div class="chart-wrapper chart-age-distribution">
-					<CustomChart
-						title="Patienten pro Standort"
-						chartType="doughnut"
-						{labels}
-						{datasets}
-					/>
+				<div class="chart-wrapper chart-sites">
+					<SitesChart></SitesChart>
 				</div>
 				<div class="chart-wrapper chart-diseases">
 					<DiseasesChart></DiseasesChart>
 				</div>
-					<div class="chart-wrapper chart-age-distribution">
-						<SitesChart></SitesChart>
-					</div>
 				<div class="chart-wrapper chart-alter">
-					<lens-chart
-					title="Alter bei Aufnahme"
-					catalogueGroupCode="age"
-					chartType="bar"
-					>
-				</lens-chart>
+					<lens-chart title="Alter bei Aufnahme" catalogueGroupCode="age" chartType="bar">
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper gender">
+				<div class="chart-wrapper chart-gender">
 					<lens-chart
 						title="Geschlecht"
 						catalogueGroupCode="gender"
@@ -153,10 +133,10 @@
 				</div>
 				<div class="chart-wrapper chart-samples">
 					<lens-chart
-					title="Samples"
-					catalogueGroupCode="sample_kind"
-					chartType="pie"
-					displayLegends="{false}"
+						title="Proben"
+						catalogueGroupCode="sample_kind"
+						chartType="pie"
+						displayLegends="{true}"
 					>
 					</lens-chart>
 				</div>
@@ -171,7 +151,7 @@
 					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper smoker">
+				<div class="chart-wrapper chart-smoker">
 					<lens-chart
 						title="Raucher"
 						catalogueGroupCode="smoker"
@@ -180,7 +160,7 @@
 					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper diabetes">
+				<div class="chart-wrapper chart-diabetes">
 					<lens-chart
 						title="Diabetes"
 						catalogueGroupCode="diabetes"
@@ -189,16 +169,7 @@
 					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diagnosis">
-					<lens-chart
-						title="Diagnose"
-						catalogueGroupCode="diagnosis"
-						chartType="bar"
-						xAxisTitle="X"
-						yAxisTitle="Y"
-						displayLegends="{false}"
-					></lens-chart>
-				</div>
+
 				<div class="chart-wrapper chart-krankheiten">
 					<lens-chart
 						title="Krankheiten"

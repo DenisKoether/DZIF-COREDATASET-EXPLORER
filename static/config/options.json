@@ -1,12 +1,139 @@
 {
-    "iconOptions": {
-        "deleteUrl": "delete_icon.svg",
-        "infoUrl": "info-circle-svgrepo-com.svg",
-        "selectAll": {
-            "text": "Add all"
-        }
-    },
-    "siteMappings": {
+  "iconOptions": {
+    "deleteUrl": "delete_icon.svg",
+    "infoUrl": "info-circle-svgrepo-com.svg",
+    "selectAll": {
+      "text": "Add all"
+    }
+  },
+  "siteMappings": {
+    "berlin-test": "Berlin",
+    "bonn": "Bonn",
+    "dresden": "Dresden",
+    "essen": "Essen",
+    "frankfurt": "Frankfurt",
+    "freiburg": "Freiburg",
+    "hannover": "Hannover",
+    "mainz": "Mainz",
+    "muenchen-lmu": "München(LMU)",
+    "muenchen-tum": "München(TUM)",
+    "ulm": "Ulm",
+    "wuerzburg": "Würzburg",
+    "mannheim": "Mannheim",
+    "dktk-test": "DKTK-Test",
+    "hamburg": "Hamburg",
+    "DKTK": "Denisburg"
+  },
+  "catalogueKeyToResponseKeyMap": [
+    [
+      "gender",
+      "Gender"
+    ],
+    [
+      "sites",
+      "Sites"
+    ],
+    [
+      "age",
+      "Age"
+    ],
+    [
+      "smoker",
+      "Smoker"
+    ],
+    [
+      "diabetes",
+      "Diabetes"
+    ],
+    [
+      "diagnosis",
+      "diagnosis"
+    ],
+    [
+      "medicationStatements",
+      "MedicationType"
+    ],
+    [
+      "sample_kind",
+      "sample_kind"
+    ],
+    [
+      "cardvascHT",
+      "cardvascHT"
+    ],
+    [
+      "cardvascCHD",
+      "cardvascCHD"
+    ],
+    [
+      "cardvasc",
+      "cardvasc"
+    ],
+    [
+      "chrLung",
+      "chrLung"
+    ],
+    [
+      "chrKidneydSeverity",
+      "chrKidneydSeverity"
+    ],
+    [
+      "chrKidneyd",
+      "chrKidneyd"
+    ],
+    [
+      "chrLiverdis",
+      "chrLiverdis"
+    ],
+    [
+      "rheuImmu",
+      "rheuImmu"
+    ],
+    [
+      "chrMyobakt",
+      "chrMyobakt"
+    ],
+    [
+      "malaria",
+      "malaria"
+    ],
+    [
+      "chrVirusHIV",
+      "chrVirusHIV"
+    ],
+    [
+      "chrVirusHBV",
+      "chrVirusHBV"
+    ],
+    [
+      "chrVirusHCV",
+      "chrVirusHCV"
+    ],
+    [
+      "chrVirusOTHER",
+      "chrVirusOTHER"
+    ],
+    [
+      "neuro",
+      "neuro"
+    ],
+    [
+      "study",
+      "study"
+    ],
+    [
+      "therapy_of_tumor",
+      "ProcedureType"
+    ],
+    [
+      "75186-7",
+      "75186-7"
+    ]
+  ],
+  "chartOptions": {
+    "patients": {
+      "legendMapping": {
+        "berlin": "Berlin",
         "berlin-test": "Berlin",
         "bonn": "Bonn",
         "dresden": "Dresden",
@@ -23,311 +150,184 @@
         "dktk-test": "DKTK-Test",
         "hamburg": "Hamburg",
         "DKTK": "Denisburg"
+      }
     },
-    "catalogueKeyToResponseKeyMap": [
-        [
-            "gender",
-            "Gender"
-        ],
-        [
-            "sites",
-            "Sites"
-        ],
-        [
-            "age",
-            "Age"
-        ],
-        [
-            "smoker",
-            "Smoker"
-        ],
-        [
-            "diabetes",
-            "Diabetes"
-        ],
-        [
-            "diagnosis",
-            "diagnosis"
-        ],
-        [
-            "medicationStatements",
-            "MedicationType"
-        ],
-        [
-            "sample_kind",
-            "sample_kind"
-        ],
-        [
-            "cardvascHT",
-            "cardvascHT"
-        ],
-        [
-            "cardvascCHD",
-            "cardvascCHD"
-        ],
-        [
-            "cardvasc",
-            "cardvasc"
-        ],
-        [
-            "chrLung",
-            "chrLung"
-        ],
-        [
-            "chrKidneydSeverity",
-            "chrKidneydSeverity"
-        ],
-        [
-            "chrKidneyd",
-            "chrKidneyd"
-        ],
-        [
-            "chrLiverdis",
-            "chrLiverdis"
-        ],
-        [
-            "rheuImmu",
-            "rheuImmu"
-        ],
-        [
-            "chrMyobakt",
-            "chrMyobakt"
-        ],
-        [
-            "malaria",
-            "malaria"
-        ],
-        [
-            "chrVirusHIV",
-            "chrVirusHIV"
-        ],
-        [
-            "chrVirusHBV",
-            "chrVirusHBV"
-        ],
-        [
-            "chrVirusHCV",
-            "chrVirusHCV"
-        ],
-        [
-            "chrVirusOTHER",
-            "chrVirusOTHER"
-        ],
-        [
-            "neuro",
-            "neuro"
-        ],
-        [
-            "study",
-            "study"
-        ],
-        [
-            "therapy_of_tumor",
-            "ProcedureType"
-        ],
-        [
-            "75186-7",
-            "75186-7"
-        ]
-    ],
-    "chartOptions": {
-        "patients": {
-            "legendMapping": {
-                "berlin": "Berlin",
-                "berlin-test": "Berlin",
-                "bonn": "Bonn",
-                "dresden": "Dresden",
-                "essen": "Essen",
-                "frankfurt": "Frankfurt",
-                "freiburg": "Freiburg",
-                "hannover": "Hannover",
-                "mainz": "Mainz",
-                "muenchen-lmu": "München(LMU)",
-                "muenchen-tum": "München(TUM)",
-                "ulm": "Ulm",
-                "wuerzburg": "Würzburg",
-                "mannheim": "Mannheim",
-                "dktk-test": "DKTK-Test",
-                "hamburg": "Hamburg",
-                "DKTK": "Denisburg"
-            }
-        },
-        "gender": {
-            "hintText": [
-                "TODO"
-            ],
-            "legendMapping": {
-                "male": "Männlich",
-                "female": "Weiblich",
-                "unknown": "Unbekannt",
-                "other": "Divers"
-            }
-        },
-        "sites": {
-            "hintText": [
-                "TODO"
-            ],
-            "legendMapping": {
-                "BN": "Bonn",
-                "BOR": "Borstel",
-                "BS": "Braunschweig",
-                "GI": "Gießen",
-                "H": "Hannover",
-                "HD": "Heidelberg",
-                "HH": "Hamburg Universität",
-                "HHBNI": "Hamburg (BNI)",
-                "HHUKE": "Hamburg (UKE)",
-                "HL": "Lübeck",
-                "K": "Köln",
-                "MLMU": "München (LMU)",
-                "MR": "Marburg",
-                "MTUM": "München (TUM)",
-                "RIEMS": "Riems",
-                "TUE": "Tübingen",
-                "OTHER": "Anderer Standort"
-            }
-        },
-        "diabetes": {
-            "hintText": [
-                "TODO"
-            ],
-            "legendMapping": {
-                "1": "Typ1",
-                "2A": "Typ2 ohne Insulin",
-                "2B": "Typ2 mit Insulin",
-                "3": "Typ3",
-                "4": "Typ4",
-                "N": "Nein",
-                "X": "Keine Information verfügbar"
-            }
-        },
-        "smoker": {
-            "hintText": [
-                "TODO"
-            ],
-            "legendMapping": {
-                "Y": "Yes",
-                "N": "No",
-                "FS": "Ehemalig",
-                "X": "Keine Information verfügbar"
-            }
-        },
-        "diagnosis": {
-            "hintText": [
-                "TODO"
-            ]
-        },
-        "age": {
-            "hintText": [
-                "TODO"
-            ]
-        },
-        "medicationStatements": {
-            "hintText": [
-                "Art der systemischen oder abwartenden Therapie (ADT Basisdatensatz Versionen 2014, 2021)"
-            ],
-            "tooltips": {
-                "CH": "Chemotherapie",
-                "HO": "Hormontherapie",
-                "IM": "Immun-/Antikörpertherapie",
-                "KM": "Knochenmarktransplantation",
-                "ZS": "zielgerichtete Substanzen",
-                "CI": "Chemo- + Immun-/Antikörpertherapie",
-                "CZ": "Chemotherapie + zielgerichtete Substanzen",
-                "CIZ": "Chemo- + Immun-/Antikörpertherapie + zielgerichtete Substanzen",
-                "IZ": "Immun-/Antikörpertherapie + zielgerichtete Substanzen",
-                "SZ": "Stammzelltransplantation (inklusive Knochenmarktransplantation)",
-                "AS": "Active Surveillance",
-                "WS": "Wait and see",
-                "WW": "Watchful Waiting",
-                "SO": "Sonstiges"
-            }
-        },
-        "sample_kind": {
-            "hintText": [
-                "Verteilung der Probentypen die mit den identifizierten Patienten verbunden sind."
-            ],
-            "legendMapping": {
-                "LIQUID-EDTA": "LIQUID-EDTA",
-                "LIQUID-HEP": "LIQUID-HEP",
-                "LIQUID-CIT": "LIQUID-CIT",
-                "LIQUID-RNA-PAX": "LIQUID-RNA-PAX",
-                "LIQUID-RNA-TEM": "LIQUID-RNA-TEM",
-                "LIQUID-SER": "LIQUID-SER",
-                "LIQUID-URI": "LIQUID-URI",
-                "LIQUID-STO-NAT": "LIQUID-STO-NAT",
-                "LIQUID-STO-STA": "LIQUID-STO-STA",
-                "LIQUID-SAL": "LIQUID-SAL",
-                "LIQUID-BAL": "LIQUID-BAL",
-                "LIQUID-BSW": "LIQUID-BSW",
-                "LIQUID-PSW": "LIQUID-PSW",
-                "LIQUID-PHL": "LIQUID-PHL",
-                "LIQUID-FEC": "LIQUID-FEC",
-                "TISSUE-FF": "TISSUE-FF",
-                "TISSUE-FFPE": "TISSUE-FFPE",
-                "TISSUE-PATH": "TISSUE-PATH",
-                "LIQUID-OTH": "LIQUID-OTH",
-                "TISSUE-OTH": "TISSUE-OTH",
-                "X": "X",
-                "LIQUID-TBS": "LIQUID-TBS",
-                "LIQUID-PLA": "LIQUID-PLA",
-                "LIQUID-CIT-BLU": "LIQUID-CIT-BLU",
-                "LIQUID-CIT-PLA": "LIQUID-CIT-PLA",
-                "LIQUID-BC": "LIQUID-BC",
-                "LIQUID-RNA": "LIQUID-RNA",
-                "LIQUID-DNA": "LIQUID-DNA",
-                "LIQUID-PBMC": "LIQUID-PBMC",
-                "LIQUID-URI-SED": "LIQUID-URI-SED"
-            }
-        },
-        "study": {
-            "hintText": [
-                "TODO"
-            ]
-        }
+    "gender": {
+      "hintText": [
+        "TODO"
+      ],
+      "legendMapping": {
+        "male": "Männlich",
+        "female": "Weiblich",
+        "unknown": "Unbekannt",
+        "other": "Divers"
+      }
     },
-    "tableOptions": {
-        "headerData": [
-            {
-                "title": "Standorte",
-                "dataKey": "site"
-            },
-            {
-                "title": "Patienten",
-                "dataKey": "patients"
-            },
-            {
-                "title": "Bioproben*",
-                "aggregatedDataKeys": [
-                    {
-                        "groupCode": "specimen"
-                    },
-                    {
-                        "stratifierCode": "Histologies",
-                        "stratumCode": "1"
-                    }
-                ]
-            }
-        ],
-        "claimedText": "Processing..."
+    "sites": {
+      "hintText": [
+        "TODO"
+      ],
+      "legendMapping": {
+        "BN": "Bonn",
+        "BOR": "Borstel",
+        "BS": "Braunschweig",
+        "GI": "Gießen",
+        "H": "Hannover",
+        "HD": "Heidelberg",
+        "HH": "Hamburg Universität",
+        "HHBNI": "Hamburg (BNI)",
+        "HHUKE": "Hamburg (UKE)",
+        "HL": "Lübeck",
+        "K": "Köln",
+        "MLMU": "München (LMU)",
+        "MR": "Marburg",
+        "MTUM": "München (TUM)",
+        "RIEMS": "Riems",
+        "TUE": "Tübingen",
+        "OTHER": "Anderer Standort"
+      }
     },
-    "resultSummaryOptions": {
-        "title": "Ergebnisse",
-        "infoButtonText": "Um eine Re-Identifizierung zu erschweren, werden Standortergebnisse modifiziert und auf Zehnerstellen gerundet. Meldet ein Standort keinen Treffer, wird für diesen null angezeigt.",
-        "dataTypes": [
-            {
-                "title": "Patienten",
-                "dataKey": "patients"
-            }
-        ]
+    "diabetes": {
+      "hintText": [
+        "TODO"
+      ],
+      "legendMapping": {
+        "1": "Typ1",
+        "2A": "Typ2 ohne Insulin",
+        "2B": "Typ2 mit Insulin",
+        "3": "Typ3",
+        "4": "Typ4",
+        "N": "Nein",
+        "X": "Keine Information verfügbar"
+      }
     },
-    "backends": {
-        "blazes": [
-            {
-                "name": "DKTK",
-                "backendMeasures": "define InInitialPopulation:\n",
-                "url": "http://localhost:8082/fhir"
-            }
-        ]
+    "smoker": {
+      "hintText": [
+        "TODO"
+      ],
+      "legendMapping": {
+        "Y": "Yes",
+        "N": "No",
+        "FS": "Ehemalig",
+        "X": "Keine Information verfügbar"
+      }
+    },
+    "diagnosis": {
+      "hintText": [
+        "TODO"
+      ]
+    },
+    "age": {
+      "hintText": [
+        "TODO"
+      ]
+    },
+    "medicationStatements": {
+      "hintText": [
+        "Art der systemischen oder abwartenden Therapie (ADT Basisdatensatz Versionen 2014, 2021)"
+      ],
+      "tooltips": {
+        "CH": "Chemotherapie",
+        "HO": "Hormontherapie",
+        "IM": "Immun-/Antikörpertherapie",
+        "KM": "Knochenmarktransplantation",
+        "ZS": "zielgerichtete Substanzen",
+        "CI": "Chemo- + Immun-/Antikörpertherapie",
+        "CZ": "Chemotherapie + zielgerichtete Substanzen",
+        "CIZ": "Chemo- + Immun-/Antikörpertherapie + zielgerichtete Substanzen",
+        "IZ": "Immun-/Antikörpertherapie + zielgerichtete Substanzen",
+        "SZ": "Stammzelltransplantation (inklusive Knochenmarktransplantation)",
+        "AS": "Active Surveillance",
+        "WS": "Wait and see",
+        "WW": "Watchful Waiting",
+        "SO": "Sonstiges"
+      }
+    },
+    "sample_kind": {
+      "hintText": [
+        "Verteilung der Probentypen die mit den identifizierten Patienten verbunden sind."
+      ],
+      "legendMapping": {
+        "LIQUID-EDTA": "EDTA",
+        "LIQUID-HEP": "Heparin",
+        "LIQUID-CIT": "Citrat",
+        "LIQUID-RNA-PAX": "Paxgene RNA Tube",
+        "LIQUID-RNA-TEM": "Tempus RNA Tube",
+        "LIQUID-SER": "Serum(- Gel)",
+        "LIQUID-URI": "Urin",
+        "LIQUID-STO-NAT": "Stuhl (nativ)",
+        "LIQUID-STO-STA": "Stuhl (stabilisiert)",
+        "LIQUID-SAL": "Speichel",
+        "LIQUID-BAL": "Bronchoalveoläre Lavage",
+        "LIQUID-BSW": "Bukkaler Abstrich (buccal swab)",
+        "LIQUID-PSW": "Peritonealer Abstrich (peritoneal swab)",
+        "LIQUID-PHL": "Rachenspülwasser (pharyngeal lavage)",
+        "LIQUID-FEC": "Fäkaler Abstrich (fecal swab)",
+        "TISSUE-FF": "fresh frozen",
+        "TISSUE-FFPE": "FFPE (Formalin-fixiert)",
+        "TISSUE-PATH": "Pathogen",
+        "LIQUID-OTH": "Andere Flüssigprobe",
+        "TISSUE-OTH": "Andere Gewebeprobe",
+        "X": "Probentyp unbekannt/Keine Information verfügbar",
+        "LIQUID-TBS": "Dicker Tropfen (thick blood smear)",
+        "LIQUID-PLA": "EDTA-Plasma",
+        "LIQUID-CIT-BLU": "Citrat-Blut",
+        "LIQUID-CIT-PLA": "Citrat-Plasma",
+        "LIQUID-BC": "Buffy coat",
+        "LIQUID-RNA": "RNA",
+        "LIQUID-DNA": "DNA",
+        "LIQUID-PBMC": "PBMC",
+        "LIQUID-URI-SED": "Urin-Sediment"
+      }
+    },
+    "study": {
+      "hintText": [
+        "TODO"
+      ]
     }
+  },
+  "tableOptions": {
+    "headerData": [
+      {
+        "title": "Standorte",
+        "dataKey": "site"
+      },
+      {
+        "title": "Patienten",
+        "dataKey": "patients"
+      },
+      {
+        "title": "Bioproben*",
+        "aggregatedDataKeys": [
+          {
+            "groupCode": "specimen"
+          },
+          {
+            "stratifierCode": "Histologies",
+            "stratumCode": "1"
+          }
+        ]
+      }
+    ],
+    "claimedText": "Processing..."
+  },
+  "resultSummaryOptions": {
+    "title": "Ergebnisse",
+    "infoButtonText": "Um eine Re-Identifizierung zu erschweren, werden Standortergebnisse modifiziert und auf Zehnerstellen gerundet. Meldet ein Standort keinen Treffer, wird für diesen null angezeigt.",
+    "dataTypes": [
+      {
+        "title": "Patienten",
+        "dataKey": "patients"
+      }
+    ]
+  },
+  "backends": {
+    "blazes": [
+      {
+        "name": "DKTK",
+        "backendMeasures": "define InInitialPopulation:\n",
+        "url": "http://localhost:8082/fhir"
+      }
+    ]
+  }
 }

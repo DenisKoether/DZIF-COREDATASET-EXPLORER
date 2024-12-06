@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Chart } from 'chart.js/auto';
 
-	import type { LensDataPasser } from '@samply/lens';
+	import type { LensDataPasser, Site } from '@samply/lens';
 
 	let dataPasser: LensDataPasser;
 
@@ -13,6 +13,12 @@
 
 	let chart: Chart | null = null;
 	let chartData: ChartDataItem[] = [];
+	let response: Map<string, Site>;
+
+	window.addEventListener('lens-responses-updated', () => {
+		response = dataPasser?.getResponseAPI();
+		anamneseOut();
+	});
 
 	const getResponse = (): void => {
 		console.log('getResponse()', dataPasser.getResponseAPI());
@@ -22,8 +28,8 @@
 	const anamneseOut = () => {
 		chartData = [];
 
-		let data = dataPasser.getResponseAPI();
-		let anamneseGroup = data
+		//let data = dataPasser.getResponseAPI();
+		let anamneseGroup = response
 			.get('DKTK')
 			?.data.group.find((group) => group.code.text === 'anamnese');
 
@@ -37,7 +43,7 @@
 			let cardvascStratifier = anamneseGroup.stratifier.find((strat) =>
 				strat.code.some((c) => c.text === 'cardvasc')
 			);
-            let chrLungStratifier = anamneseGroup.stratifier.find((strat) =>
+			let chrLungStratifier = anamneseGroup.stratifier.find((strat) =>
 				strat.code.some((c) => c.text === 'chrLung')
 			);
 
@@ -80,15 +86,15 @@
 				chartData.push(...resultCardvasc);
 			}
 
-            if (chrLungStratifier) {
-				let resultChrLung= chrLungStratifier.stratum
+			if (chrLungStratifier) {
+				let resultChrLung = chrLungStratifier.stratum
 					.map((stratum) => {
 						const answer = 'chrLung-' + stratum.value?.text;
 						const count = stratum.population?.at(0)?.count ?? 0;
 
 						return answer && !answer.includes('null') ? { answer, count } : null;
 					})
-					.filter((item) => item !== null)
+					.filter((item) => item !== null);
 
 				chartData.push(...resultChrLung);
 			}
@@ -135,9 +141,5 @@
 </script>
 
 <canvas id="diseasesChart"></canvas>
-
-<button on:click="{getResponse}"> getResponse </button>
-
-<button on:click="{anamneseOut}"> testOut </button>
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
