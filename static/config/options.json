@@ -314,12 +314,5 @@
     ]
   },
   "backends": {
-    "blazes": [
-      {
-        "name": "DKTK",
-        "backendMeasures": "define InInitialPopulation:\n",
-        "url": "http://localhost:8082/fhir"
-      }
-    ]
   }
 }

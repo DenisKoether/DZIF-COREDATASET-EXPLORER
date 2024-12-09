@@ -2,6 +2,8 @@ import type { MeasureItem, Measure, AstTopLayer, Site, MeasureGroup } from '@sam
 
 import { buildLibrary, buildMeasure } from './cql-measure';
 import { translateAstToCql } from './ast-to-cql-translator';
+import { Blaze } from './blaze';
+
 
 export const requestBackend = (
 	ast: AstTopLayer,
@@ -41,7 +43,7 @@ export const requestBackend = (
 	// if (import.meta.env.VITE_TARGET_ENVIRONMENT === "production") {
 	//     backendUrl = "https://locator-dev.bbmri-eric.eu/backend";
 	// } else if (import.meta.env.VITE_TARGET_ENVIRONMENT === "staging") {
-	backendUrl = 'https://locator-dev.bbmri-eric.eu/backend/';
+	backendUrl = 'http://localhost:8082/fhir';
 	console.debug(backendUrl)
 	// } else {
 	//     backendUrl = "http://localhost:8055";
@@ -71,21 +73,17 @@ export const requestBackend = (
 	//     "wuerzburg",
 	// ]);
 
-	/*
-    const backend = new Spot(new URL(backendUrl), [
-        "uppsala-test",
-        "eric-test",
-        "prague-uhkt-test",
-    ], queryId);
+
+    const backend = new Blaze(new URL(backendUrl), "DKTK", "");
 
 
 
 
 
     backend.send(
-        btoa(decodeURI(JSON.stringify(query))),
+        cql,
         updateResponse,
         abortController,
+			measures
     );
-    */
 };

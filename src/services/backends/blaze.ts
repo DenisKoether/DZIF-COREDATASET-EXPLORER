@@ -1,6 +1,6 @@
 import type { ResponseStore } from "@samply/lens";
 import type { Site } from "@samply/lens";
-import type { MeasureStore } from "@samply/lens";
+//import type { MeasureStore } from "@samply/lens";
 //import { buildLibrary, buildMeasure } from "@samply/lens";
 
 import { v4 as uuidv4 } from "uuid";
