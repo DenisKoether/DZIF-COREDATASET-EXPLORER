@@ -20,11 +20,6 @@
 		anamneseOut();
 	});
 
-	const getResponse = (): void => {
-		console.log('getResponse()', dataPasser.getResponseAPI());
-		//let data = dataPasser.getResponseAPI();
-	};
-
 	const anamneseOut = () => {
 		chartData = [];
 

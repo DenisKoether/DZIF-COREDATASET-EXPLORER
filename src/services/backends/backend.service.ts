@@ -14,7 +14,6 @@ export const requestBackend = (
 		(measureItem: MeasureItem) => measureItem.measure
 	);
 
-	const queryId = crypto.randomUUID();
 	let query = {};
 
 	const cql = translateAstToCql(
@@ -31,6 +30,8 @@ export const requestBackend = (
 	const measure = buildMeasure(library.url, measures);
 	query = { lang: 'cql', lib: library, measure: measure };
 
+	console.debug(query)
+
 	let backendUrl: string = '';
 
 	/**
@@ -41,6 +42,7 @@ export const requestBackend = (
 	//     backendUrl = "https://locator-dev.bbmri-eric.eu/backend";
 	// } else if (import.meta.env.VITE_TARGET_ENVIRONMENT === "staging") {
 	backendUrl = 'https://locator-dev.bbmri-eric.eu/backend/';
+	console.debug(backendUrl)
 	// } else {
 	//     backendUrl = "http://localhost:8055";
 	// }

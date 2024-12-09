@@ -110,7 +110,6 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 			console.log(myCriterion.type);
 			switch (myCriterion.type) {
 				case 'storageTemperature':
-				//neu
 				case 'gender':
 				case 'AFFILIATION_TTU_TI':
 				case 'AFFILATION_STUDY':
@@ -193,37 +192,7 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'BIOSAMPLE_AMOUNT':
 				case 'BIOSAMPLE_AMOUNT_UNIT':
 				case 'BIO_SAMPLING_DATE':
-				case 'INFECTION_ACUTE':
-
-				//
-				case 'BBMRI_gender':
-				case 'histology':
-				case 'conditionValue':
-				case 'BBMRI_conditionValue':
-				case 'BBMRI_conditionSampleDiagnosis':
-				case 'conditionSampleDiagnosis':
-				case 'conditionBodySite':
-				case 'conditionLocalization':
-				case 'observation':
-				case 'uiccstadium':
-				case 'observationMetastasis':
-				case 'observationMetastasisBodySite':
-				case 'procedure':
-				case 'procedureResidualstatus':
-				case 'medicationStatement':
-				case 'specimen':
-				case 'BBMRI_specimen':
-				case 'BBMRI_hasSpecimen':
-				case 'hasSpecimen':
-				case 'Organization':
-				case 'observationMolecularMarkerName':
-				case 'observationMolecularMarkerAminoacidchange':
-				case 'observationMolecularMarkerDNAchange':
-				case 'observationMolecularMarkerSeqRefNCBI':
-				case 'observationMolecularMarkerEnsemblID':
-				case 'department':
-				case 'TNMp':
-				case 'TNMc': {
+				case 'INFECTION_ACUTE': {
 					console.log('test');
 					if (typeof criterion.value === 'string') {
 						// TODO: Check if we really need to do this or we can somehow tell cql to do that expansion it self

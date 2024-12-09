@@ -1,5 +1,4 @@
 <script lang="ts">
-	import CustomChart from './charts/CustomChart.svelte';
 	import DiseasesChart from './charts/DiseasesChart.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
@@ -104,23 +103,8 @@
 						>Diagramme repräsentieren nicht mehr die aktuelle Suche!</lens-search-modified-display
 					>
 				</div>
-				<div class="chart-wrapper result-table">
-					<lens-result-table pageSize="10">
-						<div slot="above-pagination" class="result-table-hint-text">
-							* Umfasst Gewebe- und flüssige Proben. Die Anzahl der FFPE-Proben
-							(Schätzung) entspricht der Zahl der Diagnosen.
-						</div>
-					</lens-result-table>
-				</div>
 				<div class="chart-wrapper chart-sites">
 					<SitesChart></SitesChart>
-				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChart></DiseasesChart>
-				</div>
-				<div class="chart-wrapper chart-alter">
-					<lens-chart title="Alter bei Aufnahme" catalogueGroupCode="age" chartType="bar">
-					</lens-chart>
 				</div>
 				<div class="chart-wrapper chart-gender">
 					<lens-chart
@@ -131,6 +115,14 @@
 						headers="{genderHeaders}"
 					></lens-chart>
 				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChart></DiseasesChart>
+				</div>
+				<div class="chart-wrapper chart-alter">
+					<lens-chart title="Alter bei Aufnahme" catalogueGroupCode="age" chartType="bar">
+					</lens-chart>
+				</div>
+
 				<div class="chart-wrapper chart-samples">
 					<lens-chart
 						title="Proben"

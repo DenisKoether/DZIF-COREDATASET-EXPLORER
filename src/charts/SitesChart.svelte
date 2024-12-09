@@ -5,10 +5,6 @@
 
 	let dataPasser: LensDataPasser;
 
-	const getResponse = (): void => {
-		console.log('getResponse()', dataPasser.getResponseAPI());
-	};
-
 	interface ChartDataItem {
 		answer: string;
 		count: number;
