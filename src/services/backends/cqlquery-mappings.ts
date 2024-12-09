@@ -72,7 +72,7 @@ export const cqltemplate = new Map<string, string>([
 		"exists from [Specimen] S where (S.extension.where(url='https://fhir.bbmri.de/StructureDefinition/StorageTemperature').value.coding contains Code '{{C}}' from {{A1}})"
 	],
 	//neu
-	['AFFILIATION_TTU_TI', "exists from [Observation] O where (O.code.coding.code.where(system='http://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI') contains '{{C}}')"],
+	['AFFILIATION_TTU_TI', "exists from [Observation] O where (O.code.coding.where(system='http://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code contains '{{C}}')"],
 	['AFFILATION_STUDY', "exists from [Observation: Code '{{C}}']"],
 	['ORG_UNIT', "exists from [Observation: Code '{{C}}']"],
 	['CONSENT_GENERAL', "exists from [Observation: Code '{{C}}']"],
