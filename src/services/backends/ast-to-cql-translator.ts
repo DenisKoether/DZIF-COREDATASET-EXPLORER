@@ -117,23 +117,17 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'CONSENT_GENERAL':
 				case 'CONSENT_SIGN':
 				case 'CONSENT_RESTRICTION':
-				case 'CONSENT_SIGNDATE':
-				case 'CONSENT_VERSDATE':
 				case 'WITHDRAWAL':
-				case 'WITHDRAWAL_DATE':
 				case 'PARTICIPANT_TYPE':
 				case 'INCLUSION_REASON':
 				case 'STUDY_ENDPOINT':
-				case 'DATE_OF_DEATH':
 				case 'AGE_AT_INCLUSION':
 				case 'SEX':
 				case 'SEX_OTHER':
-				case 'VISIT_START':
 				case 'VISIT_TYPE':
 				case 'VISIT_TYPE_OTHER':
 				case 'VISIT_TYPE_NUMBER':
 				case 'VISIT_TYPE_UNIT':
-				case 'TRANSPLANTATION_EXDATE':
 				case 'TRANSPLANTATION':
 				case 'TRANSPLANTATION_AMOUNT_OF_TRANSPLANS':
 				case 'TRANSPLANTATION_ORGAN':
@@ -267,6 +261,12 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 					break;
 				}
 				case 'samplingDate':
+				case 'CONSENT_SIGNDATE':
+				case 'CONSENT_VERSDATE':
+				case 'WITHDRAWAL_DATE':
+				case 'DATE_OF_DEATH':
+				case 'VISIT_START':
+				case 'TRANSPLANTATION_EXDATE':
 				case 'conditionRangeDate': {
 					if (
 						!(

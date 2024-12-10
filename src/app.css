@@ -233,7 +233,11 @@ header h1 {
   grid-column: span 2;
 }
 
-.chart-samples {
+.chart-samples-liquid {
+  grid-column: span 4;
+}
+
+.chart-samples-tissue {
   grid-column: span 2;
 }
 

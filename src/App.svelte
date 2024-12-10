@@ -81,6 +81,7 @@
 				<lens-search-button title="Suchen"></lens-search-button>
 			</div>
 		</div>
+
 		<div class="grid">
 			<div class="catalogue-wrapper">
 				<div class="catalogue">
@@ -96,6 +97,7 @@
 					></lens-catalogue>
 				</div>
 			</div>
+
 			<div class="charts">
 				<div class="chart-wrapper result-summary">
 					<lens-result-summary></lens-result-summary>
@@ -103,9 +105,11 @@
 						>Diagramme repräsentieren nicht mehr die aktuelle Suche!</lens-search-modified-display
 					>
 				</div>
+
 				<div class="chart-wrapper chart-sites">
 					<SitesChart></SitesChart>
 				</div>
+
 				<div class="chart-wrapper chart-gender">
 					<lens-chart
 						title="Geschlecht"
@@ -115,23 +119,42 @@
 						headers="{genderHeaders}"
 					></lens-chart>
 				</div>
+
 				<div class="chart-wrapper chart-diseases">
 					<DiseasesChart></DiseasesChart>
 				</div>
+
 				<div class="chart-wrapper chart-alter">
-					<lens-chart title="Alter bei Aufnahme" catalogueGroupCode="age" chartType="bar">
+					<lens-chart
+						title="Alter bei Aufnahme"
+						catalogueGroupCode="age"
+						chartType="bar"
+						groupRange="{10}"
+						filterRegex="^(1*[12]*[0-9])"
+						xAxisTitle="Alter"
+						yAxisTitle="Anzahl der Patienten">
 					</lens-chart>
 				</div>
 
-				<div class="chart-wrapper chart-samples">
+				<div class="chart-wrapper chart-samples-liquid">
 					<lens-chart
-						title="Proben"
+						title="Proben LIQUID"
 						catalogueGroupCode="sample_kind"
-						chartType="pie"
-						displayLegends="{true}"
-					>
+						chartType="bar"
+						filterRegex="^[LIQUID|X].*"
+						displayLegends="{false}">
 					</lens-chart>
 				</div>
+				<div class="chart-wrapper chart-samples-tissue">
+					<lens-chart
+						title="Proben Tissue"
+						catalogueGroupCode="sample_kind"
+						chartType="bar"
+						filterRegex="^[TISSUE].*"
+						displayLegends="{false}">
+					</lens-chart>
+				</div>
+
 				<div class="chart-wrapper chart-study">
 					<lens-chart
 						title="Studie"
@@ -143,6 +166,7 @@
 					>
 					</lens-chart>
 				</div>
+
 				<div class="chart-wrapper chart-smoker">
 					<lens-chart
 						title="Raucher"
@@ -152,6 +176,7 @@
 					>
 					</lens-chart>
 				</div>
+
 				<div class="chart-wrapper chart-diabetes">
 					<lens-chart
 						title="Diabetes"
@@ -161,7 +186,7 @@
 					>
 					</lens-chart>
 				</div>
-
+				<!--
 				<div class="chart-wrapper chart-krankheiten">
 					<lens-chart
 						title="Krankheiten"
@@ -169,10 +194,10 @@
 						chartType="bar"
 						xAxisTitle="Krankheit"
 						yAxisTitle="Anzahl"
-						displayLegends="{false}"
-					>
+						displayLegends="{false}">
 					</lens-chart>
 				</div>
+				-->
 			</div>
 		</div>
 	</main>

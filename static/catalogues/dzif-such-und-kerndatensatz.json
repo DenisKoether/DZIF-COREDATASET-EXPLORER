@@ -355,12 +355,15 @@
 					},
 					{
 						"key": "CONSENT_SIGNDATE",
-						"name": "Date of declaration of consent(TODO)",
-						"fieldType": "date"
+						"name": "Date of declaration of consent",
+						"fieldType": "date",
+                		"type": "BETWEEN"
 					},
 					{
 						"key": "CONSENT_VERSDATE",
-						"name": "Version date of signed declaration of consent(TODO)"
+						"name": "Version date of signed declaration of consent",
+						"fieldType": "date",
+                		"type": "BETWEEN"
 					},
 					{
 						"key": "WITHDRAWAL",
@@ -388,7 +391,9 @@
 					},
 					{
 						"key": "WITHDRAWAL_DATE",
-						"name": "Date of withdrawal(TODO)"
+						"name": "Date of withdrawal",
+						"fieldType": "date",
+                		"type": "BETWEEN"
 					}
 				]
 			},
@@ -466,7 +471,9 @@
 			},
 			{
 				"key": "DATE_OF_DEATH",
-				"name": "Todeszeitpunkt(TODO)"
+				"name": "Todeszeitpunkt",
+				"fieldType": "date",
+				"type": "BETWEEN"
 			},
 			{
 				"key": "AGE_AT_INCLUSION",
@@ -474,12 +481,19 @@
 				"childCategories": [
 					{
 						"key": "AGE_AT_INCLUSION",
-						"name": "Age at inclusion(TODO: INT?)"
+						"name": "Age at inclusion(TODO: INT?)",
+						"fieldType": "number",
+                		"type": "BETWEEN",
+                		"min": 0,
+               	 		"max": 100
 					},
 					{
 						"key": "AGE_AT_INCLUSION_UNIT",
-						"name": "Unit of age at inclusion(TODO: Jahr)"
-					}
+						"name": "Unit of age at inclusion(TODO: Jahr)",
+						"fieldType": "number",
+                		"type": "BETWEEN",
+                		"min": 0,
+                		"max": 50					}
 				]
 			},
 			{
@@ -545,7 +559,9 @@
 		"childCategories": [
 			{
 				"key": "VISIT_START",
-				"name": "Visitenbeginn(TODO: Date)"
+				"name": "Visitenbeginn",
+				"fieldType": "date",
+				"type": "BETWEEN"
 			},
 			{
 				"key": "VISIT_TYPE",
@@ -567,7 +583,7 @@
 							},
 							{
 								"key": "RV",
-								"name": "Regular visit  (Akutphase)"
+								"name": "Regular visit (Akutphase)"
 							},
 							{
 								"key": "EOT",
@@ -593,7 +609,11 @@
 					},
 					{
 						"key": "VISIT_TYPE_NUMBER",
-						"name": "Type of visit: Number(TODO: Decimal)"
+						"name": "Type of visit: Number(TODO: Decimal)",
+						"fieldType": "number",
+                		"type": "BETWEEN",
+                		"min": 0,
+                		"max": 50
 					},
 					{
 						"key": "VISIT_TYPE_UNIT",
@@ -633,11 +653,13 @@
 		"childCategories": [
 			{
 				"key": "TRANSPLANTATION_EXDATE",
-				"name": "Untersuchungsdatum(TODO: Date"
+				"name": "Untersuchungsdatum(TODO: Date",
+				"fieldType": "date",
+				"type": "BETWEEN"
 			},
 			{
 				"key": "TRANSPLANTATION",
-				"name": "Transplantation[Ja/Nein]",
+				"name": "Transplantation",
 				"fieldType": "single-select",
 				"type": "EQUALS",
 				"criteria": [
@@ -648,16 +670,16 @@
 					{
 						"key": "N",
 						"name": "Nein"
-					},
-					{
-						"key": "X",
-						"name": "Keine Information verfügbar"
 					}
 				]
 			},
 			{
 				"key": "TRANSPLANTATION_AMOUNT_OF_TRANSPLANS",
-				"name": "Anzahl Transplantationen(TODO: INT)"
+				"name": "Anzahl Transplantationen",
+				"fieldType": "number",
+                "type": "BETWEEN",
+                "min": 0,
+                "max": 50
 			}
 		]
 	},
@@ -773,11 +795,19 @@
 			},
 			{
 				"key": "WEIGHT",
-				"name": "Anthropometrie: Gewicht(TODO: FLoat)"
+				"name": "Anthropometrie: Gewicht(TODO: FLoat)",
+				"fieldType": "number",
+                "type": "BETWEEN",
+                "min": 0,
+                "max": 50
 			},
 			{
 				"key": "HEIGHT",
-				"name": "Anthropometrie: Größe(TODO: INT)"
+				"name": "Anthropometrie: Größe(TODO: INT)",
+				"fieldType": "number",
+                "type": "BETWEEN",
+                "min": 0,
+                "max": 50
 			},
 			{
 				"key": "CARDVASC",
@@ -1435,11 +1465,19 @@
 		"childCategories": [
 			{
 				"key": "VITAL_RR",
-				"name": "Atemfrequenz(TODO: Decimal)"
+				"name": "Atemfrequenz(TODO: Decimal)",
+				"fieldType": "number",
+                "type": "BETWEEN",
+                "min": 0,
+                "max": 50
 			},
 			{
 				"key": "VITAL_TEMP",
-				"name": "Körpertemperatur(TODO: Decimal)"
+				"name": "Körpertemperatur(TODO: Decimal)",
+				"fieldType": "number",
+                "type": "BETWEEN",
+                "min": 0,
+                "max": 50
 			}
 		]
 	},
@@ -1869,7 +1907,7 @@
 					},
 					{
 						"key": "X",
-						"name": "Probentyp unbekannt/Keine Information verfügbar"
+						"name": "Unbekannt"
 					},
 					{
 						"key": "LIQUID_TBS",
@@ -1915,7 +1953,11 @@
 				"childCategories": [
 					{
 						"key": "BIOSAMPLE_AMOUNT",
-						"name": "Menge(TODO: Float)"
+						"name": "Menge(TODO: Float)",
+						"fieldType": "number",
+                		"type": "BETWEEN",
+                		"min": 0,
+                		"max": 50
 					},
 					{
 						"key": "BIOSAMPLE_AMOUNT_UNIT",

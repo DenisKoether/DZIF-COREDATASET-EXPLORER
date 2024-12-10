@@ -407,11 +407,11 @@ define Study:
 if InInitialPopulation then [Observation] else {} as List<Observation>
 
 define function StudyOut(study FHIR.Observation):
-study.code.coding.where(system = 'http://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code.first()
+study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code.first()
 
 define function OrgOut(study FHIR.Observation):
-study.code.coding.where(system = 'http://dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT').code.first() 
-+ '#' + study.code.coding.where(system = 'http://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code.first() 
-+ '#' + study.code.coding.where(system = 'http://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY').code.first()
+study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT').code.first() 
++ '#' + study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code.first() 
++ '#' + study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY').code.first()
 `
 };
