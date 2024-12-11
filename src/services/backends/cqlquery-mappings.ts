@@ -9,12 +9,12 @@ export const alias = new Map<string, string>([
 ]);
 
 export const cqltemplate = new Map<string, string>([
-	['gender', 'Patient.gender = \'{{C}}\''],
+	['gender', "Patient.gender = '{{C}}'"],
 	[
 		'conditionSampleDiagnosis',
-		'((exists[Condition: Code \'{{C}}\' from {{A1}}]) or (exists[Condition: Code \'{{C}}\' from {{A2}}])) or (exists from [Specimen] S where (S.extension.where(url=\'https://fhir.bbmri.de/StructureDefinition/SampleDiagnosis\').value.coding.code contains \'{{C}}\'))'
+		"((exists[Condition: Code '{{C}}' from {{A1}}]) or (exists[Condition: Code '{{C}}' from {{A2}}])) or (exists from [Specimen] S where (S.extension.where(url='https://fhir.bbmri.de/StructureDefinition/SampleDiagnosis').value.coding.code contains '{{C}}'))"
 	],
-	['conditionValue', 'exists [Condition: Code \'{{C}}\' from {{A1}}]'],
+	['conditionValue', "exists [Condition: Code '{{C}}' from {{A1}}]"],
 	[
 		'conditionRangeDate',
 		'exists from [Condition] C\nwhere FHIRHelpers.ToDateTime(C.onset) between {{D1}} and {{D2}}'
@@ -30,26 +30,26 @@ export const cqltemplate = new Map<string, string>([
 	['age', 'AgeInYears() between Ceiling({{D1}}) and Ceiling({{D2}})'],
 	[
 		'observation',
-		'exists from [Observation: Code \'{{K}}\' from {{A1}}] O\nwhere O.value.coding.code contains \'{{C}}\''
+		"exists from [Observation: Code '{{K}}' from {{A1}}] O\nwhere O.value.coding.code contains '{{C}}'"
 	],
 	[
 		'observationRange',
-		'exists from [Observation: Code \'{{K}}\' from {{A1}}] O\nwhere O.value between {{D1}} and {{D2}}'
+		"exists from [Observation: Code '{{K}}' from {{A1}}] O\nwhere O.value between {{D1}} and {{D2}}"
 	],
 	[
 		'observationBodyWeight',
-		'exists from [Observation: Code \'{{K}}\' from {{A1}}] O\nwhere ((O.value as Quantity) < {{D1}} \'kg\' and (O.value as Quantity) > {{D2}} \'kg\')'
+		"exists from [Observation: Code '{{K}}' from {{A1}}] O\nwhere ((O.value as Quantity) < {{D1}} 'kg' and (O.value as Quantity) > {{D2}} 'kg')"
 	],
 	[
 		'observationBMI',
-		'exists from [Observation: Code \'{{K}}\' from {{A1}}] O\nwhere ((O.value as Quantity) < {{D1}} \'kg/m2\' and (O.value as Quantity) > {{D2}} \'kg/m2\')'
+		"exists from [Observation: Code '{{K}}' from {{A1}}] O\nwhere ((O.value as Quantity) < {{D1}} 'kg/m2' and (O.value as Quantity) > {{D2}} 'kg/m2')"
 	],
 	['hasSpecimen', 'exists [Specimen]'],
-	['specimen', 'exists [Specimen: Code \'{{C}}\' from {{A1}}]'],
-	['retrieveSpecimenByType', '(S.type.coding.code contains \'{{C}}\')'],
+	['specimen', "exists [Specimen: Code '{{C}}' from {{A1}}]"],
+	['retrieveSpecimenByType', "(S.type.coding.code contains '{{C}}')"],
 	[
 		'retrieveSpecimenByTemperature',
-		'(S.extension.where(url=\'https://fhir.bbmri.de/StructureDefinition/StorageTemperature\').value.coding.code contains \'{{C}}\')'
+		"(S.extension.where(url='https://fhir.bbmri.de/StructureDefinition/StorageTemperature').value.coding.code contains '{{C}}')"
 	],
 	[
 		'retrieveSpecimenBySamplingDate',
@@ -57,7 +57,7 @@ export const cqltemplate = new Map<string, string>([
 	],
 	[
 		'retrieveSpecimenByFastingStatus',
-		'(S.collection.fastingStatus.coding.code contains \'{{C}}\')'
+		"(S.collection.fastingStatus.coding.code contains '{{C}}')"
 	],
 	[
 		'samplingDate',
@@ -65,108 +65,354 @@ export const cqltemplate = new Map<string, string>([
 	],
 	[
 		'fastingStatus',
-		'exists from [Specimen] S\nwhere S.collection.fastingStatus.coding.code contains \'{{C}}\''
+		"exists from [Specimen] S\nwhere S.collection.fastingStatus.coding.code contains '{{C}}'"
 	],
 	[
 		'storageTemperature',
-		'exists from [Specimen] S where (S.extension.where(url=\'https://fhir.bbmri.de/StructureDefinition/StorageTemperature\').value.coding contains Code \'{{C}}\' from {{A1}})'
+		"exists from [Specimen] S where (S.extension.where(url='https://fhir.bbmri.de/StructureDefinition/StorageTemperature').value.coding contains Code '{{C}}' from {{A1}})"
 	],
 	//neu
 	//Studie works
-	['AFFILIATION_TTU_TI', 'exists from [Observation] O where (O.code.coding.where(system=\'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI\').code contains \'{{C}}\')'],
-	['AFFILATION_STUDY', 'exists from [Observation] O where (O.code.coding.where(system=\'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY\').code contains \'{{C}}\')'],
-	['ORG_UNIT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT\').code contains \'{{C}}\')'],
-	['CONSENT_GENERAL', 'exists from [Observation] O where (O.code.coding.where(system=\'https://dzif.ti-bbd.de/Observation/CONSENT/CONSENT_GENERAL\').code contains \'{{C}}\')'],
+	[
+		'AFFILIATION_TTU_TI',
+		"exists from [Observation] O where (O.code.coding.where(system='https://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code contains '{{C}}')"
+	],
+	[
+		'AFFILATION_STUDY',
+		"exists from [Observation] O where (O.code.coding.where(system='https://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY').code contains '{{C}}')"
+	],
+	[
+		'ORG_UNIT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT').code contains '{{C}}')"
+	],
+	[
+		'CONSENT_GENERAL',
+		"exists from [Observation] O where (O.code.coding.where(system='https://dzif.ti-bbd.de/Observation/CONSENT/CONSENT_GENERAL').code contains '{{C}}')"
+	],
 	//Person works
-	['CONSENT_SIGN', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/CONSENT\').value contains \'{{C}}\')'],
-	['CONSENT_RESTRICTION', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/CONSENT_RESTRICTION\').value contains \'{{C}}\')'],
-	['CONSENT_SIGNDATE', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/CONSENT_SIGNDATE\').value between {{D1}} and {{D2}})'],
-	['CONSENT_VERSDATE', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/CONSENT_VERSDATE\').value between {{D1}} and {{D2}})'],
-	['WITHDRAWAL', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL\').value contains \'{{C}}\')'],
-	['WITHDRAWAL_DATE', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL_DATE\').value between {{D1}} and {{D2}})'],
-	['PARTICIPANT_TYPE', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/PARTICIPANT_TYPE\').value contains \'{{C}}\')'],
-	['INCLUSION_REASON', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/INCLUSION_REASON\').value contains \'{{C}}\')'],
-	['STUDY_ENDPOINT', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/STUDY_ENDPOINT\').value contains \'{{C}}\')'],
-	['DATE_OF_DEATH', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/DATE_OF_DEATH\').value between {{D1}} and {{D2}})'],
-	['AGE_AT_INCLUSION', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION\').value contains \'{{C}}\')'],
-	['SEX', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/SEX\').value contains \'{{C}}\')'],
-	['SEX_OTHER', 'exists from [Patient] P where (P.extension.where(url=\'https://fhir.dzif.ti-bbd.de/consent/SEX_OTHER\').value contains \'{{C}}\')'],
+	[
+		'CONSENT_SIGN',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/CONSENT').value contains '{{C}}')"
+	],
+	[
+		'CONSENT_RESTRICTION',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/CONSENT_RESTRICTION').value contains '{{C}}')"
+	],
+	[
+		'CONSENT_SIGNDATE',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/CONSENT_SIGNDATE').value between {{D1}} and {{D2}})"
+	],
+	[
+		'CONSENT_VERSDATE',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/CONSENT_VERSDATE').value between {{D1}} and {{D2}})"
+	],
+	[
+		'WITHDRAWAL',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL').value contains '{{C}}')"
+	],
+	[
+		'WITHDRAWAL_DATE',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL_DATE').value between {{D1}} and {{D2}})"
+	],
+	[
+		'PARTICIPANT_TYPE',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/PARTICIPANT_TYPE').value contains '{{C}}')"
+	],
+	[
+		'INCLUSION_REASON',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/INCLUSION_REASON').value contains '{{C}}')"
+	],
+	[
+		'STUDY_ENDPOINT',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/STUDY_ENDPOINT').value contains '{{C}}')"
+	],
+	[
+		'DATE_OF_DEATH',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/DATE_OF_DEATH').value between {{D1}} and {{D2}})"
+	],
+	[
+		'AGE_AT_INCLUSION',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION').value contains '{{C}}')"
+	],
+	[
+		'SEX',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/SEX').value contains '{{C}}')"
+	],
+	[
+		'SEX_OTHER',
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/SEX_OTHER').value contains '{{C}}')"
+	],
 	// works
-	['VISIT_START', 'exists from [Observation] O where (O.extension.where(url=\'https://dzif.ti-bbd.de/Observation/VISITE/VISIT_START\').value between {{D1}} and {{D2}})'],
-	['VISIT_TYPE', 'exists from [Observation] O where (O.extension.where(url=\'https://dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE\').value contains \'{{C}}\')'],
-	['VISIT_TYPE_OTHER', 'exists from [Observation] O where (O.extension.where(url=\'https://dzif.ti-bbd.de/Observation/CONSENT/VISIT_TYPE_OTHER\').value contains \'{{C}}\')'],
-	['VISIT_TYPE_NUMBER', 'exists from [Observation] O where (O.extension.where(url=\'https://dzif.ti-bbd.de/Observation/CONSENT/VISIT_TYPE_NUMBER\').value contains \'{{C}}\')'],
-	['VISIT_TYPE_UNIT', 'exists from [Observation] O where (O.extension.where(url=\'https://dzif.ti-bbd.de/Observation/CONSENT/VISIT_TYPE_UNIT\').value contains \'{{C}}\')'],
+	[
+		'VISIT_START',
+		"exists from [Observation] O where (O.extension.where(url='https://dzif.ti-bbd.de/Observation/VISITE/VISIT_START').value between {{D1}} and {{D2}})"
+	],
+	[
+		'VISIT_TYPE',
+		"exists from [Observation] O where (O.extension.where(url='https://dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE').value contains '{{C}}')"
+	],
+	[
+		'VISIT_TYPE_OTHER',
+		"exists from [Observation] O where (O.extension.where(url='https://dzif.ti-bbd.de/Observation/CONSENT/VISIT_TYPE_OTHER').value contains '{{C}}')"
+	],
+	[
+		'VISIT_TYPE_NUMBER',
+		"exists from [Observation] O where (O.extension.where(url='https://dzif.ti-bbd.de/Observation/CONSENT/VISIT_TYPE_NUMBER').value contains '{{C}}')"
+	],
+	[
+		'VISIT_TYPE_UNIT',
+		"exists from [Observation] O where (O.extension.where(url='https://dzif.ti-bbd.de/Observation/CONSENT/VISIT_TYPE_UNIT').value contains '{{C}}')"
+	],
 
 	//ORGAN_TRANSPLANT_GENERAL works
-	['TRANSPLANTATION_EXDATE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_EXDATE\').code between {{D1}} and {{D2}})'],
-	['TRANSPLANTATION', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION\').code contains \'{{C}}\')'],
-	['TRANSPLANTATION_AMOUNT_OF_TRANSPLANS', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_AMOUNT_OF_TRANSPLANS\').code contains \'{{C}}\')'],
+	[
+		'TRANSPLANTATION_EXDATE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_EXDATE').code between {{D1}} and {{D2}})"
+	],
+	[
+		'TRANSPLANTATION',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION').code contains '{{C}}')"
+	],
+	[
+		'TRANSPLANTATION_AMOUNT_OF_TRANSPLANS',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_AMOUNT_OF_TRANSPLANS').code contains '{{C}}')"
+	],
 	// works
-	['TRANSPLANTATION_ORGAN', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN\').code contains \'{{C}}\')'],
+	[
+		'TRANSPLANTATION_ORGAN',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN').code contains '{{C}}')"
+	],
 	//Anamnese works
-	['SMOKING_STATUS', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/smoker\').code contains \'{{C}}\')'],
-	['WEIGHT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/weight\').code contains \'{{C}}\')'],
-	['HEIGHT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/height\').code contains \'{{C}}\')'],
-	['CARDVASC_HT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-HT\').code contains \'{{C}}\')'],
-	['CARDVASC_HT_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC_HT_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['CARDVASC_CHD', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-CHD\').code contains \'{{C}}\')'],
-	['CARDVASC_CHD_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC_CHD_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['CARDVASC', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC\').code contains \'{{C}}\')'],
-	['CHR_LUNG', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LUNG\').code contains \'{{C}}\')'],
-	['CHR_LUNG_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LUNG_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['CHR_KIDNEYD', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_KIDNEYD\').code contains \'{{C}}\')'],
-	['CHR_LIVERDIS', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LIVERDIS\').code contains \'{{C}}\')'],
-	['RHEU_IMMU', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/RHEU_IMMU\').code contains \'{{C}}\')'],
-	['CHR_MYOBAKT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_MYOBAKT\').code contains \'{{C}}\')'],
-	['CHR_MYOBAKT_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_MYOBAKT_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['MALARIA', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/MALARIA\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_HIV', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HIV\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_HIV_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HIV_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_HBV', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HBV\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_HBV_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HBV_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_HCV', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HCV\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_HCV_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HCV_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_OTHER', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_OTHER_INFO', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER_INFO\').code contains \'{{C}}\')'],
-	['CHR_VIRUS_OTHER_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['NEURO', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO\').code contains \'{{C}}\')'],
-	['NEURO_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['DIABETES', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES\').code contains \'{{C}}\')'],
-	['DIABETES_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES_DIAG_YEAR\').code contains \'{{C}}\')'],
-	['TUMOR_ACTIVE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_ACTIVE\').code contains \'{{C}}\')'],
-	['TUMOR_MORPHOLOGY', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_MORPHOLOGY\').code contains \'{{C}}\')'],
-	['TUMOR_DIAG_YEAR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_DIAG_YEAR\').code contains \'{{C}}\')'],
+	[
+		'SMOKING_STATUS',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/smoker').code contains '{{C}}')"
+	],
+	[
+		'WEIGHT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/weight').code contains '{{C}}')"
+	],
+	[
+		'HEIGHT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/height').code contains '{{C}}')"
+	],
+	[
+		'CARDVASC_HT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-HT').code contains '{{C}}')"
+	],
+	[
+		'CARDVASC_HT_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC_HT_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'CARDVASC_CHD',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-CHD').code contains '{{C}}')"
+	],
+	[
+		'CARDVASC_CHD_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC_CHD_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'CARDVASC',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC').code contains '{{C}}')"
+	],
+	[
+		'CHR_LUNG',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LUNG').code contains '{{C}}')"
+	],
+	[
+		'CHR_LUNG_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LUNG_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'CHR_KIDNEYD',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_KIDNEYD').code contains '{{C}}')"
+	],
+	[
+		'CHR_LIVERDIS',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LIVERDIS').code contains '{{C}}')"
+	],
+	[
+		'RHEU_IMMU',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/RHEU_IMMU').code contains '{{C}}')"
+	],
+	[
+		'CHR_MYOBAKT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_MYOBAKT').code contains '{{C}}')"
+	],
+	[
+		'CHR_MYOBAKT_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_MYOBAKT_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'MALARIA',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/MALARIA').code contains '{{C}}')"
+	],
+	[
+		'CHR_VIRUS_HIV',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HIV').code contains '{{C}}')"
+	],
+	[
+		'CHR_VIRUS_HIV_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HIV_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'CHR_VIRUS_HBV',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HBV').code contains '{{C}}')"
+	],
+	[
+		'CHR_VIRUS_HBV_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HBV_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'CHR_VIRUS_HCV',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HCV').code contains '{{C}}')"
+	],
+	[
+		'CHR_VIRUS_HCV_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HCV_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'CHR_VIRUS_OTHER',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER').code contains '{{C}}')"
+	],
+	[
+		'CHR_VIRUS_OTHER_INFO',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER_INFO').code contains '{{C}}')"
+	],
+	[
+		'CHR_VIRUS_OTHER_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'NEURO',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO').code contains '{{C}}')"
+	],
+	[
+		'NEURO_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'DIABETES',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES').code contains '{{C}}')"
+	],
+	[
+		'DIABETES_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
+	[
+		'TUMOR_ACTIVE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_ACTIVE').code contains '{{C}}')"
+	],
+	[
+		'TUMOR_MORPHOLOGY',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_MORPHOLOGY').code contains '{{C}}')"
+	],
+	[
+		'TUMOR_DIAG_YEAR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_DIAG_YEAR').code between {{D1}} and {{D2}})"
+	],
 	//Klinisch works
-	['CLINICAL_INFECTION', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_INFECTION/CLINICAL_INFECTION\').code contains \'{{C}}\')'],
-	['CLINICAL_INFECTION_DATE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_INFECTION/CLINICAL_INFECTION_DATE\').code contains \'{{C}}\')'],
-	['PTG_CULT_DATE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_INFECTION/PTG_CULT_DATE\').code contains \'{{C}}\')'],
+	[
+		'CLINICAL_INFECTION',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_INFECTION/CLINICAL_INFECTION').code contains '{{C}}')"
+	],
+	[
+		'CLINICAL_INFECTION_DATE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_INFECTION/CLINICAL_INFECTION_DATE').code between {{D1}} and {{D2}})"
+	],
+	[
+		'PTG_CULT_DATE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_INFECTION/PTG_CULT_DATE').code between {{D1}} and {{D2}})"
+	],
 	//Vitalparameter works
-	['VITAL_RR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_RR\').code contains \'{{C}}\')'],
-	['VITAL_TEMP', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_TEMP\').code contains \'{{C}}\')'],
+	[
+		'VITAL_RR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_RR').code contains '{{C}}')"
+	],
+	[
+		'VITAL_TEMP',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_TEMP').code contains '{{C}}')"
+	],
 	//Medikation works
-	['MEDS', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS\').code contains \'{{C}}\')'],
-	['MEDS_IMMUNSUPPR', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_IMMUNSUPPR\').code contains \'{{C}}\')'],
-	['MEDS_CORTISONE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CORTISONE\').code contains \'{{C}}\')'],
-	['MEDS_ANTIHYPERTENSIVES', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHYPERTENSIVES\').code contains \'{{C}}\')'],
-	['MEDS_INSULIN', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_INSULIN\').code contains \'{{C}}\')'],
-	['MEDS_ASTHMA', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ASTHMA\').code contains \'{{C}}\')'],
-	['MEDS_ANTIHISTAMINES', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHISTAMINES\').code contains \'{{C}}\')'],
-	['MEDS_ANTICOAGULANT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTICOAGULANT\').code contains \'{{C}}\')'],
-	['MEDS_CHEMO', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CHEMO\').code contains \'{{C}}\')'],
-	['MEDS_ANTIINFECTIVES', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIINFECTIVES\').code contains \'{{C}}\')'],
+	[
+		'MEDS',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS').code contains '{{C}}')"
+	],
+	[
+		'MEDS_IMMUNSUPPR',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_IMMUNSUPPR').code contains '{{C}}')"
+	],
+	[
+		'MEDS_CORTISONE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CORTISONE').code contains '{{C}}')"
+	],
+	[
+		'MEDS_ANTIHYPERTENSIVES',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHYPERTENSIVES').code contains '{{C}}')"
+	],
+	[
+		'MEDS_INSULIN',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_INSULIN').code contains '{{C}}')"
+	],
+	[
+		'MEDS_ASTHMA',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ASTHMA').code contains '{{C}}')"
+	],
+	[
+		'MEDS_ANTIHISTAMINES',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHISTAMINES').code contains '{{C}}')"
+	],
+	[
+		'MEDS_ANTICOAGULANT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTICOAGULANT').code contains '{{C}}')"
+	],
+	[
+		'MEDS_CHEMO',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CHEMO').code contains '{{C}}')"
+	],
+	[
+		'MEDS_ANTIINFECTIVES',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIINFECTIVES').code contains '{{C}}')"
+	],
 	//Bioprobenentnahme works
-	['BIOSAMPLE_RETRIEVAL', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL\').code contains \'{{C}}\')'],
-	['BIOSAMPLE_RETRIEVAL_DATE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_DATE\').code contains \'{{C}}\')'],
-	['BIOSAMPLE_RETRIEVAL_TIME', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_TIME\').code contains \'{{C}}\')'],
-	['BIOSAMPLE_RETRIEVAL_LOCATION', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/SITE\').code contains \'{{C}}\')'],
+	[
+		'BIOSAMPLE_RETRIEVAL',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL').code contains '{{C}}')"
+	],
+	[
+		'BIOSAMPLE_RETRIEVAL_DATE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_DATE').code between {{D1}} and {{D2}})"
+	],
+	[
+		'BIOSAMPLE_RETRIEVAL_TIME',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_TIME').code contains '{{C}}')"
+	],
+	[
+		'BIOSAMPLE_RETRIEVAL_LOCATION',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/SITE').code contains '{{C}}')"
+	],
 	//Bioproben Testdaten broke
-	['BIOSAMPLE_TYPE', 'exists from [Specimen] S where (S.type.coding.where(system=\'https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE\').code contains \'{{C}}\')'],
-	['BIOSAMPLE_AMOUNT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/BIOSAMPLE/AMOUNT\').code contains \'{{C}}\')'],
-	['BIOSAMPLE_AMOUNT_UNIT', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/BIOSAMPLE/AMOUNT_UNIT\').code contains \'{{C}}\')'],
+	[
+		'BIOSAMPLE_TYPE',
+		"exists from [Specimen] S where (S.type.coding.where(system='https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE').code contains '{{C}}')"
+	],
+	[
+		'BIOSAMPLE_AMOUNT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/BIOSAMPLE/AMOUNT').code contains '{{C}}')"
+	],
+	[
+		'BIOSAMPLE_AMOUNT_UNIT',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/BIOSAMPLE/AMOUNT_UNIT').code contains '{{C}}')"
+	],
 	//Klinisches Labor works
-	['BIO_SAMPLING_DATE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY/BIO_SAMPLING_DATE\').code contains \'{{C}}\')'],
-	['INFECTION_ACUTE', 'exists from [Observation] O where (O.code.coding.where(system=\'https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY/INFECTION_ACUTE\').code contains \'{{C}}\')']
+	[
+		'BIO_SAMPLING_DATE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY/BIO_SAMPLING_DATE').code between {{D1}} and {{D2}})"
+	],
+	[
+		'INFECTION_ACUTE',
+		"exists from [Observation] O where (O.code.coding.where(system='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY/INFECTION_ACUTE').code contains '{{C}}')"
+	]
 ]);
 
 export const criterionMap = new Map<string, { type: string; alias?: string[] }>([
@@ -208,7 +454,10 @@ export const criterionMap = new Map<string, { type: string; alias?: string[] }>(
 	['VISIT_TYPE_UNIT', { type: 'VISIT_TYPE_UNIT' }],
 	['TRANSPLANTATION_EXDATE', { type: 'TRANSPLANTATION_EXDATE' }],
 	['TRANSPLANTATION', { type: 'TRANSPLANTATION' }],
-	['TRANSPLANTATION_AMOUNT_OF_TRANSPLANS', { type: 'TRANSPLANTATION_AMOUNT_OF_TRANSPLANS' }],
+	[
+		'TRANSPLANTATION_AMOUNT_OF_TRANSPLANS',
+		{ type: 'TRANSPLANTATION_AMOUNT_OF_TRANSPLANS' }
+	],
 	['TRANSPLANTATION_ORGAN', { type: 'TRANSPLANTATION_ORGAN' }],
 	['SMOKING_STATUS', { type: 'SMOKING_STATUS' }],
 	['WEIGHT', { type: 'WEIGHT' }],

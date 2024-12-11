@@ -835,7 +835,9 @@
 					},
 					{
 						"key": "CARDVASC_HT_DIAG_YEAR",
-						"name": "Hypertension year of initial medical diagnosis(TODO: Date)"
+						"name": "Hypertension year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					},
 					{
 						"key": "CARDVASC_CHD",
@@ -859,7 +861,9 @@
 					},
 					{
 						"key": "CARDVASC_CHD_DIAG_YEAR",
-						"name": "Coronary Heart Disease year of initial medical diagnosis(TODO: Date)"
+						"name": "Coronary Heart Disease year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					},
 					{
 						"key": "CARDVASC",
@@ -965,7 +969,9 @@
 					},
 					{
 						"key": "CHR_LUNG_DIAG_YEAR",
-						"name": "Year of initial medical diagnosis(TODO: Date)"
+						"name": "Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			},
@@ -1117,7 +1123,9 @@
 					},
 					{
 						"key": "CHR_MYOBAKT_DIAG_YEAR",
-						"name": "Year of initial medical diagnosis(TODO: Date)"
+						"name": "Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			},
@@ -1173,7 +1181,9 @@
 					},
 					{
 						"key": "CHR_VIRUS_HIV_DIAG_YEAR",
-						"name": "Year of initial medical diagnosis(TODO: Date)"
+						"name": "Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					},
 					{
 						"key": "CHR_VIRUS_HBV",
@@ -1197,7 +1207,9 @@
 					},
 					{
 						"key": "CHR_VIRUS_HBV_DIAG_YEAR",
-						"name": "HBV: Year of initial medical diagnosis(TODO: Date)"
+						"name": "HBV: Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					},
 					{
 						"key": "CHR_VIRUS_HCV",
@@ -1221,7 +1233,9 @@
 					},
 					{
 						"key": "CHR_VIRUS_HCV_DIAG_YEAR",
-						"name": "HCV: Year of initial medical diagnosis(TODO: Date)"
+						"name": "HCV: Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					},
 					{
 						"key": "CHR_VIRUS_OTHER",
@@ -1249,7 +1263,9 @@
 					},
 					{
 						"key": "CHR_VIRUS_OTHER_DIAG_YEAR",
-						"name": "Other: Year of initial medical diagnosis(TODO: Date)"
+						"name": "Other: Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			},
@@ -1295,7 +1311,9 @@
 					},
 					{
 						"key": "NEURO_DIAG_YEAR",
-						"name": "Neuro: Year of initial medical diagnosis(TODO: Date)"
+						"name": "Neuro: Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			},
@@ -1341,7 +1359,9 @@
 					},
 					{
 						"key": "DIABETES_DIAG_YEAR",
-						"name": "Diabetes: Year of initial medical diabetes diagnosis(TODO: Date)"
+						"name": "Diabetes: Year of initial medical diabetes diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			},
@@ -1395,7 +1415,9 @@
 					},
 					{
 						"key": "TUMOR_DIAG_YEAR",
-						"name": "Tumor: Year of initial medical diagnosis(TODO: Date)"
+						"name": "Tumor: Year of initial medical diagnosis(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			}
@@ -1451,11 +1473,15 @@
 			},
 			{
 				"key": "CLINICAL_INFECTION_DATE",
-				"name": "Erstdiagnosedatum(TODO: Date)"
+				"name": "Erstdiagnosedatum(TODO: Date)",
+				"fieldType": "date",
+				"type": "BETWEEN"
 			},
 			{
 				"key": "PTG_CULT_DATE",
-				"name": "Probenkultur [Datum](TODO: Date)"
+				"name": "Probenkultur [Datum](TODO: Date)",
+				"fieldType": "date",
+				"type": "BETWEEN"
 			}
 		]
 	},
@@ -1717,11 +1743,15 @@
 				"childCategories": [
 					{
 						"key": "BIOSAMPLE_RETRIEVAL_DATE",
-						"name": "Bioprobenentnahmedatum(TODO: Date)"
+						"name": "Bioprobenentnahmedatum(TODO: Date)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					},
 					{
 						"key": "BIOSAMPLE_RETRIEVAL_TIME",
-						"name": "Bioprobenentnahmedatum(TODO: TIme)"
+						"name": "Bioprobenentnahmedatum(TODO: TIme)",
+						"fieldType": "date",
+						"type": "BETWEEN"
 					}
 				]
 			},
@@ -2049,7 +2079,9 @@
 		"childCategories": [
 			{
 				"key": "BIO_SAMPLING_DATE",
-				"name": "Probenentnahmedatum(TODO: Date)"
+				"name": "Probenentnahmedatum(TODO: Date)",
+				"fieldType": "date",
+				"type": "BETWEEN"
 			},
 			{
 				"key": "INFECTION_ACUTE",

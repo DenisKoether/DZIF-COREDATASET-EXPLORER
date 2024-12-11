@@ -9,7 +9,6 @@ import {
 	studyMeasure
 } from '../measures';
 
-
 export const genderHeaders: Map<string, string> = new Map<string, string>()
 	.set('male', 'männlich')
 	.set('female', 'weiblich')
@@ -29,8 +28,8 @@ export const measures: MeasureGroup[] = [
 			anamneseMeasure as MeasureItem,
 			specimenMeasure as MeasureItem,
 			studyMeasure as MeasureItem
-		],
-	},
+		]
+	}
 ];
 
 export const backendMeasures = `define InInitialPopulation:\n`;

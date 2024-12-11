@@ -45,8 +45,12 @@
 			if (cardvascHTStratifier) {
 				let resultHT = cardvascHTStratifier.stratum
 					.map((stratum) => {
-						if(stratum.value?.text.includes("X") || stratum.value?.text.includes("N") || stratum.value?.text.includes("null") ) {
-							return null
+						if (
+							stratum.value?.text.includes('X') ||
+							stratum.value?.text.includes('N') ||
+							stratum.value?.text.includes('null')
+						) {
+							return null;
 						}
 						const answer = 'Bluthochdruck';
 						const count = stratum.population?.at(0)?.count ?? 0;

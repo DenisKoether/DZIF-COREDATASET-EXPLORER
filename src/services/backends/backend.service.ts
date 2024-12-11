@@ -4,7 +4,6 @@ import { buildLibrary, buildMeasure } from './cql-measure';
 import { translateAstToCql } from './ast-to-cql-translator';
 import { Blaze } from './blaze';
 
-
 export const requestBackend = (
 	ast: AstTopLayer,
 	updateResponse: (response: Map<string, Site>) => void,
@@ -32,7 +31,7 @@ export const requestBackend = (
 	const measure = buildMeasure(library.url, measures);
 	query = { lang: 'cql', lib: library, measure: measure };
 
-	console.debug(query)
+	console.debug(query);
 
 	let backendUrl: string = '';
 
@@ -44,7 +43,7 @@ export const requestBackend = (
 	//     backendUrl = "https://locator-dev.bbmri-eric.eu/backend";
 	// } else if (import.meta.env.VITE_TARGET_ENVIRONMENT === "staging") {
 	backendUrl = 'http://localhost:8082/fhir';
-	console.debug(backendUrl)
+	console.debug(backendUrl);
 	// } else {
 	//     backendUrl = "http://localhost:8055";
 	// }
@@ -73,17 +72,7 @@ export const requestBackend = (
 	//     "wuerzburg",
 	// ]);
 
+	const backend = new Blaze(new URL(backendUrl), 'DKTK', '');
 
-    const backend = new Blaze(new URL(backendUrl), "DKTK", "");
-
-
-
-
-
-    backend.send(
-        cql,
-        updateResponse,
-        abortController,
-			measures
-    );
+	backend.send(cql, updateResponse, abortController, measures);
 };

@@ -110,7 +110,11 @@
 						{
 							label: 'Value 3',
 							data: value3Data,
-							backgroundColor: ['rgba(75, 3, 102, 0.5)', 'rgba(75, 192, 0, 0.5)', 'rgba(75, 192, 0, 192)'],
+							backgroundColor: [
+								'rgba(75, 3, 102, 0.5)',
+								'rgba(75, 192, 0, 0.5)',
+								'rgba(75, 192, 0, 192)'
+							],
 							borderColor: 'rgba(255, 159, 64, 1)',
 							borderWidth: 1
 						}

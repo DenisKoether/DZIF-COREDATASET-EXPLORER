@@ -132,7 +132,8 @@
 						groupRange="{10}"
 						filterRegex="^(1*[12]*[0-9])"
 						xAxisTitle="Alter"
-						yAxisTitle="Anzahl der Patienten">
+						yAxisTitle="Anzahl der Patienten"
+					>
 					</lens-chart>
 				</div>
 
@@ -142,7 +143,8 @@
 						catalogueGroupCode="sample_kind"
 						chartType="bar"
 						filterRegex="^[LIQUID|X].*"
-						displayLegends="{false}">
+						displayLegends="{false}"
+					>
 					</lens-chart>
 				</div>
 				<div class="chart-wrapper chart-samples-tissue">
@@ -151,7 +153,8 @@
 						catalogueGroupCode="sample_kind"
 						chartType="bar"
 						filterRegex="^[TISSUE].*"
-						displayLegends="{false}">
+						displayLegends="{false}"
+					>
 					</lens-chart>
 				</div>
 

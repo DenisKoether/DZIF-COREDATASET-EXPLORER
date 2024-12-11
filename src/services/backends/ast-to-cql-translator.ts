@@ -135,37 +135,24 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'WEIGHT':
 				case 'HEIGHT':
 				case 'CARDVASC_HT':
-				case 'CARDVASC_HT_DIAG_YEAR':
 				case 'CARDVASC_CHD':
-				case 'CARDVASC_CHD_DIAG_YEAR':
 				case 'CARDVASC':
 				case 'CHR_LUNG':
-				case 'CHR_LUNG_DIAG_YEAR':
 				case 'CHR_KIDNEYD':
 				case 'CHR_LIVERDIS':
 				case 'RHEU_IMMU':
 				case 'CHR_MYOBAKT':
-				case 'CHR_MYOBAKT_DIAG_YEAR':
 				case 'MALARIA':
 				case 'CHR_VIRUS_HIV':
-				case 'CHR_VIRUS_HIV_DIAG_YEAR':
 				case 'CHR_VIRUS_HBV':
-				case 'CHR_VIRUS_HBV_DIAG_YEAR':
 				case 'CHR_VIRUS_HCV':
-				case 'CHR_VIRUS_HCV_DIAG_YEAR':
 				case 'CHR_VIRUS_OTHER':
 				case 'CHR_VIRUS_OTHER_INFO':
-				case 'CHR_VIRUS_OTHER_DIAG_YEAR':
 				case 'NEURO':
-				case 'NEURO_DIAG_YEAR':
 				case 'DIABETES':
-				case 'DIABETES_DIAG_YEAR':
 				case 'TUMOR_ACTIVE':
 				case 'TUMOR_MORPHOLOGY':
-				case 'TUMOR_DIAG_YEAR':
 				case 'CLINICAL_INFECTION':
-				case 'CLINICAL_INFECTION_DATE':
-				case 'PTG_CULT_DATE':
 				case 'VITAL_RR':
 				case 'VITAL_TEMP':
 				case 'MEDS':
@@ -179,13 +166,10 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'MEDS_CHEMO':
 				case 'MEDS_ANTIINFECTIVES':
 				case 'BIOSAMPLE_RETRIEVAL':
-				case 'BIOSAMPLE_RETRIEVAL_DATE':
-				case 'BIOSAMPLE_RETRIEVAL_TIME':
 				case 'BIOSAMPLE_RETRIEVAL_LOCATION':
 				case 'BIOSAMPLE_TYPE':
 				case 'BIOSAMPLE_AMOUNT':
 				case 'BIOSAMPLE_AMOUNT_UNIT':
-				case 'BIO_SAMPLING_DATE':
 				case 'INFECTION_ACUTE': {
 					console.log('test');
 					if (typeof criterion.value === 'string') {
@@ -265,7 +249,23 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'CONSENT_VERSDATE':
 				case 'WITHDRAWAL_DATE':
 				case 'DATE_OF_DEATH':
+				case 'BIOSAMPLE_RETRIEVAL_TIME':
 				case 'VISIT_START':
+				case 'CARDVASC_HT_DIAG_YEAR':
+				case 'CARDVASC_CHD_DIAG_YEAR':
+				case 'CHR_LUNG_DIAG_YEAR':
+				case 'CHR_MYOBAKT_DIAG_YEAR':
+				case 'CHR_VIRUS_HIV_DIAG_YEAR':
+				case 'CHR_VIRUS_HBV_DIAG_YEAR':
+				case 'CHR_VIRUS_HCV_DIAG_YEAR':
+				case 'CHR_VIRUS_OTHER_DIAG_YEAR':
+				case 'NEURO_DIAG_YEAR':
+				case 'DIABETES_DIAG_YEAR':
+				case 'TUMOR_DIAG_YEAR':
+				case 'BIOSAMPLE_RETRIEVAL_DATE':
+				case 'BIO_SAMPLING_DATE':
+				case 'CLINICAL_INFECTION_DATE':
+				case 'PTG_CULT_DATE':
 				case 'TRANSPLANTATION_EXDATE':
 				case 'conditionRangeDate': {
 					if (
