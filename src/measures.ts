@@ -393,6 +393,15 @@ export const studyMeasure = {
 			},
 			{
 				code: {
+					text: 'study-kohorte'
+				},
+				criteria: {
+					language: 'text/cql',
+					expression: 'StudyKohorteOut'
+				}
+			},
+			{
+				code: {
 					text: 'Orgs'
 				},
 				criteria: {
@@ -408,6 +417,9 @@ if InInitialPopulation then [Observation] else {} as List<Observation>
 
 define function StudyOut(study FHIR.Observation):
 study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code.first()
+
+define function StudyKohorteOut(study FHIR.Observation):
+study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY').code.first()
 
 define function OrgOut(study FHIR.Observation):
 study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT').code.first() 

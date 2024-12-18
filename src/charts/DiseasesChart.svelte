@@ -23,85 +23,74 @@
 	const anamneseOut = () => {
 		chartData = [];
 
-		//let data = dataPasser.getResponseAPI();
-		let anamneseGroup = response
+		const anamneseGroup = response
 			.get('DKTK')
 			?.data.group.find((group) => group.code.text === 'anamnese');
 
-		if (anamneseGroup) {
-			let cardvascHTStratifier = anamneseGroup.stratifier.find((strat) =>
-				strat.code.some((c) => c.text === 'cardvascHT')
-			);
-			let cardvascCHDStratifier = anamneseGroup.stratifier.find((strat) =>
-				strat.code.some((c) => c.text === 'cardvascCHD')
-			);
-			let cardvascStratifier = anamneseGroup.stratifier.find((strat) =>
-				strat.code.some((c) => c.text === 'cardvasc')
-			);
-			let chrLungStratifier = anamneseGroup.stratifier.find((strat) =>
-				strat.code.some((c) => c.text === 'chrLung')
-			);
+		if (!anamneseGroup) return;
 
-			if (cardvascHTStratifier) {
-				let resultHT = cardvascHTStratifier.stratum
-					.map((stratum) => {
-						if (
-							stratum.value?.text.includes('X') ||
-							stratum.value?.text.includes('N') ||
-							stratum.value?.text.includes('null')
-						) {
-							return null;
-						}
-						const answer = 'Bluthochdruck';
-						const count = stratum.population?.at(0)?.count ?? 0;
-
-						return answer && !answer.includes('null') ? { answer, count } : null;
-					})
-					.filter((item) => item !== null);
-
-				chartData.push(...resultHT);
+		const stratifiers = [
+			//Herz-Kreislauf-Erkrankungen
+			{ key: 'cardvascHT', label: 'Bluthochdruck' },
+			{ key: 'cardvascCHD', label: 'Herzerkrankung' },
+			{
+				key: 'cardvasc',
+				label: 'Herz-Kreislauf Erkrankung',
+				includeAsYes: ['YOTHER', 'YCA', 'YHF', 'YPAVK', 'YRV', 'YCS']
+			},
+			//chron. Lungenerkrankungen
+			{
+				key: 'chrLung',
+				label: 'chron. Lungenerkrankung',
+				includeAsYes: [
+					'YOTHER',
+					'YA',
+					'YCOP',
+					'YPF',
+					'YPH',
+					'YOHS',
+					'YSA',
+					'YOSAS',
+					'YCF'
+				]
 			}
+		];
 
-			if (cardvascCHDStratifier) {
-				let resultCHD = cardvascCHDStratifier.stratum
-					.map((stratum) => {
-						const answer = 'CardvascCHD-' + stratum.value?.text;
-						const count = stratum.population?.at(0)?.count ?? 0;
+		stratifiers.forEach(({ key, label, includeAsYes = [] }) => {
+			const stratifier = anamneseGroup.stratifier.find((strat) =>
+				strat.code.some((c) => c.text === key)
+			);
 
-						return answer && !answer.includes('null') ? { answer, count } : null;
-					})
-					.filter((item) => item !== null);
+			if (!stratifier) return;
 
-				chartData.push(...resultCHD);
-			}
+			const results = stratifier.stratum
+				.map((stratum) => {
+					const value = stratum.value?.text || '';
+					const count = stratum.population?.at(0)?.count ?? 0;
 
-			if (cardvascStratifier) {
-				let resultCardvasc = cardvascStratifier.stratum
-					.map((stratum) => {
-						const answer = 'Cardvasc-' + stratum.value?.text;
-						const count = stratum.population?.at(0)?.count ?? 0;
+					if (includeAsYes.some((yesValue) => value.includes(yesValue))) {
+						return { answer: label, count };
+					}
+					if (['X', 'N', 'null'].some((excluded) => value.includes(excluded))) {
+						return null;
+					}
+					return { answer: label, count };
+				})
+				.filter((item) => item !== null)
+				.reduce((acc, curr) => {
+					const existing = acc.find((item) => item.answer === curr.answer);
+					if (existing) {
+						existing.count += curr.count;
+					} else {
+						acc.push(curr);
+					}
+					return acc;
+				}, []);
 
-						return answer && !answer.includes('null') ? { answer, count } : null;
-					})
-					.filter((item) => item !== null);
+			chartData.push(...results);
+		});
 
-				chartData.push(...resultCardvasc);
-			}
-
-			if (chrLungStratifier) {
-				let resultChrLung = chrLungStratifier.stratum
-					.map((stratum) => {
-						const answer = 'chrLung-' + stratum.value?.text;
-						const count = stratum.population?.at(0)?.count ?? 0;
-
-						return answer && !answer.includes('null') ? { answer, count } : null;
-					})
-					.filter((item) => item !== null);
-
-				chartData.push(...resultChrLung);
-			}
-			updateChart();
-		}
+		updateChart();
 	};
 
 	const updateChart = () => {

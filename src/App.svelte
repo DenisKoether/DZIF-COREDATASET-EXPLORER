@@ -66,7 +66,7 @@
 <div class="page">
 	<header>
 		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
-		<h1>DZIF-COREDATASET-EXPLORER</h1>
+		<h1>DZIF-COREDATASET-EXPLORER (TESTDATEN)</h1>
 	</header>
 
 	<main>
@@ -102,12 +102,32 @@
 				<div class="chart-wrapper result-summary">
 					<lens-result-summary></lens-result-summary>
 					<lens-search-modified-display
-						>Diagramme repräsentieren nicht mehr die aktuelle Suche!</lens-search-modified-display
-					>
+						>Diagramme repräsentieren nicht mehr die aktuelle Suche!
+					</lens-search-modified-display>
 				</div>
 
-				<div class="chart-wrapper chart-sites">
-					<SitesChart></SitesChart>
+				<div class="chart-wrapper chart-study">
+					<lens-chart
+						title="Studie - TTU/TI"
+						catalogueGroupCode="study"
+						chartType="bar"
+						xAxisTitle="Zugehörigkeit"
+						yAxisTitle="Anzahl"
+						displayLegends="{false}"
+					>
+					</lens-chart>
+				</div>
+
+				<div class="chart-wrapper chart-study">
+					<lens-chart
+						title="Studie/Kohorte"
+						catalogueGroupCode="study-kohorte"
+						chartType="bar"
+						xAxisTitle="Zugehörigkeit"
+						yAxisTitle="Anzahl"
+						displayLegends="{false}"
+					>
+					</lens-chart>
 				</div>
 
 				<div class="chart-wrapper chart-gender">
@@ -158,16 +178,8 @@
 					</lens-chart>
 				</div>
 
-				<div class="chart-wrapper chart-study">
-					<lens-chart
-						title="Studie"
-						catalogueGroupCode="study"
-						chartType="bar"
-						xAxisTitle="Zugehörigkeit"
-						yAxisTitle="Anzahl"
-						displayLegends="{false}"
-					>
-					</lens-chart>
+				<div class="chart-wrapper chart-sites">
+					<SitesChart></SitesChart>
 				</div>
 
 				<div class="chart-wrapper chart-smoker">

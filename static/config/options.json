@@ -122,6 +122,10 @@
       "study"
     ],
     [
+      "study-kohorte",
+      "study-kohorte"
+    ],
+    [
       "therapy_of_tumor",
       "ProcedureType"
     ],
@@ -282,7 +286,41 @@
     },
     "study": {
       "hintText": [
-        "TODO"
+        "-TI-AD(TI Academy)",
+        "-TI-API(TI African Partner Institutions)",
+        "-TI-BB(TI Biobanking)",
+        "-TI-BP(TI Bioinformatics Platform)",
+        "-TI-CTU(TI Clinical Trial Unit)",
+        "-TI-EPI(TI Epidemiology)",
+        "-TI-NA(TI Novel Antivirals)",
+        "-TI-PR(TI Pathogen Repository)",
+        "-TTU-EI(TTU Emerging Infections)",
+        "-TTU-GII(TTU Gastrointestinal Infections)",
+        "-TTU-HA(TTU HAARBI)",
+        "-TTU-HEP(TTU Hepatitis)",
+        "-TTU-HIV(TTU HIV)",
+        "-TTU-IICH(TTU Infections of Immunocompromised Host)",
+        "-TTU-MAL(TTU Malaria)",
+        "-TTU-NA(TTU Novel Antibiotics)",
+        "-TTU-TUB(TTU Tuberculosis)",
+        "-OTHER(Andere TTU/TI)"
+      ]
+    },
+    "study-kohorte": {
+      "hintText": [
+        "-TX(Transplantations-Kohorte)",
+        "-HIV(HIV-Kohorte)",
+        "-FWS(Fever Without Score)",
+        "-FWSC(Fever Without Score - Children)",
+        "-TIARA(MDRO colonization in complex surgical patients)",
+        "-TBC(Tuberkulose)",
+        "-KS(Epstein Barr Virus)",
+        "-LACHMI(Controlled Human Malaria Infection)",
+        "-HBV(Hepatitis-Kohorte)",
+        "-COVT(COVID Autopsieregister)",
+        "-CRYO(DZIF Gewebebank)",
+        "-OTHER(Andere Kohorte/Studie)",
+        "-AFFILATION_STUDY_OTHER(Affiliation cohort/study: Other cohort/study)"
       ]
     }
   },
