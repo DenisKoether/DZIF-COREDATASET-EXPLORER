@@ -4,7 +4,7 @@
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
-    src: url('../fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
+    /*src: url('../static/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');*/
 }
 
 :root {
@@ -299,6 +299,29 @@ header h1 {
 
 }
 
+.kontakt{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+    padding: var(--gap-xs);
+    background-color: var(--white);
+    border-radius: var(--border-radius-small);
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.impressum{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+    padding: var(--gap-xs);
+    background-color: var(--white);
+    border-radius: var(--border-radius-small);
+    position: relative;
+    flex-wrap: wrap;
+}
 
 /* Footer Styling */
 .footer {
@@ -329,7 +352,7 @@ header h1 {
 
 .footer__links {
     position: absolute;
-    left: 50%;
+    left: 53%;
     transform: translateX(-50%);
     text-align: center;
 }

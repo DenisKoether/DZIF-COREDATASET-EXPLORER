@@ -69,7 +69,6 @@
 		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
 		<h1>DZIF-COREDATASET-EXPLORER (TESTDATEN)</h1>
 	</header>
-
 	<main>
 		<div class="search">
 			<div class="search-wrapper">
@@ -218,20 +217,20 @@
 		</div>
 	</main>
 
-	<footer class="footer">
-		<div class="footer__left-section">
-			<div class="footer__made-with">
-				Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
-			</div>
-			<div class="footer__logo">
-				<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
-			</div>
-		</div>
-		<div class="footer__links">
+			<footer class="footer">
+				<div class="footer__left-section">
+					<div class="footer__made-with">
+						Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
+					</div>
+					<div class="footer__logo">
+						<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
+					</div>
+				</div>
+				<div class="footer__links">
 			<a href="/impressum">Impressum</a>
 			<a href="/kontakt">Kontakt</a>
-		</div>
-	</footer>
+				</div>
+			</footer>
 </div>
 <ScrollToTop />
 
