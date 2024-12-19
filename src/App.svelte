@@ -6,6 +6,7 @@
 	import { genderHeaders, measures } from './config/environment';
 	import type { LensDataPasser } from '@samply/lens';
 	import { fetchData, catalogueText } from './services/catalogue.service';
+	import ScrollToTop from './services/tools/top-anker.svelte';
 
 	let catalogueopen = false;
 
@@ -102,7 +103,7 @@
 				<div class="chart-wrapper result-summary">
 					<lens-result-summary></lens-result-summary>
 					<lens-search-modified-display
-						>Diagramme repräsentieren nicht mehr die aktuelle Suche!
+					>Diagramme repräsentieren nicht mehr die aktuelle Suche!
 					</lens-search-modified-display>
 				</div>
 
@@ -232,6 +233,7 @@
 		</div>
 	</footer>
 </div>
+<ScrollToTop />
 
 <!-- here it waits on all promises to resolve and fills in the parameters -->
 {#await jsonPromises}
