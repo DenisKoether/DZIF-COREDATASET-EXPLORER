@@ -12,7 +12,7 @@
 
 	let chart: Chart | null = null;
 	let chartData: ChartDataItem[] = [];
-	let response: Map<string, Site>;
+	let response: Map<string, Site> | null = null;
 
 	window.addEventListener('lens-responses-updated', () => {
 		response = dataPasser?.getResponseAPI();
@@ -20,6 +20,9 @@
 	});
 
 	const sitesOut = () => {
+		if (response == null) {
+			return;
+		}
 		chartData = [];
 
 		//let data = dataPasser.getResponseAPI();

@@ -241,6 +241,15 @@ export const anamneseMeasure = {
 					language: 'text/cql',
 					expression: 'Anamnese_NEURO'
 				}
+			},
+			{
+				code: {
+					text: 'tumorActive'
+				},
+				criteria: {
+					language: 'text/cql',
+					expression: 'Anamnese_TUMOR_ACTIVE'
+				}
 			}
 		]
 	},
@@ -301,6 +310,9 @@ anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Ana
 
 define function Anamnese_NEURO(anamnese FHIR.Observation):
 anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO').code.first()
+
+define function Anamnese_TUMOR_ACTIVE(anamnese FHIR.Observation):
+anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_ACTIVE').code.first()
 `
 };
 

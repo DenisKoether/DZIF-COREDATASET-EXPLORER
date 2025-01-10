@@ -1,5 +1,7 @@
 <script lang="ts">
 	import DiseasesChart from './charts/DiseasesChart.svelte';
+	import DiseasesChartVirus from './charts/DiseasesChartVirus.svelte';
+	import DiseasesChartCardvasc from './charts/DiseasesChartCardvasc.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
@@ -141,7 +143,13 @@
 				</div>
 
 				<div class="chart-wrapper chart-diseases">
-					<DiseasesChart></DiseasesChart>
+					<DiseasesChart />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartVirus />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartCardvasc />
 				</div>
 
 				<div class="chart-wrapper chart-alter">
@@ -201,36 +209,24 @@
 					>
 					</lens-chart>
 				</div>
-				<!--
-				<div class="chart-wrapper chart-krankheiten">
-					<lens-chart
-						title="Krankheiten"
-						catalogueGroupCode="cardvascHT"
-						chartType="bar"
-						xAxisTitle="Krankheit"
-						yAxisTitle="Anzahl"
-						displayLegends="{false}">
-					</lens-chart>
-				</div>
-				-->
 			</div>
 		</div>
 	</main>
 
-			<footer class="footer">
-				<div class="footer__left-section">
-					<div class="footer__made-with">
-						Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
-					</div>
-					<div class="footer__logo">
-						<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
-					</div>
-				</div>
-				<div class="footer__links">
+	<footer class="footer">
+		<div class="footer__left-section">
+			<div class="footer__made-with">
+				Made with ♥ and <a href="https://github.com/samply/lens">samply/lens-core</a>
+			</div>
+			<div class="footer__logo">
+				<img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
+			</div>
+		</div>
+		<div class="footer__links">
 			<a href="/impressum">Impressum</a>
 			<a href="/kontakt">Kontakt</a>
-				</div>
-			</footer>
+		</div>
+	</footer>
 </div>
 <ScrollToTop />
 

@@ -22,6 +22,7 @@
 
 	const anamneseOut = () => {
 		chartData = [];
+
 		if (response == null) {
 			return;
 		}
@@ -33,94 +34,31 @@
 
 		const stratifiers = [
 			{
-				key: 'chrLung',
-				label: 'chron. Lungenerkrankung',
-				includeAsYes: [
-					'YA',
-					'YCOP',
-					'YPF',
-					'YPH',
-					'YOHS',
-					'YSA',
-					'YOSAS',
-					'YCF',
-					'YOTHER'
-				]
-			},
-			{
-				key: 'chrKidneyd',
-				label: 'chron. Nierenerkrankung',
-				includeAsYes: [
-					'YH',
-					'YWOH'
-				]
-			},
-			{
-				key: 'chrLiverdis',
-				label: 'chron. Lebererkrankung',
-				includeAsYes: [
-					'YFL',
-					'YLZ',
-					'YCIH',
-					'YAL',
-					'YOTHER'
-				]
-			},
-			{
-				key: 'rheuImmu',
-				label: 'Rheumatologische/Immunologische Erkrankung',
-				includeAsYes: [
-					'YCIBD',
-					'YRA',
-					'YCG',
-					'YVT',
-					'YCGID',
-					'YOTHER'
-				]
-			},
-			{
-				key: 'chrMyobakt',
-				label: 'chron. Mykobakterielle Erkrankung',
-				includeAsYes: [
-					'YT',
-					'YOTHER'
-				]
-			},
-			{
-				key: 'malaria',
-				label: 'Malaria',
+				key: 'chrVirusHIV',
+				label: 'Chronische Virusinfektion (HIV)',
 				includeAsYes: [
 					'Y'
 				]
 			},
 			{
-				key: 'neuro',
-				label: 'Neurologische Erkrankung',
+				key: 'chrVirusHBV',
+				label: 'Chronische Virusinfektion (HBV)',
 				includeAsYes: [
-					'YMP',
-					'YDM',
-					'YMS',
-					'YNE',
-					'YOTHER'
+					'Y'
 				]
 			},
 			{
-				key: 'Diabetes',
-				label: 'Diabetes',
+				key: 'chrVirusHCV',
+				label: 'Chronische Virusinfektion (HCV)',
 				includeAsYes: [
-					'1',
-					'2A',
-					'2B',
-					'3',
-					'4'
+					'Y'
 				]
 			},
 			{
-				key: 'tumorActive',
-				label: 'Aktiver Tumor',
+				key: 'chrVirusOTHER',
+				label: 'Chronische Virusinfektion (Andere)',
 				includeAsYes: [
-					'A',
-					'IR'
+					'Y'
 				]
 			}
 		];
@@ -168,7 +106,7 @@
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
 			chart.update();
 		} else {
-			const ctx = document.getElementById('diseasesChart') as HTMLCanvasElement;
+			const ctx = document.getElementById('diseasesChartVirus') as HTMLCanvasElement;
 			chart = new Chart(ctx.getContext('2d'), {
 				type: 'bar',
 				data: {
@@ -187,7 +125,7 @@
 					plugins: {
 						title: {
 							display: true,
-							text: 'Krankheiten'
+							text: 'Viruserkrankungen'
 						}
 					}
 				}
@@ -200,6 +138,6 @@
 	});
 </script>
 
-<canvas id="diseasesChart"></canvas>
+<canvas id="diseasesChartVirus"></canvas>
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
