@@ -2,6 +2,11 @@
 	import DiseasesChart from './charts/DiseasesChart.svelte';
 	import DiseasesChartVirus from './charts/DiseasesChartVirus.svelte';
 	import DiseasesChartCardvasc from './charts/DiseasesChartCardvasc.svelte';
+	import DiseasesChartLung from './charts/DiseasesChartLung.svelte';
+	import DiseasesChartLiverDis from './charts/DiseasesChartLiverDis.svelte';
+	import DiseasesChartImmu from './charts/DiseasesChartImmu.svelte';
+	import DiseasesChartNeuro from './charts/DiseasesChartNeuro.svelte';
+	import DiseasesChartDiabetes from './charts/DiseasesChartDiabetes.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
@@ -150,6 +155,21 @@
 				</div>
 				<div class="chart-wrapper chart-diseases">
 					<DiseasesChartCardvasc />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartLung />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartLiverDis />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartImmu />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartNeuro />
+				</div>
+				<div class="chart-wrapper chart-diseases">
+					<DiseasesChartDiabetes />
 				</div>
 
 				<div class="chart-wrapper chart-alter">

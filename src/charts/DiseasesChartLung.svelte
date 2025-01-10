@@ -33,32 +33,23 @@
 		if (!anamneseGroup) return;
 
 		const stratifiers = [
-					{ key: 'malaria', label: 'Malaria' },
 			{
-				key: 'chrKidneyd',
+				key: 'chrLung',
 				label: '',
 				subkeys: [
-					{ key: 'YH', label: 'Nierenerkrankung - mit Hämodialyse' },
-					{ key: 'YWOH', label: 'Nierenerkrankung - ohne Hämodialyse' }
-				]
-			},
-			{
-				key: 'chrMyobakt',
-				label: '',
-				subkeys: [
-					{ key: 'YT', label: 'Mykobakteriose - Tuberkulose' },
-					{ key: 'YOTHER', label: 'Mykobakteriose - andere' }
-				]
-			},
-						{
-				key: 'tumorActive',
-				label: '',
-				subkeys: [
-					{ key: 'A', label: 'Tumor - aktiv' },
-					{ key: 'IR', label: 'Tumor - in Remission' }
+					{ key: 'YA', label: 'Asthma' },
+					{ key: 'YCOP', label: 'COPD' },
+					{ key: 'YPF', label: 'Lungenfibrose' },
+					{ key: 'YPH', label: 'Lungenhochdruck/pulmonale Hypertonie' },
+					{ key: 'YOHS', label: 'Obesitas-Hyperventilationssyndrom (OHS)' },
+					{ key: 'YSA', label: 'Schlafapnoe' },
+					{ key: 'YOSAS', label: 'Schlafapnoesyndrom (OSAS)' },
+					{ key: 'YCF', label: 'Cystische Fibrose' },
+					{ key: 'YOTHER', label: 'andere' }
 				]
 			}
 		];
+
 
 		stratifiers.forEach(({ key, label, subkeys = [] }) => {
 			const stratifier = anamneseGroup.stratifier.find((strat) =>
@@ -107,7 +98,7 @@
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
 			chart.update();
 		} else {
-			const ctx = document.getElementById('diseasesChart') as HTMLCanvasElement;
+			const ctx = document.getElementById('diseasesChartLung') as HTMLCanvasElement;
 			chart = new Chart(ctx.getContext('2d'), {
 				type: 'bar',
 				data: {
@@ -126,7 +117,7 @@
 					plugins: {
 						title: {
 							display: true,
-							text: 'Erkrankungen'
+							text: 'Lungenerkrankungen'
 						}
 					}
 				}
@@ -139,6 +130,6 @@
 	});
 </script>
 
-<canvas id="diseasesChart"></canvas>
+<canvas id="diseasesChartLung"></canvas>
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
