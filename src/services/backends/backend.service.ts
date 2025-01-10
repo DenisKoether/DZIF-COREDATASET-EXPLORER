@@ -39,39 +39,14 @@ export const requestBackend = (
 	 * TODO: add different backend URLs for different environments
 	 */
 
-	// if (import.meta.env.VITE_TARGET_ENVIRONMENT === "production") {
-	//     backendUrl = "https://locator-dev.bbmri-eric.eu/backend";
-	// } else if (import.meta.env.VITE_TARGET_ENVIRONMENT === "staging") {
-	backendUrl = 'http://localhost:8082/fhir';
-	console.debug(backendUrl);
-	// } else {
-	//     backendUrl = "http://localhost:8055";
-	// }
-
-	// const backend = new Spot(new URL(backendUrl), [
-	//     "aachen",
-	//     "berlin",
-	//     "brno",
-	//     "brno-recetox",
-	//     "cyprus",
-	//     "dresden",
-	//     "frankfurt",
-	//     "goettingen",
-	//     "hannover",
-	//     "heidelberg",
-	//     "luebeck",
-	//     "mannheim",
-	//     "marburg",
-	//     "muenchen-hmgu",
-	//     "olomouc",
-	//     "pilsen",
-	//     "prague-ffm",
-	//     "prague-ior",
-	//     "regensburg",
-	//     "rome",
-	//     "wuerzburg",
-	// ]);
-
+	if (import.meta.env.VITE_TARGET_ENVIRONMENT === 'production') {
+		backendUrl = '';
+	} else if (import.meta.env.VITE_TARGET_ENVIRONMENT === 'staging') {
+		backendUrl = 'http://bridgehead.dev.dzif.de/data/fhir';
+	} else {
+		backendUrl = 'http://localhost:8082/fhir';
+	}
+	
 	const backend = new Blaze(new URL(backendUrl), 'DKTK', '');
 
 	backend.send(cql, updateResponse, abortController, measures);
