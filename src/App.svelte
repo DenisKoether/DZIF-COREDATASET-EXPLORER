@@ -104,7 +104,7 @@
 				<div class="chart-wrapper result-summary">
 					<lens-result-summary></lens-result-summary>
 					<lens-search-modified-display
-					>Diagramme repräsentieren nicht mehr die aktuelle Suche!
+						>Diagramme repräsentieren nicht mehr die aktuelle Suche!
 					</lens-search-modified-display>
 				</div>
 
