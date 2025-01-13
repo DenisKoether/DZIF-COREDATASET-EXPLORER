@@ -1,33 +1,17 @@
 <script>
 	import ScrollToTop from '../../services/tools/top-anker.svelte';
 	import { reloadPage } from '../../services/tools/utils.js';
-
 </script>
 
 <div class="page">
 	<header>
 		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
-		<h1>Kontakt</h1>
+		<h1>Datenschutz</h1>
 	</header>
 
-	<div class="kontakt-outline">
-		<button class="button-back" on:click={reloadPage}>Zurück</button>
-		<div class="kontakt">
-			<h2>Kontakt</h2>
-			<p>
-				<strong>Inhaltliche Anfragen:</strong><br>
-				Dr. Berit Lange<br>
-				Helmholtz-Zentrum für Infektionsforschung<br>
-				Koordinatorin Bioressourcen, Biodaten und Digitale Gesundheit<br>
-				E-Mail: <a href="mailto:tibbd@dzif.de">tibbd@dzif.de</a>
-			</p>
 
-			<p>
-				<strong>Technische Anfragen:</strong><br>
-				Patrick Skowronek<br>
-				E-Mail: <a href="mailto:patrick.skowronek@dkfz-heidelberg.de">patrick.skowronek@dkfz-heidelberg.de</a>
-			</p>
-		</div>
+	<div class="datenschutz">
+		<button on:click={reloadPage}>BACK</button>
 	</div>
 
 	<footer class="footer">

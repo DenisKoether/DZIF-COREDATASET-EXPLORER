@@ -70,6 +70,7 @@
 	// 	getQuery();
 	// };
 </script>
+			<button class="button-daten-beantragen">Daten beantragen</button>
 
 <div class="page">
 	<header>
@@ -245,6 +246,7 @@
 		<div class="footer__links">
 			<a href="/impressum">Impressum</a>
 			<a href="/kontakt">Kontakt</a>
+			<a href="/datenschutz">Datenschutz</a>
 		</div>
 	</footer>
 </div>
