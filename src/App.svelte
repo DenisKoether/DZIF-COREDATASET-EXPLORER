@@ -148,6 +148,16 @@
 					></lens-chart>
 				</div>
 
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Raucher"
+						catalogueGroupCode="smoker"
+						chartType="pie"
+						displayLegends="{true}"
+					>
+					</lens-chart>
+				</div>
+
 				<div class="chart-wrapper chart-diseases">
 					<DiseasesChart />
 				</div>
@@ -210,17 +220,7 @@
 				<div class="chart-wrapper chart-sites">
 					<SitesChart></SitesChart>
 				</div>
-
-				<div class="chart-wrapper chart-smoker">
-					<lens-chart
-						title="Raucher"
-						catalogueGroupCode="smoker"
-						chartType="pie"
-						displayLegends="{true}"
-					>
-					</lens-chart>
-				</div>
-
+<!--
 				<div class="chart-wrapper chart-diabetes">
 					<lens-chart
 						title="Diabetes"
@@ -230,6 +230,7 @@
 					>
 					</lens-chart>
 				</div>
+				-->
 			</div>
 		</div>
 	</main>

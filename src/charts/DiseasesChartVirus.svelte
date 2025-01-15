@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Chart } from 'chart.js/auto';
+	import { backgroundColor, backgroundHoverColor } from '../services/tools/chart-style';
 
 	import type { LensDataPasser, Site } from '@samply/lens';
 
@@ -104,9 +105,11 @@
 		if (chart) {
 			chart.data.labels = chartData.map((d) => d.answer);
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
+			chart.data.datasets[0].backgroundColor = backgroundColor.slice(0, chartData.length);
 			chart.update();
 		} else {
 			const ctx = document.getElementById('diseasesChartVirus') as HTMLCanvasElement;
+			Chart.defaults.font.size = 12;
 			chart = new Chart(ctx.getContext('2d'), {
 				type: 'bar',
 				data: {
@@ -115,15 +118,22 @@
 						{
 							label: 'Count',
 							data: chartData.map((d) => d.count),
-							backgroundColor: 'rgba(75, 192, 192, 0.2)',
-							borderColor: 'rgba(75, 192, 192, 1)',
+							backgroundColor: backgroundColor.slice(0, chartData.length),
+							backgroundHoverColor,
 							borderWidth: 1
 						}
 					]
 				},
 				options: {
 					plugins: {
+						legend: {
+							display: false
+						},
 						title: {
+							font: {
+								size: 16
+							},
+							color: '#000000',
 							display: true,
 							text: 'Viruserkrankungen'
 						}

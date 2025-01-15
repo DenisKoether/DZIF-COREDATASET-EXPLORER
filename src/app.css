@@ -225,7 +225,7 @@ header h1 {
 }
 
 .chart-diseases {
-    grid-column: span 4;
+    grid-column: span 2;
 }
 
 .chart-study {

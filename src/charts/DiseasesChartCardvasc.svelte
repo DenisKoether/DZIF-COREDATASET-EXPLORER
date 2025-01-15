@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Chart } from 'chart.js/auto';
 	import type { LensDataPasser, Site } from '@samply/lens';
+	import { backgroundColor, backgroundHoverColor } from '../services/tools/chart-style';
 
 	let dataPasser: LensDataPasser;
 
@@ -20,85 +21,86 @@
 	});
 
 	const anamneseOut = () => {
-	chartData = [];
+		chartData = [];
 
-	if (response == null) {
-		return;
-	}
-
-	const anamneseGroup = response
-		.get('DKTK')
-		?.data.group.find((group) => group.code.text === 'anamnese');
-
-	if (!anamneseGroup) return;
-
-	const stratifiers = [
-		{ key: 'cardvascHT', label: 'Bluthochdruck' },
-		{ key: 'cardvascCHD', label: 'Koronare Herzerkrankung' },
-		{
-			key: 'cardvasc',
-			label: '',
-			subkeys: [
-				{ key: 'YHA', label: 'Zustand nach Herzinfarkt' },
-				{ key: 'YCA', label: 'Herzrhythmusstörungen' },
-				{ key: 'YHF', label: 'Herzinsuffizienz' },
-				{ key: 'YPAVK', label: 'pAVK (Periphere Arterielle Verschlusskrankheit)' },
-				{ key: 'YRV', label: 'Zustand nach Revaskularisation' },
-				{ key: 'YCS', label: 'Carotisstenose' },
-				{ key: 'YOTHER', label: 'Andere Herz-Kreislauf-Erkrankungen' }
-			]
-		}
-	];
-
-	stratifiers.forEach(({ key, label, subkeys = [] }) => {
-		const stratifier = anamneseGroup.stratifier.find((strat) =>
-			strat.code.some((c) => c.text === key)
-		);
-
-		if (!stratifier) return;
-
-		if (!subkeys.length) {
-			const results = stratifier.stratum
-				.map((stratum) => {
-					const value = stratum.value?.text || '';
-					const count = stratum.population?.at(0)?.count ?? 0;
-
-					if (['X', 'N', 'null'].some((excluded) => value.includes(excluded))) {
-						return null;
-					}
-					return { answer: label, count };
-				})
-				.filter((item) => item !== null);
-
-			chartData.push(...results);
+		if (response == null) {
+			return;
 		}
 
-		subkeys.forEach(({ key: subkey, label: subLabel }) => {
-			const subStratum = stratifier.stratum.find((stratum) =>
-				stratum.value?.text === subkey
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{ key: 'cardvascHT', label: 'Bluthochdruck' },
+			{ key: 'cardvascCHD', label: 'Koronare Herzerkrankung' },
+			{
+				key: 'cardvasc',
+				label: '',
+				subkeys: [
+					{ key: 'YHA', label: 'Zustand nach Herzinfarkt' },
+					{ key: 'YCA', label: 'Herzrhythmusstörungen' },
+					{ key: 'YHF', label: 'Herzinsuffizienz' },
+					{ key: 'YPAVK', label: 'pAVK (Periphere Arterielle Verschlusskrankheit)' },
+					{ key: 'YRV', label: 'Zustand nach Revaskularisation' },
+					{ key: 'YCS', label: 'Carotisstenose' },
+					{ key: 'YOTHER', label: 'Andere Herz-Kreislauf-Erkrankungen' }
+				]
+			}
+		];
+
+		stratifiers.forEach(({ key, label, subkeys = [] }) => {
+			const stratifier = anamneseGroup.stratifier.find((strat) =>
+				strat.code.some((c) => c.text === key)
 			);
 
-			if (subStratum) {
-				const count = subStratum.population?.at(0)?.count ?? 0;
-				if (count > 0) {
-					chartData.push({ answer: subLabel, count });
-				}
+			if (!stratifier) return;
+
+			if (!subkeys.length) {
+				const results = stratifier.stratum
+					.map((stratum) => {
+						const value = stratum.value?.text || '';
+						const count = stratum.population?.at(0)?.count ?? 0;
+
+						if (['X', 'N', 'null'].some((excluded) => value.includes(excluded))) {
+							return null;
+						}
+						return { answer: label, count };
+					})
+					.filter((item) => item !== null);
+
+				chartData.push(...results);
 			}
+
+			subkeys.forEach(({ key: subkey, label: subLabel }) => {
+				const subStratum = stratifier.stratum.find((stratum) =>
+					stratum.value?.text === subkey
+				);
+
+				if (subStratum) {
+					const count = subStratum.population?.at(0)?.count ?? 0;
+					if (count > 0) {
+						chartData.push({ answer: subLabel, count });
+					}
+				}
+			});
 		});
-	});
 
-	updateChart();
-};
-
+		updateChart();
+	};
 
 
 	const updateChart = () => {
 		if (chart) {
 			chart.data.labels = chartData.map((d) => d.answer);
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
+			chart.data.datasets[0].backgroundColor = backgroundColor.slice(0, chartData.length);
 			chart.update();
 		} else {
 			const ctx = document.getElementById('diseasesChartCardvasc') as HTMLCanvasElement;
+			Chart.defaults.font.size = 12;
 			chart = new Chart(ctx.getContext('2d'), {
 				type: 'bar',
 				data: {
@@ -107,15 +109,22 @@
 						{
 							label: 'Count',
 							data: chartData.map((d) => d.count),
-							backgroundColor: 'rgba(75, 192, 192, 0.2)',
-							borderColor: 'rgba(75, 192, 192, 1)',
+							backgroundColor: backgroundColor.slice(0, chartData.length),
+							backgroundHoverColor,
 							borderWidth: 1
 						}
 					]
 				},
 				options: {
 					plugins: {
+						legend: {
+							display: false
+						},
 						title: {
+							font: {
+								size: 16
+							},
+							color: '#000000',
 							display: true,
 							text: 'Herz-Kreislauf-Erkrankungen'
 						}
