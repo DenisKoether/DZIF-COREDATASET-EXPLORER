@@ -224,6 +224,10 @@ header h1 {
     grid-column: span 2;
 }
 
+.chart-sites-multi {
+    grid-column: span 2;
+}
+
 .chart-diseases {
     grid-column: span 2;
 }

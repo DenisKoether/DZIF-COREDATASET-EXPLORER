@@ -122,12 +122,16 @@
       "neuro"
     ],
     [
+      "org",
+      "org"
+    ],
+    [
       "study",
       "study"
     ],
     [
-      "study-kohorte",
-      "study-kohorte"
+      "studyKohorte",
+      "studyKohorte"
     ],
     [
       "therapy_of_tumor",
@@ -310,7 +314,7 @@
         "-OTHER(Andere TTU/TI)"
       ]
     },
-    "study-kohorte": {
+    "studyKohorte": {
       "hintText": [
         "-TX(Transplantations-Kohorte)",
         "-HIV(HIV-Kohorte)",

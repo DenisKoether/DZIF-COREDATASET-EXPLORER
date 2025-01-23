@@ -405,7 +405,7 @@ export const studyMeasure = {
 			},
 			{
 				code: {
-					text: 'study-kohorte'
+					text: 'studyKohorte'
 				},
 				criteria: {
 					language: 'text/cql',
@@ -414,7 +414,7 @@ export const studyMeasure = {
 			},
 			{
 				code: {
-					text: 'Orgs'
+					text: 'org'
 				},
 				criteria: {
 					language: 'text/cql',

@@ -8,6 +8,7 @@
 	import DiseasesChartNeuro from './charts/DiseasesChartNeuro.svelte';
 	import DiseasesChartDiabetes from './charts/DiseasesChartDiabetes.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
+	import TestChart from './charts/TestChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
 	import { genderHeaders, measures } from './config/environment';
@@ -129,7 +130,7 @@
 				<div class="chart-wrapper chart-study">
 					<lens-chart
 						title="Studie/Kohorte"
-						catalogueGroupCode="study-kohorte"
+						catalogueGroupCode="studyKohorte"
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
 						yAxisTitle="Anzahl"
@@ -219,6 +220,9 @@
 
 				<div class="chart-wrapper chart-sites">
 					<SitesChart></SitesChart>
+				</div>
+				<div class="chart-wrapper chart-sites-multi">
+					<TestChart></TestChart>
 				</div>
 <!--
 				<div class="chart-wrapper chart-diabetes">
