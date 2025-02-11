@@ -38,12 +38,12 @@
 				key: 'rheuImmu',
 				label: '',
 				subkeys: [
+					{ key: 'YOTHER', label: 'andere' },
 					{ key: 'YCIBD', label: 'chronisch entzündliche Darmerkrankung' },
 					{ key: 'YRA', label: 'Rheumatoide Arthritis' },
 					{ key: 'YCG', label: 'Kollagenosen' },
 					{ key: 'YVT', label: 'Vaskulitiden' },
-					{ key: 'YCGID', label: 'angeborene Immundefekte' },
-					{ key: 'YOTHER', label: 'andere' }
+					{ key: 'YCGID', label: 'angeborene Immundefekte' }
 				]
 			}
 		];
@@ -114,6 +114,15 @@
 					]
 				},
 				options: {
+					responsive: true,
+					scales:{
+						y:{
+							title: {
+								display: true,
+							text: "Anzahl der Patienten"
+						}
+						}
+					},
 					plugins: {
 						legend: {
 							display: false

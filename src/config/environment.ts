@@ -6,7 +6,8 @@ import {
 	anamneseMeasure,
 	patientsMeasure,
 	specimenMeasure,
-	studyMeasure
+	studyMeasure,
+	transplantMeasure
 } from '../measures';
 
 export const genderHeaders: Map<string, string> = new Map<string, string>()
@@ -27,7 +28,8 @@ export const measures: MeasureGroup[] = [
 			patientsMeasure as MeasureItem,
 			anamneseMeasure as MeasureItem,
 			specimenMeasure as MeasureItem,
-			studyMeasure as MeasureItem
+			studyMeasure as MeasureItem,
+			transplantMeasure as MeasureItem
 		]
 	}
 ];

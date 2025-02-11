@@ -9,6 +9,7 @@
 	import DiseasesChartDiabetes from './charts/DiseasesChartDiabetes.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
 	import TestChart from './charts/TestChart.svelte';
+	import TransplantChart from './charts/TransplantChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
 	import { genderHeaders, measures } from './config/environment';
@@ -71,8 +72,6 @@
 	// 	getQuery();
 	// };
 </script>
-			<button class="button-daten-beantragen">Daten beantragen</button>
-
 <div class="page">
 	<header>
 		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
@@ -110,6 +109,7 @@
 			<div class="charts">
 				<div class="chart-wrapper result-summary">
 					<lens-result-summary></lens-result-summary>
+					<button class="datenBeantragen" id="datenBeantragen">Daten beantragen</button>
 					<lens-search-modified-display
 						>Diagramme repräsentieren nicht mehr die aktuelle Suche!
 					</lens-search-modified-display>
@@ -204,6 +204,8 @@
 						chartType="bar"
 						filterRegex="^[LIQUID|X].*"
 						displayLegends="{false}"
+						xAxisTitle="Typ"
+						yAxisTitle="Anzahl der Proben"
 					>
 					</lens-chart>
 				</div>
@@ -214,18 +216,20 @@
 						chartType="bar"
 						filterRegex="^[TISSUE].*"
 						displayLegends="{false}"
+						xAxisTitle="Typ"
+						yAxisTitle="Anzahl der Proben"
 					>
 					</lens-chart>
 				</div>
-
-				<div class="chart-wrapper chart-sites">
+<!--				<div class="chart-wrapper chart-diseases">
+					<TransplantChart></TransplantChart>
+				</div>-->
+				<div class="chart-wrapper chart-sites-multi">
 					<SitesChart></SitesChart>
 				</div>
-				<div class="chart-wrapper chart-sites-multi">
-					<TestChart></TestChart>
-				</div>
-<!--
-				<div class="chart-wrapper chart-diabetes">
+
+
+<!--				<div class="chart-wrapper chart-diabetes">
 					<lens-chart
 						title="Diabetes"
 						catalogueGroupCode="diabetes"
@@ -233,8 +237,8 @@
 						displayLegends="{true}"
 					>
 					</lens-chart>
-				</div>
-				-->
+				</div>-->
+
 			</div>
 		</div>
 	</main>
@@ -251,7 +255,7 @@
 		<div class="footer__links">
 			<a href="/impressum">Impressum</a>
 			<a href="/kontakt">Kontakt</a>
-			<a href="/datenschutz">Datenschutz</a>
+			<!--<a href="/datenschutz">Datenschutz</a>-->
 		</div>
 	</footer>
 </div>

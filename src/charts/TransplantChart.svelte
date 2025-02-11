@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Chart } from 'chart.js/auto';
-	import { backgroundColor, backgroundHoverColor } from '../services/tools/chart-style';
-
 	import type { LensDataPasser, Site } from '@samply/lens';
+	import { backgroundColor, backgroundHoverColor } from '../services/tools/chart-style';
 
 	let dataPasser: LensDataPasser;
 
@@ -18,85 +17,74 @@
 
 	window.addEventListener('lens-responses-updated', () => {
 		response = dataPasser?.getResponseAPI();
-		anamneseOut();
+		transplantOut();
 	});
 
-	const anamneseOut = () => {
+	const transplantOut = () => {
 		chartData = [];
 
 		if (response == null) {
+			console.warn('No response data found');
 			return;
 		}
-		const anamneseGroup = response
-			.get('DKTK')
-			?.data.group.find((group) => group.code.text === 'anamnese');
 
-		if (!anamneseGroup) return;
+		const transplantGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'transplant');
+
+		if (!transplantGroup) {
+			console.warn('No transplant group found');
+			return;
+		}
+
+		console.log('Transplant Group:', transplantGroup);
 
 		const stratifiers = [
-			{
-				key: 'chrVirusHIV',
-				label: 'Chronische Virusinfektion (HIV)',
-				includeAsYes: [
-					'Y'
-				]
-			},
-			{
-				key: 'chrVirusHBV',
-				label: 'Chronische Virusinfektion (HBV)',
-				includeAsYes: [
-					'Y'
-				]
-			},
-			{
-				key: 'chrVirusHCV',
-				label: 'Chronische Virusinfektion (HCV)',
-				includeAsYes: [
-					'Y'
-				]
-			},
-			{
-				key: 'chrVirusOTHER',
-				label: 'Chronische Virusinfektion (Andere)',
-				includeAsYes: [
-					'Y'
-				]
-			}
+			{ key: 'BON', label: 'BON' },
+			{ key: 'STE', label: 'STE' },
+			{ key: 'CLN', label: 'CLN' },
+			{ key: 'LUN', label: 'LUN' },
+			{ key: 'COR', label: 'COR' },
+			{ key: 'KID', label: 'KID' },
+			{ key: 'HRT', label: 'HRT' },
+			{ key: 'HRTV', label: 'HRTV' },
+			{ key: 'AO', label: 'AO' },
+			{ key: 'OTHER', label: 'OTHER' },
+			{ key: 'BV', label: 'BV' },
+			{ key: 'CAR', label: 'CAR' },
+			{ key: 'SKN', label: 'SKN' },
+			{ key: 'MEN', label: 'MEN' },
+			{ key: 'LIV', label: 'LIV' },
+			{ key: 'PAN', label: 'PAN' },
+			{ key: 'TEN', label: 'TEN' }
 		];
 
-		stratifiers.forEach(({ key, label, includeAsYes = [] }) => {
-			const stratifier = anamneseGroup.stratifier.find((strat) =>
+		stratifiers.forEach(({ key, label }) => {
+			const stratifier = transplantGroup.stratifier.find((strat) =>
 				strat.code.some((c) => c.text === key)
 			);
 
-			if (!stratifier) return;
+			if (!stratifier) {
+				console.warn(`Stratifier not found for key: ${key}`);
+				return;
+			}
 
 			const results = stratifier.stratum
 				.map((stratum) => {
 					const value = stratum.value?.text || '';
 					const count = stratum.population?.at(0)?.count ?? 0;
 
-					if (includeAsYes.some((yesValue) => value.includes(yesValue))) {
-						return { answer: label, count };
-					}
 					if (['X', 'N', 'null'].some((excluded) => value.includes(excluded))) {
 						return null;
 					}
 					return { answer: label, count };
 				})
-				.filter((item) => item !== null)
-				.reduce((acc, curr) => {
-					const existing = acc.find((item) => item.answer === curr.answer);
-					if (existing) {
-						existing.count += curr.count;
-					} else {
-						acc.push(curr);
-					}
-					return acc;
-				}, []);
+				.filter((item) => item !== null);
 
 			chartData.push(...results);
 		});
+
+		console.log('Chart Data:', chartData);
 
 		updateChart();
 	};
@@ -108,10 +96,15 @@
 			chart.data.datasets[0].backgroundColor = backgroundColor.slice(0, chartData.length);
 			chart.update();
 		} else {
-			const ctx = document.getElementById('diseasesChartVirus') as HTMLCanvasElement;
+			const ctx = document.getElementById('transplantChart') as HTMLCanvasElement;
+			if (!ctx) {
+				console.error('Canvas element not found');
+				return;
+			}
+
 			Chart.defaults.font.size = 12;
 			chart = new Chart(ctx.getContext('2d'), {
-				type: 'bar',
+				type: 'pie',
 				data: {
 					labels: chartData.map((d) => d.answer),
 					datasets: [
@@ -125,14 +118,6 @@
 					]
 				},
 				options: {
-					scales:{
-						y:{
-							title: {
-								display: true,
-							text: "Anzahl der Patienten"
-						}
-						}
-					},
 					plugins: {
 						legend: {
 							display: false
@@ -143,19 +128,21 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Viruserkrankungen'
+							text: 'Transplantierte Organe'
 						}
 					}
 				}
 			});
+
+			console.log('Chart created:', chart);
 		}
 	};
 
 	onMount(() => {
-		anamneseOut();
+		transplantOut();
 	});
 </script>
 
-<canvas id="diseasesChartVirus"></canvas>
+<canvas id="transplantChart"></canvas>
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>

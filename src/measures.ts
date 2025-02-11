@@ -439,3 +439,52 @@ study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/ORG
 + '#' + study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY').code.first()
 `
 };
+
+export const transplantMeasure = {
+	key: 'transplant',
+	measure: {
+		code: {
+			text: 'transplant'
+		},
+		extension: [
+			{
+				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
+				valueCode: 'Observation'
+			}
+		],
+		population: [
+			{
+				code: {
+					coding: [
+						{
+							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
+							code: 'initial-population'
+						}
+					]
+				},
+				criteria: {
+					language: 'text/cql-identifier',
+					expression: 'Transplant'
+				}
+			}
+		],
+		stratifier: [
+			{
+				code: {
+					text: 'transplant'
+				},
+				criteria: {
+					language: 'text/cql',
+					expression: 'TransplantOut'
+				}
+			}
+		]
+	},
+	cql: `
+define Transplant:
+if InInitialPopulation then [Observation] else {} as List<Observation>
+
+define function TransplantOut(transplant FHIR.Observation):
+transplant.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN').code.first()
+`
+};

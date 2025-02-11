@@ -42,7 +42,7 @@
 		<div class="footer__links">
 			<a href="/impressum">Impressum</a>
 			<a href="/kontakt">Kontakt</a>
-			<a href="/datenschutz">Datenschutz</a>
+			<!--<a href="/datenschutz">Datenschutz</a>-->
 		</div>
 	</footer>
 </div>

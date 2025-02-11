@@ -113,6 +113,14 @@
 					]
 				},
 				options: {
+					scales:{
+						y:{
+							title: {
+								display: true,
+							text: "Anzahl der Patienten"
+						}
+						}
+					},
 					plugins: {
 						legend: {
 							display: false
