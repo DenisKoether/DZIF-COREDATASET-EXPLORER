@@ -30,8 +30,9 @@
 		const anamneseGroup = response
 			.get('DKTK')
 			?.data.group.find((group) => group.code.text === 'anamnese');
-
 		if (!anamneseGroup) return;
+
+				console.log('anamnese Group:', anamneseGroup);
 
 		const stratifiers = [
 			{ key: 'malaria', label: 'Malaria' },
@@ -66,7 +67,10 @@
 				strat.code.some((c) => c.text === key)
 			);
 
-			if (!stratifier) return;
+			if (!stratifier) {
+				console.warn(`Stratifier not found for key: ${key}`);
+				return;
+			}
 
 			if (!subkeys.length) {
 				const results = stratifier.stratum

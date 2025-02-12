@@ -221,9 +221,9 @@
 					>
 					</lens-chart>
 				</div>
-<!--				<div class="chart-wrapper chart-diseases">
+				<div class="chart-wrapper chart-diseases">
 					<TransplantChart></TransplantChart>
-				</div>-->
+				</div>
 				<div class="chart-wrapper chart-sites-multi">
 					<SitesChart></SitesChart>
 				</div>

@@ -31,35 +31,37 @@
 		const transplantGroup = response
 			.get('DKTK')
 			?.data.group.find((group) => group.code.text === 'transplant');
-
-		if (!transplantGroup) {
-			console.warn('No transplant group found');
-			return;
-		}
+		if (!transplantGroup) return;
 
 		console.log('Transplant Group:', transplantGroup);
 
 		const stratifiers = [
-			{ key: 'BON', label: 'BON' },
-			{ key: 'STE', label: 'STE' },
-			{ key: 'CLN', label: 'CLN' },
-			{ key: 'LUN', label: 'LUN' },
-			{ key: 'COR', label: 'COR' },
-			{ key: 'KID', label: 'KID' },
-			{ key: 'HRT', label: 'HRT' },
-			{ key: 'HRTV', label: 'HRTV' },
-			{ key: 'AO', label: 'AO' },
-			{ key: 'OTHER', label: 'OTHER' },
-			{ key: 'BV', label: 'BV' },
-			{ key: 'CAR', label: 'CAR' },
-			{ key: 'SKN', label: 'SKN' },
-			{ key: 'MEN', label: 'MEN' },
-			{ key: 'LIV', label: 'LIV' },
-			{ key: 'PAN', label: 'PAN' },
-			{ key: 'TEN', label: 'TEN' }
+			{
+				key: 'transplant',
+				label: '',
+				subkeys: [
+					{ key: 'BON', label: 'BON' },
+					{ key: 'STE', label: 'STE' },
+					{ key: 'CLN', label: 'CLN' },
+					{ key: 'LUN', label: 'LUN' },
+					{ key: 'COR', label: 'COR' },
+					{ key: 'KID', label: 'KID' },
+					{ key: 'HRT', label: 'HRT' },
+					{ key: 'HRTV', label: 'HRTV' },
+					{ key: 'AO', label: 'AO' },
+					{ key: 'OTHER', label: 'OTHER' },
+					{ key: 'BV', label: 'BV' },
+					{ key: 'CAR', label: 'CAR' },
+					{ key: 'SKN', label: 'SKN' },
+					{ key: 'MEN', label: 'MEN' },
+					{ key: 'LIV', label: 'LIV' },
+					{ key: 'PAN', label: 'PAN' },
+					{ key: 'TEN', label: 'TEN' }
+				]
+			}
 		];
 
-		stratifiers.forEach(({ key, label }) => {
+		stratifiers.forEach(({ key, label, subkeys = [] }) => {
 			const stratifier = transplantGroup.stratifier.find((strat) =>
 				strat.code.some((c) => c.text === key)
 			);
@@ -69,27 +71,42 @@
 				return;
 			}
 
-			const results = stratifier.stratum
-				.map((stratum) => {
-					const value = stratum.value?.text || '';
-					const count = stratum.population?.at(0)?.count ?? 0;
+			if (!subkeys.length) {
+				const results = stratifier.stratum
+					.map((stratum) => {
+						const value = stratum.value?.text || '';
+						const count = stratum.population?.at(0)?.count ?? 0;
 
-					if (['X', 'N', 'null'].some((excluded) => value.includes(excluded))) {
-						return null;
+						if (['X', 'N', 'null'].some((excluded) => value.includes(excluded))) {
+							return null;
+						}
+						return { answer: label, count };
+					})
+					.filter((item) => item !== null);
+
+				chartData.push(...results);
+			}
+
+			subkeys.forEach(({ key: subkey, label: subLabel }) => {
+				const subStratum = stratifier.stratum.find((stratum) =>
+					stratum.value?.text === subkey
+				);
+
+				if (subStratum) {
+					const count = subStratum.population?.at(0)?.count ?? 0;
+					if (count > 0) {
+						chartData.push({ answer: subLabel, count });
 					}
-					return { answer: label, count };
-				})
-				.filter((item) => item !== null);
-
-			chartData.push(...results);
+				}
+			});
 		});
 
 		console.log('Chart Data:', chartData);
-
-		updateChart();
+		const totalCount = chartData.reduce((total, item) => total + item.count, 0);
+		updateChart(totalCount);
 	};
 
-	const updateChart = () => {
+	const updateChart = (totalCount: number) => {
 		if (chart) {
 			chart.data.labels = chartData.map((d) => d.answer);
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
@@ -129,6 +146,10 @@
 							color: '#000000',
 							display: true,
 							text: 'Transplantierte Organe'
+						},
+						subtitle: {
+							display: true,
+							text: 'Anzahl aller Transplantationen: ' + totalCount
 						}
 					}
 				}

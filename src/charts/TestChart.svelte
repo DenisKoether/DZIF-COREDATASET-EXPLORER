@@ -213,7 +213,6 @@
 		let studyGroup = response.get('DKTK')?.data.group.find((group) => group.code.text === 'study');
 		if (!studyGroup) return [];
 
-		console.log('Study Group:', studyGroup);
 
 		/*		const chartData = stratifiers.map(stratifier => {
 					const relevantStratifier = studyGroup.stratifier.find(s =>
