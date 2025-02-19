@@ -8,7 +8,6 @@
 	import DiseasesChartNeuro from './charts/DiseasesChartNeuro.svelte';
 	import DiseasesChartDiabetes from './charts/DiseasesChartDiabetes.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
-	import TestChart from './charts/TestChart.svelte';
 	import TransplantChart from './charts/TransplantChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
@@ -72,6 +71,7 @@
 	// 	getQuery();
 	// };
 </script>
+
 <div class="page">
 	<header>
 		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
@@ -228,8 +228,7 @@
 					<SitesChart></SitesChart>
 				</div>
 
-
-<!--				<div class="chart-wrapper chart-diabetes">
+				<!--				<div class="chart-wrapper chart-diabetes">
 					<lens-chart
 						title="Diabetes"
 						catalogueGroupCode="diabetes"
@@ -238,7 +237,6 @@
 					>
 					</lens-chart>
 				</div>-->
-
 			</div>
 		</div>
 	</main>

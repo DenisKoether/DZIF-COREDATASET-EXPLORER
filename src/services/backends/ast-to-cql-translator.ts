@@ -43,9 +43,9 @@ export const translateAstToCql = (
 	singletons = backendMeasures + '\n';
 	singletons += resolveOperation(query);
 
-	if (query.children.length == 0) {
-		singletons += 'true';
-	}
+    if (isQueryEmpty(query)) {
+        singletons += "\ntrue";
+    }
 
 	if (returnOnlySingeltons) {
 		return singletons;
@@ -92,6 +92,23 @@ const resolveOperation = (operation: AstElement): string => {
 		});
 
 	return expression;
+};
+
+const isQueryEmptyRec = (query: AstElement): boolean => {
+    if (query.nodeType === "leaf") {
+        return false;
+    }
+    if (query.children.length === 0) {
+        return true;
+    }
+    return query.children.every(isQueryEmptyRec);
+};
+
+const isQueryEmpty = (query: AstTopLayer): boolean => {
+    if (query.children.length === 0) {
+        return true;
+    }
+    return query.children.every(isQueryEmptyRec);
 };
 
 const getSingleton = (criterion: AstBottomLayerValue): string => {

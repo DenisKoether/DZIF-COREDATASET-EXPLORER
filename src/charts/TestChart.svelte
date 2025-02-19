@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
-	import ChartDataLabels from 'chartjs-plugin-datalabels';
 	import type { LensDataPasser, Site } from '@samply/lens';
 	import { backgroundColor } from '../services/tools/chart-style';
 
@@ -135,74 +134,6 @@
 						{ study: 'HH-TI-AD-OTHER', count: 0 }
 					]
 				}
-			]
-		}
-	];
-
-	const stratifiers = [
-		{
-			key: 'sites',
-			label: 'Standorte',
-			subkeys: [
-				{ key: 'BN', label: 'Bonn' },
-				{ key: 'BOR', label: 'Borstel' },
-				{ key: 'BS', label: 'Braunschweig' },
-				{ key: 'GI', label: 'Gießen' },
-				{ key: 'H', label: 'Hannover' },
-				{ key: 'HD', label: 'Heidelberg' },
-				{ key: 'HH', label: 'Hamburg' },
-				{ key: 'HHBNI', label: 'Hamburg BNI' },
-				{ key: 'HHUKE', label: 'Hamburg UKE' },
-				{ key: 'HL', label: 'Lübeck' },
-				{ key: 'K', label: 'Köln' },
-				{ key: 'MLMU', label: 'München LMU' },
-				{ key: 'MR', label: 'Marburg' },
-				{ key: 'MTUM', label: 'München TUM' },
-				{ key: 'RIEMS', label: 'Riems' },
-				{ key: 'TUE', label: 'Tübingen' },
-				{ key: 'OTHER', label: 'Andere' }
-			]
-		},
-		{
-			key: 'study',
-			label: 'TTUs',
-			subkeys: [
-				{ key: 'TI-AD', label: 'TI-AD' },
-				{ key: 'TI-API', label: 'TI-API' },
-				{ key: 'TI-BB', label: 'TI-BB' },
-				{ key: 'TI-BP', label: 'TI-BP' },
-				{ key: 'TI-CTU', label: 'TI-CTU' },
-				{ key: 'TI-EPI', label: 'TI-EPI' },
-				{ key: 'TI-NA', label: 'TI-NA' },
-				{ key: 'TI-PR', label: 'TI-PR' },
-				{ key: 'TTU-EI', label: 'TTU-EI' },
-				{ key: 'TTU-GII', label: 'TTU-GII' },
-				{ key: 'TTU-HA', label: 'TTU-HA' },
-				{ key: 'TTU-HEP', label: 'TTU-HEP' },
-				{ key: 'TTU-HIV', label: 'TTU-HIV' },
-				{ key: 'TTU-IICH', label: 'TTU-IICH' },
-				{ key: 'TTU-MAL', label: 'TTU-MAL' },
-				{ key: 'TTU-NA', label: 'TTU-NA' },
-				{ key: 'TTU-TUB', label: 'TTU-TUB' },
-				{ key: 'OTHER', label: 'Andere' }
-			]
-		},
-		{
-			key: 'studyKohorte',
-			label: 'Studien',
-			subkeys: [
-				{ key: 'TX', label: 'TX' },
-				{ key: 'HIV', label: 'HIV' },
-				{ key: 'FWS', label: 'FWS' },
-				{ key: 'FWSC', label: 'FWSC' },
-				{ key: 'TIARA', label: 'TIARA' },
-				{ key: 'TBC', label: 'TBC' },
-				{ key: 'KS', label: 'KS' },
-				{ key: 'LACHMI', label: 'LACHMI' },
-				{ key: 'HBV', label: 'HBV' },
-				{ key: 'COVT', label: 'COVT' },
-				{ key: 'CRYO', label: 'CRYO' },
-				{ key: 'OTHER', label: 'Andere' }
 			]
 		}
 	];
