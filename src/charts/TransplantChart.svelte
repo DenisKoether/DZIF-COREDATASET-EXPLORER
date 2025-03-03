@@ -33,8 +33,6 @@
 			?.data.group.find((group) => group.code.text === 'transplant');
 		if (!transplantGroup) return;
 
-		console.log('Transplant Group:', transplantGroup);
-
 		const stratifiers = [
 			{
 				key: 'transplant',
@@ -101,7 +99,6 @@
 			});
 		});
 
-		console.log('Chart Data:', chartData);
 		const totalCount = chartData.reduce((total, item) => total + item.count, 0);
 		updateChart(totalCount);
 	};
@@ -154,8 +151,6 @@
 					}
 				}
 			});
-
-			console.log('Chart created:', chart);
 		}
 	};
 

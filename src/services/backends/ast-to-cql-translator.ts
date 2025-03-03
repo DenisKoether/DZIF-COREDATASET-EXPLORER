@@ -118,13 +118,11 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 	if (criterion.key === 'therapy_of_tumor') {
 		criterion.key = criterion.value as string;
 	}
-	console.log('test2');
 	const myCriterion = criterionMap.get(criterion.key);
 
 	if (myCriterion) {
 		const myCQL = cqltemplate.get(myCriterion.type);
 		if (myCQL) {
-			console.log(myCriterion.type);
 			switch (myCriterion.type) {
 				case 'storageTemperature':
 				case 'gender':
@@ -188,7 +186,6 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'BIOSAMPLE_AMOUNT':
 				case 'BIOSAMPLE_AMOUNT_UNIT':
 				case 'INFECTION_ACUTE': {
-					console.log('test');
 					if (typeof criterion.value === 'string') {
 						// TODO: Check if we really need to do this or we can somehow tell cql to do that expansion it self
 						if (criterion.value.slice(-1) === '%' && criterion.value.length == 5) {

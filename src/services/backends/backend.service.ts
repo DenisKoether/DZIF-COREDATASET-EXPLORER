@@ -1,6 +1,6 @@
 import type { MeasureItem, Measure, AstTopLayer, Site, MeasureGroup } from '@samply/lens';
 
-import { buildLibrary, buildMeasure } from './cql-measure';
+//import { buildLibrary, buildMeasure } from './cql-measure';
 import { translateAstToCql } from './ast-to-cql-translator';
 import { Blaze } from './blaze';
 
@@ -15,7 +15,7 @@ export const requestBackend = (
 		(measureItem: MeasureItem) => measureItem.measure
 	);
 
-	let query = {};
+	// let query = {};
 
 	const cql = translateAstToCql(
 		ast,
@@ -25,13 +25,9 @@ export const requestBackend = (
 		criteria
 	);
 
-	console.log(cql);
-
-	const library = buildLibrary(`${cql}`);
+/* 	const library = buildLibrary(`${cql}`);
 	const measure = buildMeasure(library.url, measures);
-	query = { lang: 'cql', lib: library, measure: measure };
-
-	console.debug(query);
+	query = { lang: 'cql', lib: library, measure: measure }; */
 
 	let backendUrl: string = '';
 

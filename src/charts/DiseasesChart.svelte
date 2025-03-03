@@ -32,8 +32,6 @@
 			?.data.group.find((group) => group.code.text === 'anamnese');
 		if (!anamneseGroup) return;
 
-				console.log('anamnese Group:', anamneseGroup);
-
 		const stratifiers = [
 			{ key: 'malaria', label: 'Malaria' },
 			{
