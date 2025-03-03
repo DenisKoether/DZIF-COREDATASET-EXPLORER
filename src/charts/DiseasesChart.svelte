@@ -190,6 +190,19 @@
 						}
 						}
 					},
+					plugins: {
+						legend: {
+							display: false
+						},
+						title: {
+							font: {
+								size: 16
+							},
+							color: '#000000',
+							display: true,
+							text: 'Erkrankungen'
+						}
+					}
 				}
     };
 

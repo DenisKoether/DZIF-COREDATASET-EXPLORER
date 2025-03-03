@@ -154,7 +154,30 @@
                     backgroundHoverColor: ["#E6E6E6"],
                 },
             ],
-        }
+        },
+				options: {
+					scales:{
+						y:{
+							title: {
+								display: true,
+							text: "Anzahl der Patienten"
+						}
+						}
+					},
+					plugins: {
+						legend: {
+							display: false
+						},
+						title: {
+							font: {
+								size: 16
+							},
+							color: '#000000',
+							display: true,
+							text: 'Diabetes'
+						}
+					}
+				}
     };
 
 	onMount(() => {

@@ -15,6 +15,8 @@
 	let chartData: ChartDataItem[] = [];
 	let response: Map<string, Site> | null = null;
 
+	let totalCount: number = 0;
+
 	window.addEventListener('lens-responses-updated', () => {
 		response = dataPasser?.getResponseAPI();
 		transplantOut();
@@ -102,11 +104,11 @@
 			});
 		});
 
-		const totalCount = chartData.reduce((total, item) => total + item.count, 0);
-		updateChart(totalCount);
+		totalCount = chartData.reduce((total, item) => total + item.count, 0);
+		updateChart();
 	};
 
-	const updateChart = (totalCount: number) => {
+	const updateChart = () => {
 		if (chart) {
 			chart.data.labels = chartData.map((d) => d.answer);
 			chart.data.datasets[0].data = chartData.map((d) => d.count);
@@ -146,10 +148,6 @@
 							color: '#000000',
 							display: true,
 							text: 'Transplantierte Organe'
-						},
-						subtitle: {
-							display: true,
-							text: 'Anzahl aller Transplantationen: ' + totalCount
 						}
 					}
 				}
@@ -168,7 +166,21 @@
                     backgroundHoverColor: ["#E6E6E6"],
                 },
             ],
-        }
+        },				options: {
+					plugins: {
+						legend: {
+							display: false
+						},
+						title: {
+							font: {
+								size: 16
+							},
+							color: '#000000',
+							display: true,
+							text: 'Transplantierte Organe'
+						}
+					}
+				}
     };
 
 	onMount(() => {
@@ -181,5 +193,7 @@
 </script>
 
 <canvas class="lens-chart" id="transplantChart"></canvas>
+<div>Anzahl aller Transplantationen: {totalCount}</div>
+
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
