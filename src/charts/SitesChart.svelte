@@ -33,7 +33,7 @@
 	};
 
 	const updateChart = () => {
-		
+
 		if (response === null) {
 			return;
 		} else if (response.get('DKTK') === undefined) {
@@ -188,9 +188,27 @@
 		});
 	};
 
+	let initialChartData = {
+        type: 'pie',
+        data: {
+            labels: ["", "", "", ""],
+            datasets: [
+                {
+                    data: [1, 1, 1, 1],
+                    backgroundColor: ["#E6E6E6"],
+                    backgroundHoverColor: ["#E6E6E6"],
+                },
+            ],
+        }
+    };
+
 	onMount(() => {
-		updateChart();
+		const ctx = document.getElementById('multiRingChart2') as HTMLCanvasElement;
+			Chart.defaults.font.size = 12;
+			chart = new Chart(ctx.getContext('2d'), initialChartData);
 	});
+
+	import './chart.css';
 </script>
 
 <canvas id="multiRingChart2"></canvas>

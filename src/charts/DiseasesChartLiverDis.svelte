@@ -145,11 +145,29 @@
 		}
 	};
 
+	let initialChartData = {
+        type: 'bar',
+        data: {
+            labels: ["", "", "", ""],
+            datasets: [
+                {
+                    data: [1, 1, 1, 1],
+                    backgroundColor: ["#E6E6E6"],
+                    backgroundHoverColor: ["#E6E6E6"],
+                },
+            ],
+        }
+    };
+
 	onMount(() => {
-		anamneseOut();
+		const ctx = document.getElementById('diseasesChartLiverDis') as HTMLCanvasElement;
+			Chart.defaults.font.size = 12;
+			chart = new Chart(ctx.getContext('2d'), initialChartData);
 	});
+
+	import './chart.css';
 </script>
 
-<canvas id="diseasesChartLiverDis"></canvas>
+<canvas class="lens-chart" id="diseasesChartLiverDis"></canvas>
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>

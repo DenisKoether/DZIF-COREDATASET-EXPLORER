@@ -4,6 +4,7 @@
 	import type { LensDataPasser, Site } from '@samply/lens';
 	import { backgroundColor, backgroundHoverColor } from '../services/tools/chart-style';
 
+
 	let dataPasser: LensDataPasser;
 
 	interface ChartDataItem {
@@ -14,6 +15,8 @@
 	let chart: Chart | null = null;
 	let chartData: ChartDataItem[] = [];
 	let response: Map<string, Site> | null = null;
+	let init: boolean = true;
+
 
 	window.addEventListener('lens-responses-updated', () => {
 		response = dataPasser?.getResponseAPI();
@@ -109,12 +112,11 @@
 
 
 	const updateChart = () => {
-		if (chart) {
-			chart.data.labels = chartData.map((d) => d.answer);
-			chart.data.datasets[0].data = chartData.map((d) => d.count);
-			chart.data.datasets[0].backgroundColor = backgroundColor.slice(0, chartData.length);
-			chart.update();
-		} else {
+		if (init) {
+			init = false
+
+			chart?.destroy();
+
 			const ctx = document.getElementById('diseasesChart') as HTMLCanvasElement;
 			Chart.defaults.font.size = 12;
 			chart = new Chart(ctx.getContext('2d'), {
@@ -155,14 +157,52 @@
 					}
 				}
 			});
+			chart.data.labels = chartData.map((d) => d.answer);
+			chart.data.datasets[0].data = chartData.map((d) => d.count);
+			chart.data.datasets[0].backgroundColor = backgroundColor.slice(0, chartData.length);
+			chart.update();
+		} else {
+			chart.data.labels = chartData.map((d) => d.answer);
+			chart.data.datasets[0].data = chartData.map((d) => d.count);
+			chart.data.datasets[0].backgroundColor = backgroundColor.slice(0, chartData.length);
+			chart.update();
 		}
 	};
 
+	let initialChartData = {
+        type: 'bar',
+        data: {
+            labels: ["", "", "", ""],
+            datasets: [
+                {
+                    data: [1, 1, 1, 1],
+                    backgroundColor: ["#E6E6E6"],
+                    backgroundHoverColor: ["#E6E6E6"],
+                },
+            ],
+        },
+		options: {
+					scales:{
+						y:{
+							title: {
+								display: true,
+							text: "Anzahl der Patienten"
+						}
+						}
+					},
+				}
+    };
+
+
 	onMount(() => {
-		anamneseOut();
+		const ctx = document.getElementById('diseasesChart') as HTMLCanvasElement;
+			Chart.defaults.font.size = 12;
+			chart = new Chart(ctx.getContext('2d'), initialChartData);
 	});
+
+	import './chart.css';
 </script>
 
-<canvas id="diseasesChart"></canvas>
+<canvas class="lens-chart" id="diseasesChart"></canvas>
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
