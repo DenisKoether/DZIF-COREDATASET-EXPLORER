@@ -24,9 +24,14 @@
 	const anamneseOut = () => {
 		chartData = [];
 
-		if (response == null) {
+		if (response === null) {
 			return;
+		} else if (response.get('DKTK') === undefined) {
+			return
+		} else if (response.get('DKTK')?.status !== "succeeded") {
+			return
 		}
+		
 		const anamneseGroup = response
 			.get('DKTK')
 			?.data.group.find((group) => group.code.text === 'anamnese');

@@ -23,9 +23,12 @@
 	const transplantOut = () => {
 		chartData = [];
 
-		if (response == null) {
-			console.warn('No response data found');
+		if (response === null) {
 			return;
+		} else if (response.get('DKTK') === undefined) {
+			return
+		} else if (response.get('DKTK')?.status !== "succeeded") {
+			return
 		}
 
 		const transplantGroup = response

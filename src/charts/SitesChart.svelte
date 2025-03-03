@@ -33,7 +33,14 @@
 	};
 
 	const updateChart = () => {
-		if (response == null) return;
+		
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return
+		} else if (response.get('DKTK')?.status !== "succeeded") {
+			return
+		}
 
 		let studyGroup = response.get('DKTK')?.data.group.find((group) => group.code.text === 'study');
 		if (!studyGroup) return;
