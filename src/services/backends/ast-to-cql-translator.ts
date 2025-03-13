@@ -2,13 +2,15 @@
  * TODO: Document this file. Move to Project
  */
 
-import type {
-	AstBottomLayerValue,
-	AstElement,
-	AstTopLayer,
-	MeasureItem
+import {
+	type AstBottomLayerValue,
+	type AstElement,
+	type AstTopLayer,
+	type MeasureItem
 } from '@samply/lens';
 import { alias as aliasMap, cqltemplate, criterionMap } from './cqlquery-mappings';
+export const isBottomLayer = (x: AstElement): x is AstBottomLayerValue =>
+    "value" in x;
 
 let codesystems: string[] = [];
 let criteria: string[];
@@ -50,7 +52,14 @@ export const translateAstToCql = (
 	if (returnOnlySingeltons) {
 		return singletons;
 	}
-
+console.log(		cqlHeader +
+		getCodesystems() +
+		'context Patient\n' +
+		measures.map((measureItem: MeasureItem) => measureItem.cql).join('') +
+		'\n' +
+		singletons +
+		'\n'
+	)
 	return (
 		cqlHeader +
 		getCodesystems() +
@@ -95,7 +104,7 @@ const resolveOperation = (operation: AstElement): string => {
 };
 
 const isQueryEmptyRec = (query: AstElement): boolean => {
-    if (query.nodeType === "leaf") {
+    if (isBottomLayer(query)) {
         return false;
     }
     if (query.children.length === 0) {
@@ -136,7 +145,6 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'PARTICIPANT_TYPE':
 				case 'INCLUSION_REASON':
 				case 'STUDY_ENDPOINT':
-				case 'AGE_AT_INCLUSION':
 				case 'SEX':
 				case 'SEX_OTHER':
 				case 'VISIT_TYPE':
@@ -282,6 +290,8 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'PTG_CULT_DATE':
 				case 'TRANSPLANTATION_EXDATE':
 				case 'conditionRangeDate': {
+					console.log("Between zeug")
+					console.log(criterion)
 					if (
 						!(
 							typeof criterion.value === 'object' &&
@@ -293,9 +303,6 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 					)
 						break;
 
-					/**
-					 * The bbmri/gba backend needs the date in the format "@YYYY-MM-DD"
-					 */
 					criterion.value.min = '@' + criterion.value.min;
 					criterion.value.max = '@' + criterion.value.max;
 
@@ -321,7 +328,8 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				}
 
 				case 'age':
-				case 'conditionRangeAge': {
+					case 'AGE_AT_INCLUSION':
+					case 'conditionRangeAge': {
 					expression += substituteRangeCQLExpression(
 						criterion,
 						myCriterion,

@@ -32,6 +32,65 @@
 		count: number;
 	};
 
+const adjustColor = (color: string, factor: number) => {
+    let r, g, b;
+    if (color.startsWith("#")) {
+        r = parseInt(color.slice(1, 3), 16);
+        g = parseInt(color.slice(3, 5), 16);
+        b = parseInt(color.slice(5, 7), 16);
+    } else if (color.startsWith("rgb")) {
+        [r, g, b] = color.match(/\d+/g).map(Number);
+    } else {
+        return color;
+    }
+
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let max = Math.max(r, g, b),
+        min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+        else if (max === g) h = (b - r) / d + 2;
+        else h = (r - g) / d + 4;
+        h /= 6;
+    }
+
+    s = Math.min(1, Math.max(0, s * factor));
+
+    if (factor < 1) {
+        l = l + (1 - factor) * 0.15;
+    } else {
+        l = l - (factor - 1) * 0.10;
+    }
+    l = Math.min(1, Math.max(0, l));
+
+    let hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+    };
+
+    let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    let p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+
+    return `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
+};
+
+
+
 	const updateChart = () => {
 
 		if (response === null) {
@@ -101,15 +160,16 @@
 
 		const siteLabels = sites.map((site) => site.site);
 		const siteData = sites.map((site) => site.count);
-		const siteColors = sites.map((site) => siteColorMap.get(site.site));
+		const siteColors = sites.map((site) => adjustColor(siteColorMap.get(site.site), 2));
+
 
 		const ttuLabels = sites.flatMap((site) =>
 			site.ttus.map((ttu) => `${site.site}-${ttu.ttu}`)
 		);
 		const ttuData = sites.flatMap((site) => site.ttus.map((ttu) => ttu.count));
-		const ttuColors = sites.flatMap((site) =>
-			site.ttus.map(() => siteColorMap.get(site.site))
-		);
+        const ttuColors = sites.flatMap((site) =>
+            site.ttus.map(() => adjustColor(siteColorMap.get(site.site), 1))
+        );
 
 		const studyLabels = sites.flatMap((site) =>
 			site.ttus.flatMap((ttu) =>
@@ -119,11 +179,11 @@
 		const studyData = sites.flatMap((site) =>
 			site.ttus.flatMap((ttu) => ttu.studies.map((study) => study.count))
 		);
-		const studyColors = sites.flatMap((site) =>
-			site.ttus.flatMap((ttu) =>
-				ttu.studies.map(() => siteColorMap.get(site.site))
-			)
-		);
+const studyColors = sites.flatMap((site) =>
+    site.ttus.flatMap((ttu) =>
+        ttu.studies.map(() => adjustColor(siteColorMap.get(site.site), 0.6))
+    )
+);
 
 		chart = new Chart(ctx, {
 			type: 'doughnut',
@@ -162,6 +222,14 @@
 						display: true,
 						text: 'Patienten pro Standort'
 					},
+                    subtitle: {
+                            font: {
+								size: 16
+							},
+							color: '#000000',
+							display: true,
+							text: 'Hier könnte Ihre Werbung stehen!'
+                        },
 					legend: {
 						display: false,
 					},

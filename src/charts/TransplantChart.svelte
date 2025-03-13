@@ -178,7 +178,15 @@
 							color: '#000000',
 							display: true,
 							text: 'Transplantierte Organe'
-						}
+						},
+                        subtitle: {
+                            font: {
+								size: 16
+							},
+							color: '#000000',
+							display: true,
+							text: 'Anzahl aller Transplantationen:' + totalCount
+                        }
 					}
 				}
     };
@@ -193,7 +201,7 @@
 </script>
 
 <canvas class="lens-chart" id="transplantChart"></canvas>
-<div>Anzahl aller Transplantationen: {totalCount}</div>
+<!--<div>Anzahl aller Transplantationen: {totalCount}</div>-->
 
 
 <lens-data-passer bind:this="{dataPasser}"></lens-data-passer>

@@ -132,7 +132,7 @@ export const cqltemplate = new Map<string, string>([
 	],
 	[
 		'AGE_AT_INCLUSION',
-		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION').value contains '{{C}}')"
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION').value between {{D1}} and {{D2}})"
 	],
 	[
 		'SEX',
