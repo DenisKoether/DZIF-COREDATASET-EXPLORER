@@ -128,11 +128,11 @@ export const cqltemplate = new Map<string, string>([
 	],
 	[
 		'DATE_OF_DEATH',
-		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/DATE_OF_DEATH').value between {{D1}} and {{D2}})"
+		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/DATE_OF_DEATH').value as FHIR code.Integer between {{D1}} and {{D2}})"
 	],
 	[
 		'AGE_AT_INCLUSION',
-		"exists from [Patient] P where (P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION').value between {{D1}} and {{D2}})"
+		"exists from [Patient] P where (AgeInYearsAt(FHIRHelpers.ToDateTime(P.extension.where(url='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION').value)) between {{D1}} and {{D2}})"
 	],
 	[
 		'SEX',

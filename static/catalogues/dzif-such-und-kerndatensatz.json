@@ -575,13 +575,6 @@
                 "name": "Andere"
               }
             ]
-          },
-          {
-            "key": "VISIT_TYPE_NUMBER",
-            "name": "Amount of Visits/Follow-up's",
-            "fieldType": "number",
-            "type": "BETWEEN",
-            "min": 0
           }
         ]
       }
@@ -612,14 +605,6 @@
             "name": "Nein"
           }
         ]
-      },
-      {
-        "key": "TRANSPLANTATION_AMOUNT_OF_TRANSPLANS",
-        "name": "Anzahl Transplantationen",
-        "fieldType": "number",
-        "type": "BETWEEN",
-        "min": 0,
-        "max": 50
       }
     ]
   },
@@ -1486,20 +1471,8 @@
       {
         "key": "BIOSAMPLE_RETRIEVAL_DATE",
         "name": "Bioprobenentnahmedatum",
-        "childCategories": [
-          {
-            "key": "BIOSAMPLE_RETRIEVAL_DATE",
-            "name": "Bioprobenentnahmedatum",
             "fieldType": "date",
             "type": "BETWEEN"
-          },
-          {
-            "key": "BIOSAMPLE_RETRIEVAL_TIME",
-            "name": "Bioprobenentnahmedatum",
-            "fieldType": "date",
-            "type": "BETWEEN"
-          }
-        ]
       },
       {
         "key": "BIOSAMPLE_RETRIEVAL_LOCATION",
@@ -1719,10 +1692,6 @@
           }
         ]
       },
-      {
-        "key": "BIOSAMPLE_AMOUNT",
-        "name": "Menge",
-        "childCategories": [
           {
             "key": "BIOSAMPLE_AMOUNT",
             "name": "Probenmenge",
@@ -1732,7 +1701,7 @@
           },
           {
             "key": "BIOSAMPLE_AMOUNT_UNIT",
-            "name": "Menge",
+            "name": "Mengeneinheit",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -1806,8 +1775,6 @@
               }
             ]
           }
-        ]
-      }
     ]
   },
   {

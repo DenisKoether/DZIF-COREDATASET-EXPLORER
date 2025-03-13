@@ -9,8 +9,7 @@ import {
 	type MeasureItem
 } from '@samply/lens';
 import { alias as aliasMap, cqltemplate, criterionMap } from './cqlquery-mappings';
-export const isBottomLayer = (x: AstElement): x is AstBottomLayerValue =>
-    "value" in x;
+export const isBottomLayer = (x: AstElement): x is AstBottomLayerValue => 'value' in x;
 
 let codesystems: string[] = [];
 let criteria: string[];
@@ -45,21 +44,22 @@ export const translateAstToCql = (
 	singletons = backendMeasures + '\n';
 	singletons += resolveOperation(query);
 
-    if (isQueryEmpty(query)) {
-        singletons += "\ntrue";
-    }
+	if (isQueryEmpty(query)) {
+		singletons += '\ntrue';
+	}
 
 	if (returnOnlySingeltons) {
 		return singletons;
 	}
-console.log(		cqlHeader +
-		getCodesystems() +
-		'context Patient\n' +
-		measures.map((measureItem: MeasureItem) => measureItem.cql).join('') +
-		'\n' +
-		singletons +
-		'\n'
-	)
+	console.log(
+		cqlHeader +
+			getCodesystems() +
+			'context Patient\n' +
+			measures.map((measureItem: MeasureItem) => measureItem.cql).join('') +
+			'\n' +
+			singletons +
+			'\n'
+	);
 	return (
 		cqlHeader +
 		getCodesystems() +
@@ -104,20 +104,20 @@ const resolveOperation = (operation: AstElement): string => {
 };
 
 const isQueryEmptyRec = (query: AstElement): boolean => {
-    if (isBottomLayer(query)) {
-        return false;
-    }
-    if (query.children.length === 0) {
-        return true;
-    }
-    return query.children.every(isQueryEmptyRec);
+	if (isBottomLayer(query)) {
+		return false;
+	}
+	if (query.children.length === 0) {
+		return true;
+	}
+	return query.children.every(isQueryEmptyRec);
 };
 
 const isQueryEmpty = (query: AstTopLayer): boolean => {
-    if (query.children.length === 0) {
-        return true;
-    }
-    return query.children.every(isQueryEmptyRec);
+	if (query.children.length === 0) {
+		return true;
+	}
+	return query.children.every(isQueryEmptyRec);
 };
 
 const getSingleton = (criterion: AstBottomLayerValue): string => {
@@ -290,8 +290,8 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				case 'PTG_CULT_DATE':
 				case 'TRANSPLANTATION_EXDATE':
 				case 'conditionRangeDate': {
-					console.log("Between zeug")
-					console.log(criterion)
+					console.log('Between zeug');
+					console.log(criterion);
 					if (
 						!(
 							typeof criterion.value === 'object' &&
@@ -328,8 +328,8 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
 				}
 
 				case 'age':
-					case 'AGE_AT_INCLUSION':
-					case 'conditionRangeAge': {
+				case 'AGE_AT_INCLUSION':
+				case 'conditionRangeAge': {
 					expression += substituteRangeCQLExpression(
 						criterion,
 						myCriterion,
