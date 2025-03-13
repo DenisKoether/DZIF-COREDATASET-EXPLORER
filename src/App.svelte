@@ -141,7 +141,7 @@
 
 				<div class="chart-wrapper chart-gender">
 					<lens-chart
-						title="Geschlecht"
+						title="Identifizierendes Geschlecht"
 						catalogueGroupCode="gender"
 						chartType="pie"
 						displayLegends="{true}"

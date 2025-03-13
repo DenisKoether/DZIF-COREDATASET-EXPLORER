@@ -460,26 +460,12 @@
         "type": "BETWEEN"
       },
       {
-        "key": "AGE_AT_INCLUSION",
-        "name": "Demographie: Alter",
-        "childCategories": [
-          {
-            "key": "AGE_AT_INCLUSION",
-            "name": "Age at inclusion",
-            "fieldType": "number",
-            "type": "BETWEEN",
-            "min": 0,
-            "max": 110
-          }
-        ]
-      },
-      {
         "key": "SEX",
-        "name": "Demographie: Geschlecht",
+        "name": "Geschlecht",
         "childCategories": [
           {
             "key": "SEX",
-            "name": "Sex (biological at birth)",
+            "name": "Biologisches Geschlecht",
             "fieldType": "single-select",
             "type": "EQUALS",
             "system": "",
@@ -500,7 +486,7 @@
           },
           {
             "key": "gender",
-            "name": "Gender",
+            "name": "Identifizierendes Geschlecht",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -584,12 +570,6 @@
     "key": "ORGTRANPLANT_GEN",
     "name": "Organtransplantation allgmein",
     "childCategories": [
-      {
-        "key": "TRANSPLANTATION_EXDATE",
-        "name": "Untersuchungsdatum",
-        "fieldType": "date",
-        "type": "BETWEEN"
-      },
       {
         "key": "TRANSPLANTATION",
         "name": "Transplantation",
@@ -713,20 +693,6 @@
             "name": "ehemaliger Raucher, Abstinent für mehr als 6 Monate"
           }
         ]
-      },
-      {
-        "key": "WEIGHT",
-        "name": "Anthropometrie: Gewicht",
-        "fieldType": "number",
-        "type": "BETWEEN",
-        "min": 0
-      },
-      {
-        "key": "HEIGHT",
-        "name": "Anthropometrie: Größe in cm",
-        "fieldType": "number",
-        "type": "BETWEEN",
-        "min": 0
       },
       {
         "key": "CARDVASC",
@@ -1247,38 +1213,6 @@
             "name": "Nein"
           }
         ]
-      },
-      {
-        "key": "CLINICAL_INFECTION_DATE",
-        "name": "Erstdiagnosedatum",
-        "fieldType": "date",
-        "type": "BETWEEN"
-      },
-      {
-        "key": "PTG_CULT_DATE",
-        "name": "Probenkultur",
-        "fieldType": "date",
-        "type": "BETWEEN"
-      }
-    ]
-  },
-  {
-    "key": "VITAL",
-    "name": "Vitalparameter",
-    "childCategories": [
-      {
-        "key": "VITAL_RR",
-        "name": "Atemfrequenz",
-        "fieldType": "number",
-        "type": "BETWEEN",
-        "min": 0
-      },
-      {
-        "key": "VITAL_TEMP",
-        "name": "Körpertemperatur",
-        "fieldType": "number",
-        "type": "BETWEEN",
-        "min": 0
       }
     ]
   },
@@ -1467,12 +1401,6 @@
             "name": "Nein"
           }
         ]
-      },
-      {
-        "key": "BIOSAMPLE_RETRIEVAL_DATE",
-        "name": "Bioprobenentnahmedatum",
-            "fieldType": "date",
-            "type": "BETWEEN"
       },
       {
         "key": "BIOSAMPLE_RETRIEVAL_LOCATION",
@@ -1691,102 +1619,13 @@
             "name": "Urin-Sediment"
           }
         ]
-      },
-          {
-            "key": "BIOSAMPLE_AMOUNT",
-            "name": "Probenmenge",
-            "fieldType": "number",
-            "type": "BETWEEN",
-            "min": 0
-          },
-          {
-            "key": "BIOSAMPLE_AMOUNT_UNIT",
-            "name": "Mengeneinheit",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "criteria": [
-              {
-                "key": "CL",
-                "name": "Zentiliter"
-              },
-              {
-                "key": "CM",
-                "name": "Zentimeter"
-              },
-              {
-                "key": "CM3",
-                "name": "Kubikzentimeter"
-              },
-              {
-                "key": "DL",
-                "name": "Deziliter"
-              },
-              {
-                "key": "L",
-                "name": "Liter"
-              },
-              {
-                "key": "ML",
-                "name": "Milliliter"
-              },
-              {
-                "key": "MM",
-                "name": "Millimeter"
-              },
-              {
-                "key": "NL",
-                "name": "Nanoliter"
-              },
-              {
-                "key": "PL",
-                "name": "Picoliter"
-              },
-              {
-                "key": "G",
-                "name": "Gramm"
-              },
-              {
-                "key": "KG",
-                "name": "Kilogramm"
-              },
-              {
-                "key": "MG",
-                "name": "Milligramm"
-              },
-              {
-                "key": "MICG",
-                "name": "Mikrogramm"
-              },
-              {
-                "key": "MICL",
-                "name": "Mikroliter"
-              },
-              {
-                "key": "NG",
-                "name": "Nanogramm"
-              },
-              {
-                "key": "PC",
-                "name": "Stück"
-              },
-              {
-                "key": "PG",
-                "name": "Picogramm"
-              }
-            ]
-          }
+      }
     ]
   },
   {
     "key": "CLINLAB",
     "name": "Klinisches Labor",
     "childCategories": [
-      {
-        "key": "BIO_SAMPLING_DATE",
-        "name": "Probenentnahmedatum",
-        "fieldType": "date",
-        "type": "BETWEEN"
-      },
       {
         "key": "INFECTION_ACUTE",
         "name": "Akute Infektionen",

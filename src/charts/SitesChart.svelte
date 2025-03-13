@@ -222,14 +222,6 @@ const studyColors = sites.flatMap((site) =>
 						display: true,
 						text: 'Patienten pro Standort'
 					},
-                    subtitle: {
-                            font: {
-								size: 16
-							},
-							color: '#000000',
-							display: true,
-							text: 'Hier könnte Ihre Werbung stehen!'
-                        },
 					legend: {
 						display: false,
 					},
@@ -280,4 +272,8 @@ const studyColors = sites.flatMap((site) =>
 </script>
 
 <canvas id="multiRingChart2"></canvas>
+
+<div class="siteschart-subtitle"><hr>Das Diagramm zeigt im innersten Ring die Gesamtzahl der gefundenen Patienten pro Standort. Der mittlere Ring
+    untergliedert diese Patienten weiter in TTU/TI, während der äußere Ring eine weitere Unterteilung nach den
+    jeweiligen Studien vornimmt.</div>
 <lens-data-passer bind:this={dataPasser}></lens-data-passer>
