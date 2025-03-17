@@ -25,7 +25,7 @@
 			<p>
 				<strong>Technische Anfragen:</strong><br>
 				Patrick Skowronek<br>
-				E-Mail: <a href="mailto:patrick.skowronek@dkfz-heidelberg.de">patrick.skowronek@dkfz-heidelberg.de</a>
+				E-Mail: <a href="mailto:patrick.skowronek@medma.uni-heidelberg.de">patrick.skowronek@medma.uni-heidelberg.de</a>
 			</p>
 		</div>
 	</div>

@@ -16,6 +16,14 @@
 	import { fetchData, catalogueText } from './services/catalogue.service';
 	import ScrollToTop from './services/tools/top-anker.svelte';
 
+	import { writable } from 'svelte/store';
+
+	let showHinweis = writable(true);
+
+	function closeHinweis() {
+		showHinweis.set(false);
+	}
+
 	let catalogueopen = false;
 
 	let dataPasser: LensDataPasser;
@@ -72,15 +80,35 @@
 	// };
 </script>
 
+{#if $showHinweis}
+	<div class="hinweisBox">
+		<button class="closeBtn" on:click="{closeHinweis}">&times;</button>
+		<p><strong>Hinweis zur Testversion</strong></p>
+		<p>
+			Diese Webapp befindet sich in einer Testphase und verwendet zufällig generierte
+			Testdaten ohne spezifische Verteilung. Dadurch kann es zu Fehlern oder unerwarteten
+			Ergebnissen kommen.
+		</p>
+		<p>
+			Fehlen Daten oder Suchelemente? Oder sind irrelevante Ergebnisse dabei? Dann freuen
+			wir uns über euer Feedback an <a
+				href="mailto:patrick.skowronek@medma.uni-heidelberg.de"
+				>patrick.skowronek@medma.uni-heidelberg.de</a
+			>.
+		</p>
+	</div>
+{/if}
+
 <div class="page">
 	<header>
 		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
 		<h1>DZIF-COREDATASET-EXPLORER (TESTDATEN)</h1>
+		<div></div>
 	</header>
 	<main>
 		<div class="search">
 			<div class="search-wrapper">
-				<lens-search-bar-multiple noMatchesFoundMessage="{'keine Ergebnisse gefunden'}"
+				<lens-search-bar-multiple noMatchesFoundMessage="{'Keine Ergebnisse gefunden'}"
 				></lens-search-bar-multiple>
 				<lens-info-button
 					noQueryMessage="Leere Suchanfrage: Sucht nach allen Ergebnissen."
