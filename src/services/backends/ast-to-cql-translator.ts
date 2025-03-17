@@ -51,15 +51,7 @@ export const translateAstToCql = (
 	if (returnOnlySingeltons) {
 		return singletons;
 	}
-	console.log(
-		cqlHeader +
-			getCodesystems() +
-			'context Patient\n' +
-			measures.map((measureItem: MeasureItem) => measureItem.cql).join('') +
-			'\n' +
-			singletons +
-			'\n'
-	);
+
 	return (
 		cqlHeader +
 		getCodesystems() +
