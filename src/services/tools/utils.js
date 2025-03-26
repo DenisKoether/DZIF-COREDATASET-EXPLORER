@@ -1,5 +1,8 @@
 export function reloadPage() {
     setTimeout(() => {
-        window.location.href = "/";
+        window.history.back();
+        setTimeout(() => {
+            window.location.reload();
+        }, 100);
     }, 100);
 }

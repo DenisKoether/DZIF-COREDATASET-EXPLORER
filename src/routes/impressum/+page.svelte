@@ -1,6 +1,5 @@
 <script>
 	import ScrollToTop from '../../services/tools/top-anker.svelte';
-	import { reloadPage } from '../../services/tools/utils.js';
 </script>
 
 <div class="page">
@@ -10,7 +9,7 @@
 	</header>
 
 	<div class="impressum-outline">
-		<button class="button-back" on:click={reloadPage}>Zurück</button>
+		<button class="button-back" onclick="history.back()">Zurück</button>
 		<div class="impressum">
 			<h2>Impressum</h2>
 			<p><strong>Angaben gemäß § 5 TMG</strong></p>

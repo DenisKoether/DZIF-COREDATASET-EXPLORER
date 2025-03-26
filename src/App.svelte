@@ -131,6 +131,10 @@
 	// 	dataPasser.removeValueFromQueryAPI({ queryItem, value });
 	// 	getQuery();
 	// };
+
+	window.addEventListener("popstate", function () {
+    window.location.reload();
+});
 </script>
 
 {#if $showHinweis}
@@ -154,7 +158,7 @@
 
 <div class="page">
 	<header>
-		<img src="../assets/dzif-Logo.svg" alt="Logo des DZIF" />
+		<img src="../assets/dzif-Logo.svg" alt="ogo des DZIF" />
 		<h1>DZIF-COREDATASET-EXPLORER (TESTDATEN)</h1>
 		<div></div>
 	</header>
