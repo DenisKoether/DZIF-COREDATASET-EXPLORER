@@ -137,7 +137,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Lebererkrankungen'
+							text: 'Chron. Lebererkrankungen'
 						}
 					}
 				}
@@ -176,7 +176,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Lebererkrankungen'
+							text: 'Chron. Lebererkrankungen'
 						}
 					}
 				}

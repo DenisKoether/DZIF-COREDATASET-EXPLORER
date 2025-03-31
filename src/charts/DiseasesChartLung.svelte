@@ -139,7 +139,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Lungenerkrankungen'
+							text: 'chron. Lungenerkrankungen'
 						}
 					}
 				}
@@ -178,7 +178,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Lungenerkrankungen'
+							text: 'chron. Lungenerkrankungen'
 						}
 					}
 				}

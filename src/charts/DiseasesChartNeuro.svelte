@@ -135,7 +135,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Neurologische-Erkrankungen'
+							text: 'Chron. Neurologische-Erkrankungen'
 						}
 					}
 				}
@@ -174,7 +174,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Neurologische-Erkrankungen'
+							text: 'Chron. Neurologische-Erkrankungen'
 						}
 					}
 				}

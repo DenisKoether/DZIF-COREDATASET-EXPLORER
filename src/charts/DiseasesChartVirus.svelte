@@ -148,7 +148,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Viruserkrankungen'
+							text: 'Chron. Viruserkrankungen'
 						}
 					}
 				}
@@ -187,7 +187,7 @@
 							},
 							color: '#000000',
 							display: true,
-							text: 'Viruserkrankungen'
+							text: 'Chron. Viruserkrankungen'
 						}
 					}
 				}

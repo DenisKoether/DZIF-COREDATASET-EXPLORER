@@ -27,6 +27,13 @@
 
 	let catalogueopen = false;
 
+	window.addEventListener('emit-lens-query', function () {
+		const currentQuery = dataPasser?.getQueryAPI();
+		if (currentQuery) {
+			saveQueryToHistory(currentQuery);
+		}
+	});
+
 	let dataPasser: LensDataPasser;
 
 	if (browser) {
@@ -49,57 +56,49 @@
 		optionsJSON: string;
 	}> = fetchData(catalogueUrl, optionsFilePath);
 
+	/*Query History START*/
+	const saveQueryToHistory = (queryData) => {
+		if (!queryData) {
+			console.error('Abfragedaten sind undefined!');
+			return;
+		}
+		const history = JSON.parse(localStorage.getItem('queryHistory')) || [];
+		history.push({ queryData, timestamp: new Date().toISOString() });
+		localStorage.setItem('queryHistory', JSON.stringify(history));
+		queryHistory = history;
+	};
 
-/*Query History START*/
-  const saveQueryToHistory = (queryData) => {
-    if (!queryData) {
-      console.error('Abfragedaten sind undefined!');
-      return;
-    }
-    const history = JSON.parse(localStorage.getItem('queryHistory')) || [];
-    history.push({ queryData, timestamp: new Date().toISOString() });
-    localStorage.setItem('queryHistory', JSON.stringify(history));
-    queryHistory = history;
-  };
+	let expandedQueries = new Map<number, boolean>();
 
-  const handleSearch = (event) => {
-    const currentQuery = dataPasser?.getQueryAPI();
-    if (currentQuery) {
-      saveQueryToHistory(currentQuery);
-    }
-  };
+	const toggleQuery = (index: number) => {
+		expandedQueries.set(index, !expandedQueries.get(index));
+		expandedQueries = new Map(expandedQueries);
+	};
 
-   let expandedQueries = new Map<number, boolean>();
+	const clearQueryHistory = () => {
+		localStorage.removeItem('queryHistory');
+		queryHistory = [];
+		console.log('Query-History wurde geleert.');
+	};
 
-  const toggleQuery = (index: number) => {
-    expandedQueries.set(index, !expandedQueries.get(index));
-    expandedQueries = new Map(expandedQueries);
-  };
+	let queryHistory = [];
 
-  const clearQueryHistory = () => {
-    localStorage.removeItem('queryHistory');
-    queryHistory = [];
-    console.log('Query-History wurde geleert.');
-  };
+	onMount(() => {
+		const history = JSON.parse(localStorage.getItem('queryHistory')) || [];
+		queryHistory = history;
+	});
 
-  let queryHistory = [];
-
-  onMount(() => {
-    const history = JSON.parse(localStorage.getItem('queryHistory')) || [];
-    queryHistory = history;
-  });
-
-  const openQuery = (queryData) => {
-    if (!queryData) {
-      alert('Keine Abfragedaten verfügbar!');
-      return;
-    }
-    const url = window.location.href;
-    const query = btoa(JSON.stringify(queryData));
-    const fullUrl = `${url}?query=${query}`;
-    window.open(fullUrl, '_blank');
-  };
-  /*Query History END*/
+	const openQuery = (queryData) => {
+		if (!queryData) {
+			alert('Keine Abfragedaten verfügbar!');
+			return;
+		}
+		const url = window.location.href;
+		const query = btoa(JSON.stringify(queryData));
+		const fullUrl = `${url}?query=${query}`;
+		window.open(fullUrl, '_blank');
+	};
+	/*Query History END*/
 
 	/**
 	 * The following functions are the API to the library stores (state)
@@ -132,9 +131,9 @@
 	// 	getQuery();
 	// };
 
-	window.addEventListener("popstate", function () {
-    window.location.reload();
-});
+	window.addEventListener('popstate', function () {
+		window.location.reload();
+	});
 </script>
 
 {#if $showHinweis}
@@ -171,7 +170,7 @@
 					noQueryMessage="Leere Suchanfrage: Sucht nach allen Ergebnissen."
 					showQuery="{true}"
 				></lens-info-button>
-				<lens-search-button title="Suchen" on:click={handleSearch}></lens-search-button>
+				<lens-search-button title="Suchen"></lens-search-button>
 			</div>
 		</div>
 
@@ -188,39 +187,45 @@
 						texts="{catalogueText}"
 						toggle="{{ collapsable: false, open: catalogueopen }}"
 					></lens-catalogue>
-                    <br>
-<div>
-  <h2><b>Query History</b></h2>
-<div id="query-history">
-  {#if queryHistory.length > 0}
-    {#each queryHistory as entry, index}
-      <div class="history-item">
-        <div class="history-header" on:click={() => toggleQuery(index)}>
-          <strong>Query {index + 1}</strong>
-          <span class="timestamp">{new Date(entry.timestamp).toLocaleString()}</span>
-          <span class="toggle-icon">
-            {expandedQueries.get(index) ? '▼' : '►'}
-          </span>
-        </div>
+					<br />
+					<div>
+						<h2><b>Query History</b></h2>
+						<div id="query-history">
+							{#if queryHistory.length > 0}
+								{#each queryHistory as entry, index}
+									<div class="history-item">
+										<div class="history-header" on:click="{() => toggleQuery(index)}">
+											<strong>Query {index + 1}</strong>
+											<span class="timestamp"
+												>{new Date(entry.timestamp).toLocaleString()}</span
+											>
+											<span class="toggle-icon">
+												{expandedQueries.get(index) ? '▼' : '►'}
+											</span>
+										</div>
 
-        {#if expandedQueries.get(index)}
-          <div class="history-content">
-            {#if entry.queryData}
-              <pre>{JSON.stringify(entry.queryData, null, 2)}</pre>
-            {:else}
-              <p>Keine Abfragedaten verfügbar.</p>
-            {/if}
-            <button on:click={() => openQuery(entry.queryData)}>Diese Suche öffnen</button>
-          </div>
-        {/if}
-      </div>
-    {/each}
-  {:else}
-    <p>No queries saved yet.</p>
-  {/if}
-</div>
-	  <button class="clear-button" on:click={clearQueryHistory}>Clear History</button>
-</div>
+										{#if expandedQueries.get(index)}
+											<div class="history-content">
+												{#if entry.queryData}
+													<pre>{JSON.stringify(entry.queryData, null, 2)}</pre>
+												{:else}
+													<p>Keine Abfragedaten verfügbar.</p>
+												{/if}
+												<button on:click="{() => openQuery(entry.queryData)}"
+													>Diese Suche öffnen</button
+												>
+											</div>
+										{/if}
+									</div>
+								{/each}
+							{:else}
+								<p>No queries saved yet.</p>
+							{/if}
+						</div>
+						<button class="clear-button" on:click="{clearQueryHistory}"
+							>Clear History</button
+						>
+					</div>
 				</div>
 			</div>
 
