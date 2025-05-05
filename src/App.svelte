@@ -12,12 +12,15 @@
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
 	import { genderHeaders, measures } from './config/environment';
-	import type { LensDataPasser } from '@samply/lens';
 	import { fetchData, catalogueText } from './services/catalogue.service';
 	import ScrollToTop from './services/tools/top-anker.svelte';
 	import { onMount } from 'svelte';
 
 	import { writable } from 'svelte/store';
+	// Import Lens CSS and JS bundles
+	import '@samply/lens/style.css';
+	import '@samply/lens';
+	import type { LensDataPasser } from '@samply/lens';
 
 	let showHinweis = writable(true);
 
@@ -194,7 +197,11 @@
 							{#if queryHistory.length > 0}
 								{#each queryHistory as entry, index}
 									<div class="history-item">
-										<div class="history-header" on:click="{() => toggleQuery(index)}">
+										<button
+											type="button"
+											class="history-header"
+											on:click="{() => toggleQuery(index)}"
+										>
 											<strong>Query {index + 1}</strong>
 											<span class="timestamp"
 												>{new Date(entry.timestamp).toLocaleString()}</span
@@ -202,7 +209,7 @@
 											<span class="toggle-icon">
 												{expandedQueries.get(index) ? '▼' : '►'}
 											</span>
-										</div>
+										</button>
 
 										{#if expandedQueries.get(index)}
 											<div class="history-content">
