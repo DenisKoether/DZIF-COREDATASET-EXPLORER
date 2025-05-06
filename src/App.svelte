@@ -30,7 +30,7 @@
 		showHinweis.set(false);
 	}
 
-	const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
+	const barChartBackgroundColors: string[] = ['#4dc9f6', '#3da4c7'];
 
 	let catalogueopen = false;
 
@@ -147,8 +147,6 @@
 		}[];
 	};
 
-	
-
 	function getMergedStratifier(
 		text: string,
 		anamneseGroup: AnamneseGroup,
@@ -237,12 +235,10 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'cardvasc' },
-				stratifier: [getMergedStratifier('cardvasc', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'cardvasc' },
+			stratifier: [getMergedStratifier('cardvasc', anamneseGroup, stratifiers)]
+		});
 	};
 
 	const immu = () => {
@@ -275,25 +271,19 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'immu' },
-				stratifier: [getMergedStratifier('immu', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'immu' },
+			stratifier: [getMergedStratifier('immu', anamneseGroup, stratifiers)]
+		});
 
-			console.log(		response
-			.get('DKTK')
-			?.data)
+		console.log(response.get('DKTK')?.data);
 	};
 
 	let transplantCounter = 4;
 
 	const trans = () => {
-
 		//transplantCounter = response.get('DKTK')?.data.group.find('transplant')
 	};
-
 
 	const neuro = () => {
 		if (response === null) {
@@ -324,12 +314,10 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'neuro' },
-				stratifier: [getMergedStratifier('neuro', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'neuro' },
+			stratifier: [getMergedStratifier('neuro', anamneseGroup, stratifiers)]
+		});
 	};
 
 	const lung = () => {
@@ -365,16 +353,12 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'lung' },
-				stratifier: [getMergedStratifier('lung', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'lung' },
+			stratifier: [getMergedStratifier('lung', anamneseGroup, stratifiers)]
+		});
 
-			console.log(		response
-			.get('DKTK')
-			?.data)
+		console.log(response.get('DKTK')?.data);
 	};
 
 	const liver = () => {
@@ -406,12 +390,10 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'liver' },
-				stratifier: [getMergedStratifier('liver', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'liver' },
+			stratifier: [getMergedStratifier('liver', anamneseGroup, stratifiers)]
+		});
 	};
 
 	const diabetes = () => {
@@ -443,12 +425,10 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'diabites' },
-				stratifier: [getMergedStratifier('diabites', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'diabites' },
+			stratifier: [getMergedStratifier('diabites', anamneseGroup, stratifiers)]
+		});
 	};
 
 	const virusout = () => {
@@ -489,12 +469,10 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'virus' },
-				stratifier: [getMergedStratifier('virus', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'virus' },
+			stratifier: [getMergedStratifier('virus', anamneseGroup, stratifiers)]
+		});
 	};
 
 	const anamneseOut = () => {
@@ -539,12 +517,10 @@
 			}
 		];
 
-		response
-			.get('DKTK')
-			?.data.group.push({
-				code: { text: 'diseases' },
-				stratifier: [getMergedStratifier('diseases', anamneseGroup, stratifiers)]
-			});
+		response.get('DKTK')?.data.group.push({
+			code: { text: 'diseases' },
+			stratifier: [getMergedStratifier('diseases', anamneseGroup, stratifiers)]
+		});
 	};
 </script>
 
