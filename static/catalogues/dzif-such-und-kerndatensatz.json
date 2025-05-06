@@ -579,8 +579,8 @@
     ]
   },
   {
-    "key": "ORGTRANPLANT_GEN",
-    "name": "Organtransplantation allgmein",
+    "key": "ORGTRANPLANT",
+    "name": "Transplantiertes Organ",
     "fieldType": "group", "childCategories": [
       {
         "key": "TRANSPLANTATION",
@@ -598,13 +598,7 @@
             "name": "Nein"
           }
         ]
-      }
-    ]
-  },
-  {
-    "key": "ORGTRANPLANT",
-    "name": "Transplantiertes Organ",
-    "fieldType": "group", "childCategories": [
+      },
       {
         "key": "TRANSPLANTATION_ORGAN",
         "name": "Transplantiertes Organ",

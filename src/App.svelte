@@ -1,17 +1,19 @@
 <script lang="ts">
-	import DiseasesChart from './charts/DiseasesChart.svelte';
-	import DiseasesChartVirus from './charts/DiseasesChartVirus.svelte';
-	import DiseasesChartCardvasc from './charts/DiseasesChartCardvasc.svelte';
-	import DiseasesChartLung from './charts/DiseasesChartLung.svelte';
-	import DiseasesChartLiverDis from './charts/DiseasesChartLiverDis.svelte';
-	import DiseasesChartImmu from './charts/DiseasesChartImmu.svelte';
-	import DiseasesChartNeuro from './charts/DiseasesChartNeuro.svelte';
-	import DiseasesChartDiabetes from './charts/DiseasesChartDiabetes.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
-	import TransplantChart from './charts/TransplantChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
-	import { genderHeaders, measures } from './config/environment';
+	import {
+		cardvascHeaders,
+		diabetesHeaders,
+		diseasesHeaders,
+		genderHeaders,
+		immuHeaders,
+		liverHeaders,
+		lungHeaders,
+		measures,
+		neuroHeaders,
+		virusHeaders
+	} from './config/environment';
 	import { fetchData, catalogueText } from './services/catalogue.service';
 	import ScrollToTop from './services/tools/top-anker.svelte';
 	import { onMount } from 'svelte';
@@ -20,13 +22,15 @@
 	// Import Lens CSS and JS bundles
 	import '@samply/lens/style.css';
 	import '@samply/lens';
-	import type { LensDataPasser } from '@samply/lens';
+	import type { LensDataPasser, ResponseStore } from '@samply/lens';
 
 	let showHinweis = writable(true);
 
 	function closeHinweis() {
 		showHinweis.set(false);
 	}
+
+	const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
 
 	let catalogueopen = false;
 
@@ -54,10 +58,10 @@
 	const catalogueUrl = 'catalogues/dzif-such-und-kerndatensatz.json';
 	const optionsFilePath = 'config/options.json';
 
-	const jsonPromises: Promise<{
-		catalogueJSON: string;
-		optionsJSON: string;
-	}> = fetchData(catalogueUrl, optionsFilePath);
+	const jsonPromises: Promise<{ catalogueJSON: string; optionsJSON: string }> = fetchData(
+		catalogueUrl,
+		optionsFilePath
+	);
 
 	/*Query History START*/
 	const saveQueryToHistory = (queryData) => {
@@ -101,42 +105,447 @@
 		const fullUrl = `${url}?query=${query}`;
 		window.open(fullUrl, '_blank');
 	};
-	/*Query History END*/
 
-	/**
-	 * The following functions are the API to the library stores (state)
-	 * here you get information to use in your application
-	 * or manipulate the stores
-	 * use if needed and import types from @samply/lens
-	 */
-
-	// const getQuery = (): void => {
-	// 	console.log('getQuery()', dataPasser.getQueryAPI());
-	// };
-
-	// const getResponse = (): void => {
-	// 	console.log('getResponse()', dataPasser.getResponseAPI());
-	// };
-
-	// const getAST = (): void => {
-	// 	console.log('getAst()', dataPasser.getAstAPI());
-	// };
-
-	// const removeItem = (queryObject: QueryItem): void => {
-	// 	console.log('removeItem()', queryObject);
-	// 	dataPasser.removeItemFromQuyeryAPI({ queryObject });
-	// 	getQuery();
-	// };
-
-	// const removeValue = (queryItem: QueryItem, value: QueryValue): void => {
-	// 	console.log('removeValue()', queryItem, value);
-	// 	dataPasser.removeValueFromQueryAPI({ queryItem, value });
-	// 	getQuery();
-	// };
+	let response: ResponseStore;
 
 	window.addEventListener('popstate', function () {
 		window.location.reload();
 	});
+
+	window.addEventListener('lens-responses-updated', () => {
+		response = dataPasser?.getResponseAPI();
+		anamneseOut();
+		virusout();
+		cardvasc();
+		diabetes();
+		immu();
+		liver();
+		lung();
+		neuro();
+		trans();
+	});
+
+	type Subkey = { key: string; label: string };
+
+	type StratifierDefinition = {
+		key: string;
+		label: string;
+		subkeys?: Subkey[];
+		includeAsYes?: string[];
+	};
+
+	type AnamneseGroup = {
+		stratifier: {
+			code: { text: string }[];
+			stratum?: {
+				population?: {
+					count: number;
+					code: { coding: { code: string; system: string }[] };
+				}[];
+				value: { text: string };
+			}[];
+		}[];
+	};
+
+	
+
+	function getMergedStratifier(
+		text: string,
+		anamneseGroup: AnamneseGroup,
+		stratifiers: StratifierDefinition[]
+	) {
+		const mergedStratifier = {
+			code: [{ text: text }],
+			stratum: [] as NonNullable<AnamneseGroup['stratifier'][0]['stratum']>
+		};
+
+		stratifiers.forEach(({ key, subkeys = [] }) => {
+			const stratifier = anamneseGroup.stratifier.find((strat) =>
+				strat.code.some((c) => c.text === key)
+			);
+
+			if (!stratifier || !stratifier.stratum) {
+				console.warn(`Stratifier not found or empty for key: ${key}`);
+				return;
+			}
+
+			if (!subkeys.length) {
+				const filtered = stratifier.stratum
+					.filter((stratum) => {
+						const value = stratum.value?.text || '';
+						return !['X', 'N', 'null'].includes(value);
+					})
+					.map((stratum) => {
+						const value = stratum.value?.text || '';
+
+						// Replace 'Y' with the stratifier label (for display)
+						if (value === 'Y') {
+							return {
+								...stratum,
+								value: {
+									...stratum.value,
+									text: stratifier.code[0].text // stratifier's label replaces 'Y'
+								}
+							};
+						}
+
+						return stratum;
+					});
+
+				mergedStratifier.stratum.push(...filtered);
+			} else {
+				const filtered = stratifier.stratum.filter((stratum) => {
+					const value = stratum.value?.text;
+					const subkey = subkeys.find((s) => s.key === value);
+					const count = stratum.population?.[0]?.count ?? 0;
+					return subkey && count > 0;
+				});
+				mergedStratifier.stratum.push(...filtered);
+			}
+		});
+
+		return mergedStratifier;
+	}
+
+	const cardvasc = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{
+				key: 'rheuImmu',
+				label: '',
+				subkeys: [
+					{ key: 'YOTHER', label: 'andere' },
+					{ key: 'YCIBD', label: 'chronisch entzündliche Darmerkrankung' },
+					{ key: 'YRA', label: 'Rheumatoide Arthritis' },
+					{ key: 'YCG', label: 'Kollagenosen' },
+					{ key: 'YVT', label: 'Vaskulitiden' },
+					{ key: 'YCGID', label: 'angeborene Immundefekte' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'cardvasc' },
+				stratifier: [getMergedStratifier('cardvasc', anamneseGroup, stratifiers)]
+			});
+	};
+
+	const immu = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{
+				key: 'rheuImmu',
+				label: '',
+				subkeys: [
+					{ key: 'YOTHER', label: 'andere' },
+					{ key: 'YCIBD', label: 'chronisch entzündliche Darmerkrankung' },
+					{ key: 'YRA', label: 'Rheumatoide Arthritis' },
+					{ key: 'YCG', label: 'Kollagenosen' },
+					{ key: 'YVT', label: 'Vaskulitiden' },
+					{ key: 'YCGID', label: 'angeborene Immundefekte' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'immu' },
+				stratifier: [getMergedStratifier('immu', anamneseGroup, stratifiers)]
+			});
+
+			console.log(		response
+			.get('DKTK')
+			?.data)
+	};
+
+	let transplantCounter = 4;
+
+	const trans = () => {
+
+		//transplantCounter = response.get('DKTK')?.data.group.find('transplant')
+	};
+
+
+	const neuro = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{
+				key: 'neuro',
+				label: '',
+				subkeys: [
+					{ key: 'YMP', label: 'Parkinson' },
+					{ key: 'YDM', label: 'Demenz' },
+					{ key: 'YMS', label: 'Multiple Sklerose' },
+					{ key: 'YNE', label: 'Neuromuskuläre Erkrankungen' },
+					{ key: 'YOTH', label: 'andere' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'neuro' },
+				stratifier: [getMergedStratifier('neuro', anamneseGroup, stratifiers)]
+			});
+	};
+
+	const lung = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{
+				key: 'chrLung',
+				label: '',
+				subkeys: [
+					{ key: 'YA', label: 'Asthma' },
+					{ key: 'YCOP', label: 'COPD' },
+					{ key: 'YPF', label: 'Lungenfibrose' },
+					{ key: 'YPH', label: 'Lungenhochdruck/pulmonale Hypertonie' },
+					{ key: 'YOHS', label: 'Obesitas-Hyperventilationssyndrom (OHS)' },
+					{ key: 'YSA', label: 'Schlafapnoe' },
+					{ key: 'YOSAS', label: 'Schlafapnoesyndrom (OSAS)' },
+					{ key: 'YCF', label: 'Cystische Fibrose' },
+					{ key: 'YOTHER', label: 'andere' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'lung' },
+				stratifier: [getMergedStratifier('lung', anamneseGroup, stratifiers)]
+			});
+
+			console.log(		response
+			.get('DKTK')
+			?.data)
+	};
+
+	const liver = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{
+				key: 'chrLiverdis',
+				label: '',
+				subkeys: [
+					{ key: 'YFL', label: 'Fettleber' },
+					{ key: 'YLZ', label: 'Leberzirrhose' },
+					{ key: 'YCIH', label: 'chronisch infektiöse Hepatitis' },
+					{ key: 'YAL', label: 'Autoimmune Lebererkrankungen' },
+					{ key: 'YOTHER', label: 'andere' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'liver' },
+				stratifier: [getMergedStratifier('liver', anamneseGroup, stratifiers)]
+			});
+	};
+
+	const diabetes = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers = [
+			{
+				key: 'Diabetes',
+				label: '',
+				subkeys: [
+					{ key: '1', label: 'Typ 1' },
+					{ key: '2A', label: 'Typ 2 ohne Insulin' },
+					{ key: '2B', label: 'Typ 2 mit Insulin' },
+					{ key: '3', label: 'Typ 3' },
+					{ key: '4', label: 'Typ 4/Gestationsdiabetes' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'diabites' },
+				stratifier: [getMergedStratifier('diabites', anamneseGroup, stratifiers)]
+			});
+	};
+
+	const virusout = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+
+		if (!anamneseGroup) return;
+
+		const stratifiers: StratifierDefinition[] = [
+			{
+				key: 'chrVirusHIV',
+				label: 'Chronische Virusinfektion (HIV)',
+				includeAsYes: ['Y']
+			},
+			{
+				key: 'chrVirusHBV',
+				label: 'Chronische Virusinfektion (HBV)',
+				includeAsYes: ['Y']
+			},
+			{
+				key: 'chrVirusHCV',
+				label: 'Chronische Virusinfektion (HCV)',
+				includeAsYes: ['Y']
+			},
+			{
+				key: 'chrVirusOTHER',
+				label: 'Chronische Virusinfektion (Andere)',
+				includeAsYes: ['Y']
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'virus' },
+				stratifier: [getMergedStratifier('virus', anamneseGroup, stratifiers)]
+			});
+	};
+
+	const anamneseOut = () => {
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const anamneseGroup = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'anamnese');
+		if (anamneseGroup === undefined) return;
+
+		const stratifiers: StratifierDefinition[] = [
+			{ key: 'malaria', label: 'Malaria' },
+			{
+				key: 'chrKidneyd',
+				label: '',
+				subkeys: [
+					{ key: 'YH', label: 'Nierenerkrankung - mit Hämodialyse' },
+					{ key: 'YWOH', label: 'Nierenerkrankung - ohne Hämodialyse' }
+				]
+			},
+			{
+				key: 'chrMyobakt',
+				label: '',
+				subkeys: [
+					{ key: 'YT', label: 'Mykobakteriose - Tuberkulose' },
+					{ key: 'YOTHER', label: 'Mykobakteriose - andere' }
+				]
+			},
+			{
+				key: 'tumorActive',
+				label: '',
+				subkeys: [
+					{ key: 'A', label: 'Tumor - aktiv' },
+					{ key: 'IR', label: 'Tumor - in Remission' }
+				]
+			}
+		];
+
+		response
+			.get('DKTK')
+			?.data.group.push({
+				code: { text: 'diseases' },
+				stratifier: [getMergedStratifier('diseases', anamneseGroup, stratifiers)]
+			});
+	};
 </script>
 
 {#if $showHinweis}
@@ -252,6 +661,7 @@
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
 						yAxisTitle="Anzahl"
+						backgroundColor="{barChartBackgroundColors}"
 						displayLegends="{false}"
 					>
 					</lens-chart>
@@ -264,6 +674,7 @@
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
 						yAxisTitle="Anzahl"
+						backgroundColor="{barChartBackgroundColors}"
 						displayLegends="{false}"
 					>
 					</lens-chart>
@@ -289,36 +700,99 @@
 					</lens-chart>
 				</div>
 
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChart />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Erkrankungen"
+						catalogueGroupCode="diseases"
+						chartType="bar"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{diseasesHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartVirus />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Virus"
+						catalogueGroupCode="virus"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{virusHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartCardvasc />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Herz-Kreislauf-Erkrankungen"
+						catalogueGroupCode="cardvasc"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{cardvascHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartLung />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Diabetes"
+						catalogueGroupCode="diabetes"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{diabetesHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartLiverDis />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Immu"
+						catalogueGroupCode="immu"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{immuHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartImmu />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Liver"
+						catalogueGroupCode="liver"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{liverHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartNeuro />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Lung"
+						catalogueGroupCode="lung"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{lungHeaders}"
+					>
+					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<DiseasesChartDiabetes />
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Neuro"
+						catalogueGroupCode="neuro"
+						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
+						yAxisTitle="Anzahl Erkanungen"
+						headers="{neuroHeaders}"
+					>
+					</lens-chart>
 				</div>
-
 				<div class="chart-wrapper chart-alter">
 					<lens-chart
 						title="Alter bei Aufnahme"
 						catalogueGroupCode="age"
 						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
 						groupRange="{10}"
 						filterRegex="^(1*[12]*[0-9])"
 						xAxisTitle="Alter"
@@ -332,6 +806,7 @@
 						title="Proben LIQUID"
 						catalogueGroupCode="sample_kind"
 						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
 						filterRegex="^[LIQUID|X].*"
 						displayLegends="{false}"
 						xAxisTitle="Typ"
@@ -344,6 +819,7 @@
 						title="Proben Tissue"
 						catalogueGroupCode="sample_kind"
 						chartType="bar"
+						backgroundColor="{barChartBackgroundColors}"
 						filterRegex="^[TISSUE].*"
 						displayLegends="{false}"
 						xAxisTitle="Typ"
@@ -351,9 +827,17 @@
 					>
 					</lens-chart>
 				</div>
-				<div class="chart-wrapper chart-diseases">
-					<TransplantChart></TransplantChart>
+
+				<div class="chart-wrapper chart-smoker">
+					<lens-chart
+						title="Transplantationen"
+						catalogueGroupCode="transplant"
+						chartType="pie"
+					>
+					</lens-chart>
+					Zahl: {transplantCounter}
 				</div>
+
 				<div class="chart-wrapper chart-sites-multi">
 					<SitesChart></SitesChart>
 				</div>

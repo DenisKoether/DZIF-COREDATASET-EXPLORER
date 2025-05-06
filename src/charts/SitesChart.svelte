@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+	import { Chart } from 'chart.js/auto';
+	import { ArcElement, Tooltip, Legend } from 'chart.js';
 	import type { LensDataPasser, Site } from '@samply/lens';
 	import { backgroundColor } from '../services/tools/chart-style';
 

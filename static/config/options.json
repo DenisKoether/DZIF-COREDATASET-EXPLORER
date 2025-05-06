@@ -23,8 +23,28 @@
       "Gender"
     ],
     [
+      "diseases",
+      "diseases"
+    ],
+    [
+      "virus",
+      "virus"
+    ],
+    [
+      "liver",
+      "liver"
+    ],
+    [
+      "immu",
+      "immu"
+    ],
+    [
       "sites",
       "Sites"
+    ],
+    [
+      "trans",
+      "trans"
     ],
     [
       "transplant",
@@ -67,8 +87,8 @@
       "cardvasc"
     ],
     [
-      "chrLung",
-      "chrLung"
+      "lung",
+      "lung"
     ],
     [
       "tumorActive",
