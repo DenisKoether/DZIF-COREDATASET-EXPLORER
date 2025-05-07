@@ -27,6 +27,7 @@
 	import '@samply/lens';
 	import type { LensDataPasser, ResponseStore } from '@samply/lens';
 
+
 	let showHinweis = writable(true);
 
 	function closeHinweis() {
@@ -529,7 +530,7 @@
 
 {#if $showHinweis}
 	<div class="hinweisBox">
-		<button class="closeBtn" onclick={closeHinweis}>&times;</button>
+		<button class="closeBtn" on:click={closeHinweis}>&times;</button>
 		<p><strong>Hinweis zur Testversion</strong></p>
 		<p>
 			Diese Webapp befindet sich in einer Testphase und verwendet zufällig generierte
@@ -588,7 +589,7 @@
 										<button
 											type="button"
 											class="history-header"
-											onclick={() => toggleQuery(index)}
+											on:click={() => toggleQuery(index)}
 										>
 											<strong>Query {index + 1}</strong>
 											<span class="timestamp"
@@ -606,7 +607,7 @@
 												{:else}
 													<p>Keine Abfragedaten verfügbar.</p>
 												{/if}
-												<button onclick={() => openQuery(entry.queryData)}
+												<button on:click={() => openQuery(entry.queryData)}
 													>Diese Suche öffnen</button
 												>
 											</div>
@@ -617,7 +618,7 @@
 								<p>No queries saved yet.</p>
 							{/if}
 						</div>
-						<button class="clear-button" onclick={clearQueryHistory}
+						<button class="clear-button" on:click={clearQueryHistory}
 							>Clear History</button
 						>
 					</div>
