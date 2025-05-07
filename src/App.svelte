@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SitesChart from './charts/SitesChart.svelte';
 	import { requestBackend } from './services/backends/backend.service';
 	import { browser } from '$app/environment';
 	import {
@@ -16,11 +15,15 @@
 	} from './config/environment';
 	import { fetchData, catalogueText } from './services/catalogue.service';
 	import ScrollToTop from './services/tools/top-anker.svelte';
+	import SitesChart from './charts/SitesChart.svelte';
+
 	import { onMount } from 'svelte';
 
 	import { writable } from 'svelte/store';
 	// Import Lens CSS and JS bundles
 	import '@samply/lens/style.css';
+	import './app.css';
+
 	import '@samply/lens';
 	import type { LensDataPasser, ResponseStore } from '@samply/lens';
 
@@ -526,7 +529,7 @@
 
 {#if $showHinweis}
 	<div class="hinweisBox">
-		<button class="closeBtn" on:click="{closeHinweis}">&times;</button>
+		<button class="closeBtn" onclick={closeHinweis}>&times;</button>
 		<p><strong>Hinweis zur Testversion</strong></p>
 		<p>
 			Diese Webapp befindet sich in einer Testphase und verwendet zufällig generierte
@@ -585,7 +588,7 @@
 										<button
 											type="button"
 											class="history-header"
-											on:click="{() => toggleQuery(index)}"
+											onclick={() => toggleQuery(index)}
 										>
 											<strong>Query {index + 1}</strong>
 											<span class="timestamp"
@@ -603,7 +606,7 @@
 												{:else}
 													<p>Keine Abfragedaten verfügbar.</p>
 												{/if}
-												<button on:click="{() => openQuery(entry.queryData)}"
+												<button onclick={() => openQuery(entry.queryData)}
 													>Diese Suche öffnen</button
 												>
 											</div>
@@ -614,7 +617,7 @@
 								<p>No queries saved yet.</p>
 							{/if}
 						</div>
-						<button class="clear-button" on:click="{clearQueryHistory}"
+						<button class="clear-button" onclick={clearQueryHistory}
 							>Clear History</button
 						>
 					</div>
@@ -842,7 +845,7 @@
 <!-- here it waits on all promises to resolve and fills in the parameters -->
 {#await jsonPromises}
 	Loading data...
-{:then { optionsJSON, catalogueJSON }}
+{:then {optionsJSON, catalogueJSON }}
 	<lens-options {catalogueJSON} {optionsJSON} {measures}></lens-options>
 {:catch someError}
 	System error: {someError.message}
