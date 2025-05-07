@@ -1334,7 +1334,7 @@
       },
       {
         "key": "MEDS_ASTHMA",
-        "name": "Astma",
+        "name": "Asthma",
         "fieldType": "single-select",
         "type": "EQUALS",
         "system": "",
@@ -1540,23 +1540,23 @@
         "criteria": [
           {
             "key": "LIQUID-EDTA",
-            "name": "EDTA"
+            "name": "EDTA-Liquid"
           },
           {
             "key": "LIQUID-HEP",
-            "name": "Heparin"
+            "name": "Heparin-Liquid"
           },
           {
             "key": "LIQUID-CIT",
-            "name": "Citrat"
+            "name": "Citrat-Liquid"
           },
           {
             "key": "LIQUID-RNA-PAX",
-            "name": "Paxgene RNA Tube"
+            "name": "Paxgene RNA Tube-Liquid"
           },
           {
             "key": "LIQUID-RNA-TEM",
-            "name": "Tempus RNA Tube"
+            "name": "Tempus RNA Tube-Liquid"
           },
           {
             "key": "LIQUID-SER",
@@ -1600,7 +1600,7 @@
           },
           {
             "key": "TISSUE-FF",
-            "name": "fresh frozen"
+            "name": "Tissue - fresh frozen"
           },
           {
             "key": "TISSUE-FFPE",
@@ -1608,7 +1608,7 @@
           },
           {
             "key": "TISSUE-PATH",
-            "name": "Pathogen"
+            "name": "Tissue-Pathogen"
           },
           {
             "key": "LIQUID-OTH",
