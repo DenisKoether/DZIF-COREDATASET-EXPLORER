@@ -1,6 +1,7 @@
 <!-- @migration-task Error while migrating Svelte code: Event attribute must be a JavaScript expression, not a string
 https://svelte.dev/e/attribute_invalid_event_handler -->
 <script>
+
 	import ScrollToTop from '../../services/tools/top-anker.svelte';
 </script>
 
@@ -12,7 +13,7 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
 
 
 	<div class="datenschutz">
-		<button class="button-back" onclick="history.back()">Zurück</button>
+		<button class="button-back" onclick={history.back()}>Zurück</button>
 	</div>
 
 	<footer class="footer">

@@ -27,7 +27,6 @@
 	import '@samply/lens';
 	import type { LensDataPasser, ResponseStore } from '@samply/lens';
 
-
 	let showHinweis = writable(true);
 
 	function closeHinweis() {
@@ -556,11 +555,11 @@
 	<main>
 		<div class="search">
 			<div class="search-wrapper">
-				<lens-search-bar-multiple noMatchesFoundMessage="{'Keine Ergebnisse gefunden'}"
+				<lens-search-bar-multiple noMatchesFoundMessage={'Keine Ergebnisse gefunden'}
 				></lens-search-bar-multiple>
 				<lens-info-button
 					noQueryMessage="Leere Suchanfrage: Sucht nach allen Ergebnissen."
-					showQuery="{true}"
+					showQuery={true}
 				></lens-info-button>
 				<lens-search-button title="Suchen"></lens-search-button>
 			</div>
@@ -570,14 +569,13 @@
 			<div class="catalogue-wrapper">
 				<div class="catalogue">
 					<h2>Suchkriterien</h2>
-					<lens-info-button message="{[`Information hinzufügen(TODO)`]}"
-					></lens-info-button>
+					<lens-info-button message={[`Information hinzufügen(TODO)`]}></lens-info-button>
 					<lens-catalogue
 						toggleIconUrl="right-arrow-svgrepo-com.svg"
 						addIconUrl="long-right-arrow-svgrepo-com.svg"
 						infoIconUrl="info-circle-svgrepo-com.svg"
-						texts="{catalogueText}"
-						toggle="{{ collapsable: false, open: catalogueopen }}"
+						texts={catalogueText}
+						toggle={{ collapsable: false, open: catalogueopen }}
 					></lens-catalogue>
 					<br />
 					<div>
@@ -641,8 +639,8 @@
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
 						yAxisTitle="Anzahl"
-						backgroundColor="{barChartBackgroundColors}"
-						displayLegends="{false}"
+						backgroundColor={barChartBackgroundColors}
+						displayLegends={false}
 					>
 					</lens-chart>
 				</div>
@@ -654,8 +652,8 @@
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
 						yAxisTitle="Anzahl"
-						backgroundColor="{barChartBackgroundColors}"
-						displayLegends="{false}"
+						backgroundColor={barChartBackgroundColors}
+						displayLegends={false}
 					>
 					</lens-chart>
 				</div>
@@ -665,8 +663,8 @@
 						title="Identifizierendes Geschlecht"
 						catalogueGroupCode="gender"
 						chartType="pie"
-						displayLegends="{true}"
-						headers="{genderHeaders}"
+						displayLegends={true}
+						headers={genderHeaders}
 					></lens-chart>
 				</div>
 
@@ -675,7 +673,7 @@
 						title="Raucher"
 						catalogueGroupCode="smoker"
 						chartType="pie"
-						displayLegends="{true}"
+						displayLegends={true}
 					>
 					</lens-chart>
 				</div>
@@ -686,7 +684,7 @@
 						catalogueGroupCode="diseases"
 						chartType="bar"
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{diseasesHeaders}"
+						headers={diseasesHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -695,9 +693,9 @@
 						title="Virus"
 						catalogueGroupCode="virus"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{virusHeaders}"
+						headers={virusHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -706,9 +704,9 @@
 						title="Herz-Kreislauf-Erkrankungen"
 						catalogueGroupCode="cardvasc"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{cardvascHeaders}"
+						headers={cardvascHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -717,9 +715,9 @@
 						title="Diabetes"
 						catalogueGroupCode="diabetes"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{diabetesHeaders}"
+						headers={diabetesHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -728,9 +726,9 @@
 						title="Immu"
 						catalogueGroupCode="immu"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{immuHeaders}"
+						headers={immuHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -739,9 +737,9 @@
 						title="Liver"
 						catalogueGroupCode="liver"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{liverHeaders}"
+						headers={liverHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -750,9 +748,9 @@
 						title="Lung"
 						catalogueGroupCode="lung"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{lungHeaders}"
+						headers={lungHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -761,9 +759,9 @@
 						title="Neuro"
 						catalogueGroupCode="neuro"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						yAxisTitle="Anzahl Erkanungen"
-						headers="{neuroHeaders}"
+						headers={neuroHeaders}
 					>
 					</lens-chart>
 				</div>
@@ -772,8 +770,8 @@
 						title="Alter bei Aufnahme"
 						catalogueGroupCode="age"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
-						groupRange="{10}"
+						backgroundColor={barChartBackgroundColors}
+						groupRange={10}
 						filterRegex="^(1*[12]*[0-9])"
 						xAxisTitle="Alter"
 						yAxisTitle="Anzahl der Patienten"
@@ -786,9 +784,9 @@
 						title="Proben LIQUID"
 						catalogueGroupCode="sample_kind"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						filterRegex="^[LIQUID|X].*"
-						displayLegends="{false}"
+						displayLegends={false}
 						xAxisTitle="Typ"
 						yAxisTitle="Anzahl der Proben"
 					>
@@ -799,9 +797,9 @@
 						title="Proben Tissue"
 						catalogueGroupCode="sample_kind"
 						chartType="bar"
-						backgroundColor="{barChartBackgroundColors}"
+						backgroundColor={barChartBackgroundColors}
 						filterRegex="^[TISSUE].*"
-						displayLegends="{false}"
+						displayLegends={false}
 						xAxisTitle="Typ"
 						yAxisTitle="Anzahl der Proben"
 					>
@@ -846,10 +844,10 @@
 <!-- here it waits on all promises to resolve and fills in the parameters -->
 {#await jsonPromises}
 	Loading data...
-{:then {optionsJSON, catalogueJSON }}
+{:then { optionsJSON, catalogueJSON }}
 	<lens-options {catalogueJSON} {optionsJSON} {measures}></lens-options>
 {:catch someError}
 	System error: {someError.message}
 {/await}
 
-<lens-data-passer bind:this="{dataPasser}"></lens-data-passer>
+<lens-data-passer bind:this={dataPasser}></lens-data-passer>

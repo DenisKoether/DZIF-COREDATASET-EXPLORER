@@ -1,6 +1,4 @@
-# Lens2 Demo Project
-
-This repository provides the most fundamental building blocks needed to build your very own interface using the Lens2 library.
+# DZIF COREDATASET EXPLORER
 
 ---
 
@@ -16,6 +14,10 @@ This repository provides the most fundamental building blocks needed to build yo
 <!-- TODO -->
 
 ---
+
+## ENVIRONMENT
+
+PUBLIC_BACKEND_URL -- Sets the backend url for requests
 
 ## Quickstart Instructions 
 

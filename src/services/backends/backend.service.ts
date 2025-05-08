@@ -1,6 +1,7 @@
 import type { MeasureItem, Measure, AstTopLayer, Site, MeasureGroup } from '@samply/lens';
 
 //import { buildLibrary, buildMeasure } from './cql-measure';
+import { env } from '$env/dynamic/public';
 import { translateAstToCql } from './ast-to-cql-translator';
 import { Blaze } from './blaze';
 
@@ -35,12 +36,9 @@ export const requestBackend = (
 	 * TODO: add different backend URLs for different environments
 	 */
 
-	if (import.meta.env.VITE_TARGET_ENVIRONMENT === 'production') {
-		backendUrl = '';
-	} else if (import.meta.env.VITE_TARGET_ENVIRONMENT === 'staging') {
-		backendUrl = 'http://bridgehead.dev.dzif.de/data/fhir';
-	} else {
-		backendUrl = 'http://localhost:8082/fhir';
+	backendUrl = env.PUBLIC_BACKEND_URL;
+	if (backendUrl === undefined) {
+		backendUrl = "http://localhost:8082/fhir"
 	}
 	
 	const backend = new Blaze(new URL(backendUrl), 'DKTK', '');

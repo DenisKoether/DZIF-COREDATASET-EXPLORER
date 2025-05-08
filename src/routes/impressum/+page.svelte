@@ -11,7 +11,7 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
 	</header>
 
 	<div class="impressum-outline">
-		<button class="button-back" onclick="history.back()">Zurück</button>
+		<button class="button-back" onclick={history.back()}>Zurück</button>
 		<div class="impressum">
 			<h2>Impressum</h2>
 			<p><strong>Angaben gemäß § 5 TMG</strong></p>

@@ -12,7 +12,7 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
 	</header>
 
 	<div class="kontakt-outline">
-		<button class="button-back" onclick="history.back()">Zurück</button>
+		<button class="button-back" onclick={history.back()}>Zurück</button>
 		<div class="kontakt">
 			<h2>Kontakt</h2>
 			<p>
