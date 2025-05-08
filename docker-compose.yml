@@ -1,7 +1,7 @@
 services:
 
   lens:
-    image: 
+    image: docker.verbis.dkfz.de/dashboard/dzif-explorer:latest
     environment:
       PUBLIC_BACKEND_URL: "http://localhost:8082/fhir"
 

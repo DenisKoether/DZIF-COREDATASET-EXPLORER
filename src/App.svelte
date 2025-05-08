@@ -35,8 +35,14 @@
 
 	const barChartBackgroundColors: string[] = ['#011e50', '#1e88e5', '#f9a825'];
 	const pieChartBackgroundColors: string[] = ['#011e50', '#1e88e5', '#f9a825', '#90a4ae'];
-	const pieTransChartBackgroundColors: string[] = ['#011e50', '#1e88e5', '#f9a825', '##5e35b1', '#00838f', '#90a4ae'];
-
+	const pieTransChartBackgroundColors: string[] = [
+		'#011e50',
+		'#1e88e5',
+		'#f9a825',
+		'##5e35b1',
+		'#00838f',
+		'#90a4ae'
+	];
 
 	let catalogueopen = false;
 
