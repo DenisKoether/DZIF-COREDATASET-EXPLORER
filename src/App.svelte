@@ -33,7 +33,10 @@
 		showHinweis.set(false);
 	}
 
-	const barChartBackgroundColors: string[] = ['#4dc9f6', '#3da4c7'];
+	const barChartBackgroundColors: string[] = ['#011e50', '#1e88e5', '#f9a825'];
+	const pieChartBackgroundColors: string[] = ['#011e50', '#1e88e5', '#f9a825', '#90a4ae'];
+	const pieTransChartBackgroundColors: string[] = ['#011e50', '#1e88e5', '#f9a825', '##5e35b1', '#00838f', '#90a4ae'];
+
 
 	let catalogueopen = false;
 
@@ -278,8 +281,6 @@
 			code: { text: 'immu' },
 			stratifier: [getMergedStratifier('immu', anamneseGroup, stratifiers)]
 		});
-
-		console.log(response.get('DKTK')?.data);
 	};
 
 	let transplantCounter = 4;
@@ -360,8 +361,6 @@
 			code: { text: 'lung' },
 			stratifier: [getMergedStratifier('lung', anamneseGroup, stratifiers)]
 		});
-
-		console.log(response.get('DKTK')?.data);
 	};
 
 	const liver = () => {
@@ -665,6 +664,7 @@
 						chartType="pie"
 						displayLegends={true}
 						headers={genderHeaders}
+						backgroundColor={pieChartBackgroundColors}
 					></lens-chart>
 				</div>
 
@@ -674,6 +674,7 @@
 						catalogueGroupCode="smoker"
 						chartType="pie"
 						displayLegends={true}
+						backgroundColor={pieChartBackgroundColors}
 					>
 					</lens-chart>
 				</div>
@@ -684,6 +685,7 @@
 						catalogueGroupCode="diseases"
 						chartType="bar"
 						yAxisTitle="Anzahl Erkanungen"
+						backgroundColor={barChartBackgroundColors}
 						headers={diseasesHeaders}
 					>
 					</lens-chart>
@@ -811,6 +813,7 @@
 						title="Transplantationen"
 						catalogueGroupCode="transplant"
 						chartType="pie"
+						backgroundColor={pieTransChartBackgroundColors}
 					>
 					</lens-chart>
 					Zahl: {transplantCounter}
