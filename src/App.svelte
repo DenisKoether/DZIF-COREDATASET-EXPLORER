@@ -530,6 +530,11 @@
 			stratifier: [getMergedStratifier('diseases', anamneseGroup, stratifiers)]
 		});
 	};
+
+		let sidebarVisible = true;
+			function toggleSidebar() {
+		sidebarVisible = !sidebarVisible;
+	}
 </script>
 
 {#if $showHinweis}
@@ -570,8 +575,8 @@
 			</div>
 		</div>
 
-		<div class="grid">
-			<div class="catalogue-wrapper">
+	<div class="grid {sidebarVisible ? 'sidebar-visible' : 'collapsed'}">
+		<div class="catalogue-wrapper toggleable {sidebarVisible ? '' : 'hidden'}">
 				<div class="catalogue">
 					<h2>Suchkriterien</h2>
 					<lens-info-button message={[`Information hinzufügen(TODO)`]}></lens-info-button>
@@ -625,7 +630,11 @@
 							>Clear History</button
 						>
 					</div>
+
 				</div>
+			<div class="toggle-button" on:click={toggleSidebar}>
+        		{sidebarVisible ? '⮜' : '⮞'}
+    		</div>
 			</div>
 
 			<div class="charts">

@@ -182,13 +182,13 @@ header h1 {
     grid-gap: var(--gap-m);
     padding: 0 var(--gap-xs) var(--gap-xs);
     margin: var(--gap-xxs);
+    transition: grid-template-columns 0.3s ease;
 }
 
-.catalogue-wrapper {
-    background-color: var(--white);
-    border: solid 1px var(--lightest-gray);
-    border-radius: var(--border-radius-small);
+.grid.collapsed {
+    grid-template-columns: 0px 1fr;
 }
+
 
 .catalogue {
     border-radius: var(--border-radius-small);
@@ -795,4 +795,40 @@ lens-search-modified-display::part(display-wrapper) {
     padding: 10px;
     margin: 15px;
     /*display: inline-block;*/
+}
+
+.catalogue-wrapper {
+    background-color: var(--white);
+    border: solid 1px var(--lightest-gray);
+    border-radius: var(--border-radius-small);
+}
+
+.catalogue-wrapper.toggleable {
+    position: fixed;
+    height: calc(100vh - 131px);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+
+}
+
+.catalogue-wrapper.toggleable.hidden {
+    transform: translateX(-300px);
+}
+
+.toggle-button {
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    width: 20px;
+    height: 40px;
+    background: var(--blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1100;
 }
