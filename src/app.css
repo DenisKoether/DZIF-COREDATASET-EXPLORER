@@ -711,18 +711,6 @@ lens-catalogue::part(number-input-formfield)::-webkit-inner-spin-button {
     margin: 0;
 }
 
-lens-catalogue::part(data-tree-element-toggle-icon) {
-    width: 24px;
-    transform: rotate(0deg);
-    left: -15px;
-    top: 0px;
-    filter: invert(29%) sepia(17%) saturate(327%) hue-rotate(163deg) brightness(92%) contrast(85%);
-}
-
-lens-catalogue::part(data-tree-element-toggle-icon-open) {
-    transform: rotate(90deg);
-}
-
 lens-catalogue::part(query-add-button-icon) {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(213deg) brightness(100%) contrast(100%);
     width: 21px;

@@ -698,7 +698,7 @@
 				</div>
 				<div class="chart-wrapper chart-smoker">
 					<lens-chart
-						title="Virus"
+						title="Chron. Viruserkrankungen"
 						catalogueGroupCode="virus"
 						chartType="bar"
 						backgroundColor={barChartBackgroundColors}
@@ -731,7 +731,7 @@
 				</div>
 				<div class="chart-wrapper chart-smoker">
 					<lens-chart
-						title="Immu"
+						title="Rheumatologische / Immunologische Erkrankungen"
 						catalogueGroupCode="immu"
 						chartType="bar"
 						backgroundColor={barChartBackgroundColors}
@@ -742,7 +742,7 @@
 				</div>
 				<div class="chart-wrapper chart-smoker">
 					<lens-chart
-						title="Liver"
+						title="Chron. Lebererkrankungen"
 						catalogueGroupCode="liver"
 						chartType="bar"
 						backgroundColor={barChartBackgroundColors}
@@ -753,7 +753,7 @@
 				</div>
 				<div class="chart-wrapper chart-smoker">
 					<lens-chart
-						title="Lung"
+						title="Chron. Lungenerkrankungen"
 						catalogueGroupCode="lung"
 						chartType="bar"
 						backgroundColor={barChartBackgroundColors}
@@ -764,7 +764,7 @@
 				</div>
 				<div class="chart-wrapper chart-smoker">
 					<lens-chart
-						title="Neuro"
+						title="Chron. Neurologische-Erkrankungen"
 						catalogueGroupCode="neuro"
 						chartType="bar"
 						backgroundColor={barChartBackgroundColors}

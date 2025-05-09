@@ -222,7 +222,7 @@
           },
           {
             "key": "ORG_UNIT_OTHER",
-            "name": "Organisation site: Other organisation site"
+            "name": "Anderer Org. Standort"
           }
         ]
       },
@@ -1197,49 +1197,43 @@
     ]
   },
   {
-    "key": "CLINCONFINFECTION",
+    "key": "CLINICAL_INFECTION",
     "name": "Klinisch gesicherte Infektion",
-    "fieldType": "group", "childCategories": [
+    "fieldType": "single-select",
+    "type": "EQUALS",
+    "system": "",
+    "criteria": [
       {
-        "key": "CLINICAL_INFECTION",
-        "name": "Hospital-associated infection",
-        "fieldType": "single-select",
-        "type": "EQUALS",
-        "system": "",
-        "criteria": [
-          {
-            "key": "BSI",
-            "name": "Blutstrominfektion"
-          },
-          {
-            "key": "PNE",
-            "name": "Pneumonie"
-          },
-          {
-            "key": "HWI",
-            "name": "Harnwegsinfektion"
-          },
-          {
-            "key": "ZNS",
-            "name": "ZNS Infektion"
-          },
-          {
-            "key": "IAI",
-            "name": "Intraabdominelle Infektion"
-          },
-          {
-            "key": "WUI",
-            "name": "Wundinfektion"
-          },
-          {
-            "key": "OTHER",
-            "name": "Andere"
-          },
-          {
-            "key": "N",
-            "name": "Nein"
-          }
-        ]
+        "key": "BSI",
+        "name": "Blutstrominfektion"
+      },
+      {
+        "key": "PNE",
+        "name": "Pneumonie"
+      },
+      {
+        "key": "HWI",
+        "name": "Harnwegsinfektion"
+      },
+      {
+        "key": "ZNS",
+        "name": "ZNS Infektion"
+      },
+      {
+        "key": "IAI",
+        "name": "Intraabdominelle Infektion"
+      },
+      {
+        "key": "WUI",
+        "name": "Wundinfektion"
+      },
+      {
+        "key": "OTHER",
+        "name": "Andere"
+      },
+      {
+        "key": "N",
+        "name": "Nein"
       }
     ]
   },
