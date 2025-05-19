@@ -796,3 +796,8 @@ lens-search-modified-display::part(display-wrapper) {
     margin: 15px;
     /*display: inline-block;*/
 }
+
+.right {
+    position: absolute; right: 0;
+    padding-right: 20px;
+}

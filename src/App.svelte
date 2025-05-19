@@ -17,8 +17,6 @@
 	import ScrollToTop from './services/tools/top-anker.svelte';
 	import SitesChart from './charts/SitesChart.svelte';
 
-	import { onMount } from 'svelte';
-
 	import { writable } from 'svelte/store';
 	// Import Lens CSS and JS bundles
 	import '@samply/lens/style.css';
@@ -49,7 +47,7 @@
 	window.addEventListener('emit-lens-query', function () {
 		const currentQuery = dataPasser?.getQueryAPI();
 		if (currentQuery) {
-			saveQueryToHistory(currentQuery);
+			//saveQueryToHistory(currentQuery);
 		}
 	});
 
@@ -76,7 +74,7 @@
 	);
 
 	/*Query History START*/
-	const saveQueryToHistory = (queryData) => {
+	/* 	const saveQueryToHistory = (queryData) => {
 		if (!queryData) {
 			console.error('Abfragedaten sind undefined!');
 			return;
@@ -85,29 +83,29 @@
 		history.push({ queryData, timestamp: new Date().toISOString() });
 		localStorage.setItem('queryHistory', JSON.stringify(history));
 		queryHistory = history;
-	};
+	}; */
 
-	let expandedQueries = new Map<number, boolean>();
+	//let expandedQueries = new Map<number, boolean>();
 
-	const toggleQuery = (index: number) => {
+	/* 	const toggleQuery = (index: number) => {
 		expandedQueries.set(index, !expandedQueries.get(index));
 		expandedQueries = new Map(expandedQueries);
 	};
-
-	const clearQueryHistory = () => {
+ */
+	/* 	const clearQueryHistory = () => {
 		localStorage.removeItem('queryHistory');
 		queryHistory = [];
 		console.log('Query-History wurde geleert.');
-	};
+	}; */
 
-	let queryHistory = [];
-
-	onMount(() => {
+	/* 	let queryHistory = [];
+	 */
+	/* 	onMount(() => {
 		const history = JSON.parse(localStorage.getItem('queryHistory')) || [];
 		queryHistory = history;
 	});
-
-	const openQuery = (queryData) => {
+ */
+	/* 	const openQuery = (queryData) => {
 		if (!queryData) {
 			alert('Keine Abfragedaten verfügbar!');
 			return;
@@ -116,7 +114,7 @@
 		const query = btoa(JSON.stringify(queryData));
 		const fullUrl = `${url}?query=${query}`;
 		window.open(fullUrl, '_blank');
-	};
+	}; */
 
 	let response: ResponseStore;
 
@@ -289,10 +287,37 @@
 		});
 	};
 
-	let transplantCounter = 4;
+	let transplantCounter = 0;
 
 	const trans = () => {
-		//transplantCounter = response.get('DKTK')?.data.group.find('transplant')
+		transplantCounter = 0;
+		if (response === null) {
+			return;
+		} else if (response.get('DKTK') === undefined) {
+			return;
+		} else if (response.get('DKTK')?.status !== 'succeeded') {
+			return;
+		}
+
+		const transplatngroupe = response
+			.get('DKTK')
+			?.data.group.find((group) => group.code.text === 'transplant');
+
+		if (!transplatngroupe) return;
+
+		let total = 0;
+
+		for (const stratifier of transplatngroupe.stratifier) {
+			for (const stratum of stratifier.stratum) {
+				if (stratum.value.text !== 'null') {
+					for (const pop of stratum.population) {
+						total += pop.count;
+					}
+				}
+			}
+		}
+
+		transplantCounter = total;
 	};
 
 	const neuro = () => {
@@ -583,7 +608,7 @@
 						toggle={{ collapsable: false, open: catalogueopen }}
 					></lens-catalogue>
 					<br />
-					<div>
+					<!-- 					<div>
 						<h2><b>Query History</b></h2>
 						<div id="query-history">
 							{#if queryHistory.length > 0}
@@ -624,17 +649,22 @@
 						<button class="clear-button" on:click={clearQueryHistory}
 							>Clear History</button
 						>
-					</div>
+					</div> -->
 				</div>
 			</div>
 
 			<div class="charts">
 				<div class="chart-wrapper result-summary">
-					<lens-result-summary></lens-result-summary>
-					<button class="datenBeantragen" id="datenBeantragen">Daten beantragen</button>
-					<lens-search-modified-display
-						>Diagramme repräsentieren nicht mehr die aktuelle Suche!
-					</lens-search-modified-display>
+					<div class="right">
+						<lens-query-spinner></lens-query-spinner>
+					</div>
+					<div>
+						<lens-result-summary></lens-result-summary>
+						<button class="datenBeantragen" id="datenBeantragen">Daten beantragen</button>
+						<lens-search-modified-display
+							>Diagramme repräsentieren nicht mehr die aktuelle Suche!
+						</lens-search-modified-display>
+					</div>
 				</div>
 
 				<div class="chart-wrapper chart-study">
@@ -643,7 +673,7 @@
 						catalogueGroupCode="study"
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
-						yAxisTitle="Anzahl"
+						yAxisTitle="Patienten"
 						backgroundColor={barChartBackgroundColors}
 						displayLegends={false}
 					>
@@ -656,7 +686,7 @@
 						catalogueGroupCode="studyKohorte"
 						chartType="bar"
 						xAxisTitle="Zugehörigkeit"
-						yAxisTitle="Anzahl"
+						yAxisTitle="Patienten"
 						backgroundColor={barChartBackgroundColors}
 						displayLegends={false}
 					>
@@ -795,7 +825,7 @@
 						backgroundColor={barChartBackgroundColors}
 						filterRegex="^[LIQUID|X].*"
 						displayLegends={false}
-						xAxisTitle="Typ"
+						xAxisTitle="Probentyp"
 						yAxisTitle="Anzahl der Proben"
 					>
 					</lens-chart>
@@ -808,7 +838,7 @@
 						backgroundColor={barChartBackgroundColors}
 						filterRegex="^[TISSUE].*"
 						displayLegends={false}
-						xAxisTitle="Typ"
+						xAxisTitle="Probentyp"
 						yAxisTitle="Anzahl der Proben"
 					>
 					</lens-chart>
