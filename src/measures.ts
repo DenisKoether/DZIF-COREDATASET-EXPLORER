@@ -1,259 +1,261 @@
 /* This defines a measure 'patients' for creating a population of all patients with additional stratifier Gender, Age and Deceased */
 export const patientsMeasure = {
-	key: 'patients',
-	measure: {
-		code: {
-			text: 'patients'
-		},
-		population: [
-			{
-				code: {
-					coding: [
-						{
-							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
-							code: 'initial-population'
-						}
-					]
-				},
-				criteria: {
-					language: 'text/cql-identifier',
-					expression: 'InInitialPopulation'
-				}
-			}
-		],
-		stratifier: [
-			{
-				code: {
-					text: 'Gender'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Gender'
-				}
-			},
-			{
-				code: {
-					text: 'Age'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'AgeClass'
-				}
-			}
-		]
-	},
-	cql: `
+  key: "patients",
+  measure: {
+    code: {
+      text: "patients",
+    },
+    population: [
+      {
+        code: {
+          coding: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
+        },
+        criteria: {
+          language: "text/cql-identifier",
+          expression: "InInitialPopulation",
+        },
+      },
+    ],
+    stratifier: [
+      {
+        code: {
+          text: "Gender",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Gender",
+        },
+      },
+      {
+        code: {
+          text: "Age",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "AgeClass",
+        },
+      },
+    ],
+  },
+  cql: `
 define Gender:
 if (Patient.gender is null) then 'unknown' else Patient.gender
 
 define AgeClass:
 if (Patient.birthDate is null) then 'unknown' else ToString((AgeInYears() div 10) * 10)
-`
+`,
 };
 
 export const anamneseMeasure = {
-	key: 'anamnese',
-	measure: {
-		code: {
-			text: 'anamnese'
-		},
-		extension: [
-			{
-				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
-				valueCode: 'Observation'
-			}
-		],
-		population: [
-			{
-				code: {
-					coding: [
-						{
-							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
-							code: 'initial-population'
-						}
-					]
-				},
-				criteria: {
-					language: 'text/cql-identifier',
-					expression: 'Anamnese'
-				}
-			}
-		],
-		stratifier: [
-			{
-				code: {
-					text: 'Smoker'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_SmokerStatus'
-				}
-			},
-			{
-				code: {
-					text: 'Diabetes'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_Diabetes'
-				}
-			},
-			{
-				code: {
-					text: 'diagnosis'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'DiagnosisCode'
-				}
-			},
-			{
-				code: {
-					text: 'cardvascHT'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CardvascHT'
-				}
-			},
-			{
-				code: {
-					text: 'cardvascCHD'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CardvascCHD'
-				}
-			},
-			{
-				code: {
-					text: 'cardvasc'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_Cardvasc'
-				}
-			},
-			{
-				code: {
-					text: 'chrLung'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_LUNG'
-				}
-			},
-			{
-				code: {
-					text: 'chrKidneydSeverity'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_KIDNEYD_SEVERITY'
-				}
-			},
-			{
-				code: {
-					text: 'chrKidneyd'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_KIDNEYD'
-				}
-			},
-			{
-				code: {
-					text: 'chrLiverdis'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_LIVERDIS'
-				}
-			},
-			{
-				code: {
-					text: 'rheuImmu'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_RHEU_IMMU'
-				}
-			},
-			{
-				code: {
-					text: 'chrMyobakt'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_MYOBAKT'
-				}
-			},
-			{
-				code: {
-					text: 'malaria'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_MALARIA'
-				}
-			},
-			{
-				code: {
-					text: 'chrVirusHIV'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_VIRUS_HIV'
-				}
-			},
-			{
-				code: {
-					text: 'chrVirusHBV'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_VIRUS_HBV'
-				}
-			},
-			{
-				code: {
-					text: 'chrVirusHCV'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_VIRUS_HCV'
-				}
-			},
-			{
-				code: {
-					text: 'chrVirusOTHER'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_CHR_VIRUS_OTHER'
-				}
-			},
-			{
-				code: {
-					text: 'neuro'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_NEURO'
-				}
-			},
-			{
-				code: {
-					text: 'tumorActive'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'Anamnese_TUMOR_ACTIVE'
-				}
-			}
-		]
-	},
-	cql: `
+  key: "anamnese",
+  measure: {
+    code: {
+      text: "anamnese",
+    },
+    extension: [
+      {
+        url: "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
+        valueCode: "Observation",
+      },
+    ],
+    population: [
+      {
+        code: {
+          coding: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
+        },
+        criteria: {
+          language: "text/cql-identifier",
+          expression: "Anamnese",
+        },
+      },
+    ],
+    stratifier: [
+      {
+        code: {
+          text: "Smoker",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_SmokerStatus",
+        },
+      },
+      {
+        code: {
+          text: "Diabetes",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_Diabetes",
+        },
+      },
+      {
+        code: {
+          text: "diagnosis",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "DiagnosisCode",
+        },
+      },
+      {
+        code: {
+          text: "cardvascHT",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CardvascHT",
+        },
+      },
+      {
+        code: {
+          text: "cardvascCHD",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CardvascCHD",
+        },
+      },
+      {
+        code: {
+          text: "cardvasc",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_Cardvasc",
+        },
+      },
+      {
+        code: {
+          text: "chrLung",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_LUNG",
+        },
+      },
+      {
+        code: {
+          text: "chrKidneydSeverity",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_KIDNEYD_SEVERITY",
+        },
+      },
+      {
+        code: {
+          text: "chrKidneyd",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_KIDNEYD",
+        },
+      },
+      {
+        code: {
+          text: "chrLiverdis",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_LIVERDIS",
+        },
+      },
+      {
+        code: {
+          text: "rheuImmu",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_RHEU_IMMU",
+        },
+      },
+      {
+        code: {
+          text: "chrMyobakt",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_MYOBAKT",
+        },
+      },
+      {
+        code: {
+          text: "malaria",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_MALARIA",
+        },
+      },
+      {
+        code: {
+          text: "chrVirusHIV",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_VIRUS_HIV",
+        },
+      },
+      {
+        code: {
+          text: "chrVirusHBV",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_VIRUS_HBV",
+        },
+      },
+      {
+        code: {
+          text: "chrVirusHCV",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_VIRUS_HCV",
+        },
+      },
+      {
+        code: {
+          text: "chrVirusOTHER",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_CHR_VIRUS_OTHER",
+        },
+      },
+      {
+        code: {
+          text: "neuro",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_NEURO",
+        },
+      },
+      {
+        code: {
+          text: "tumorActive",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Anamnese_TUMOR_ACTIVE",
+        },
+      },
+    ],
+  },
+  cql: `
 define Anamnese:
 if InInitialPopulation then [Observation] else {} as List <Observation>
 
@@ -313,117 +315,119 @@ anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Ana
 
 define function Anamnese_TUMOR_ACTIVE(anamnese FHIR.Observation):
 anamnese.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_ACTIVE').code.first()
-`
+`,
 };
 
 export const specimenMeasure = {
-	key: 'specimen',
-	measure: {
-		code: {
-			text: 'specimen'
-		},
-		extension: [
-			{
-				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
-				valueCode: 'Specimen'
-			}
-		],
-		population: [
-			{
-				code: {
-					coding: [
-						{
-							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
-							code: 'initial-population'
-						}
-					]
-				},
-				criteria: {
-					language: 'text/cql-identifier',
-					expression: 'Specimen'
-				}
-			}
-		],
-		stratifier: [
-			{
-				code: {
-					text: 'sample_kind'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'SampleType'
-				}
-			}
-		]
-	},
-	cql: `
+  key: "specimen",
+  measure: {
+    code: {
+      text: "specimen",
+    },
+    extension: [
+      {
+        url: "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
+        valueCode: "Specimen",
+      },
+    ],
+    population: [
+      {
+        code: {
+          coding: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
+        },
+        criteria: {
+          language: "text/cql-identifier",
+          expression: "Specimen",
+        },
+      },
+    ],
+    stratifier: [
+      {
+        code: {
+          text: "sample_kind",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "SampleType",
+        },
+      },
+    ],
+  },
+  cql: `
 define Specimen:
 if InInitialPopulation then [Specimen] else {} as List<Specimen>
 
 define function SampleType(specimen FHIR.Specimen):
 specimen.type.coding.where(system = 'https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE').code.first()
-`
+`,
 };
 
 export const studyMeasure = {
-	key: 'study',
-	measure: {
-		code: {
-			text: 'study'
-		},
-		extension: [
-			{
-				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
-				valueCode: 'Observation'
-			}
-		],
-		population: [
-			{
-				code: {
-					coding: [
-						{
-							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
-							code: 'initial-population'
-						}
-					]
-				},
-				criteria: {
-					language: 'text/cql-identifier',
-					expression: 'Study'
-				}
-			}
-		],
-		stratifier: [
-			{
-				code: {
-					text: 'study'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'StudyOut'
-				}
-			},
-			{
-				code: {
-					text: 'studyKohorte'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'StudyKohorteOut'
-				}
-			},
-			{
-				code: {
-					text: 'org'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'OrgOut'
-				}
-			}
-		]
-	},
-	cql: `
+  key: "study",
+  measure: {
+    code: {
+      text: "study",
+    },
+    extension: [
+      {
+        url: "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
+        valueCode: "Observation",
+      },
+    ],
+    population: [
+      {
+        code: {
+          coding: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
+        },
+        criteria: {
+          language: "text/cql-identifier",
+          expression: "Study",
+        },
+      },
+    ],
+    stratifier: [
+      {
+        code: {
+          text: "study",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "StudyOut",
+        },
+      },
+      {
+        code: {
+          text: "studyKohorte",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "StudyKohorteOut",
+        },
+      },
+      {
+        code: {
+          text: "org",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "OrgOut",
+        },
+      },
+    ],
+  },
+  cql: `
 define Study:
 if InInitialPopulation then [Observation] else {} as List<Observation>
 
@@ -437,54 +441,55 @@ define function OrgOut(study FHIR.Observation):
 study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT').code.first() 
 + '#' + study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI').code.first() 
 + '#' + study.code.coding.where(system = 'https://dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY').code.first()
-`
+`,
 };
 
 export const transplantMeasure = {
-	key: 'transplant',
-	measure: {
-		code: {
-			text: 'transplant'
-		},
-		extension: [
-			{
-				url: 'http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis',
-				valueCode: 'Observation'
-			}
-		],
-		population: [
-			{
-				code: {
-					coding: [
-						{
-							system: 'http://terminology.hl7.org/CodeSystem/measure-population',
-							code: 'initial-population'
-						}
-					]
-				},
-				criteria: {
-					language: 'text/cql-identifier',
-					expression: 'Transplant'
-				}
-			}
-		],
-		stratifier: [
-			{
-				code: {
-					text: 'transplant'
-				},
-				criteria: {
-					language: 'text/cql',
-					expression: 'TransplantOut'
-				}
-			}
-		]
-	},
-	cql: `
+  key: "transplant",
+  measure: {
+    code: {
+      text: "transplant",
+    },
+    extension: [
+      {
+        url: "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
+        valueCode: "Observation",
+      },
+    ],
+    population: [
+      {
+        code: {
+          coding: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
+        },
+        criteria: {
+          language: "text/cql-identifier",
+          expression: "Transplant",
+        },
+      },
+    ],
+    stratifier: [
+      {
+        code: {
+          text: "transplant",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "TransplantOut",
+        },
+      },
+    ],
+  },
+  cql: `
 define Transplant:
 if InInitialPopulation then [Observation] else {} as List<Observation>
 
 define function TransplantOut(transplant FHIR.Observation):
 transplant.code.coding.where(system = 'https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN').code.first()
-`
+`,
 };

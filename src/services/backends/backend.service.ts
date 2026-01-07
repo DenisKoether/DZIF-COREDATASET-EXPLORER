@@ -1,47 +1,40 @@
-import type { MeasureItem, Measure, AstTopLayer, Site, MeasureGroup } from '@samply/lens';
 
 //import { buildLibrary, buildMeasure } from './cql-measure';
 import { env } from '$env/dynamic/public';
-import { translateAstToCql } from './ast-to-cql-translator';
-import { Blaze } from './blaze';
+import { clearSiteResults, getAst, setSiteResult, showToast, type LensResult } from '@samply/lens';
 
-export const requestBackend = (
-	ast: AstTopLayer,
-	updateResponse: (response: Map<string, Site>) => void,
-	abortController: AbortController,
-	measureGroups: MeasureGroup[],
-	criteria: string[]
+let abortController = new AbortController();
+
+
+export const requestBackend = async (
+
 ) => {
-	const measures: Measure[] = measureGroups[0].measures.map(
-		(measureItem: MeasureItem) => measureItem.measure
-	);
 
-	// let query = {};
+  abortController.abort();
+    abortController = new AbortController();
+    clearSiteResults();
 
-	const cql = translateAstToCql(
-		ast,
-		false,
-		'define InInitialPopulation:',
-		measureGroups[0].measures,
-		criteria
-	);
-
-/* 	const library = buildLibrary(`${cql}`);
-	const measure = buildMeasure(library.url, measures);
-	query = { lang: 'cql', lib: library, measure: measure }; */
-
-	let backendUrl: string = '';
-
-	/**
-	 * TODO: add different backend URLs for different environments
-	 */
+	let backendUrl: string | undefined;
 
 	backendUrl = env.PUBLIC_BACKEND_URL;
 	if (backendUrl === undefined) {
-		backendUrl = "http://localhost:8082/fhir"
+		backendUrl = "http://localhost:3001"
 	}
-	
-	const backend = new Blaze(new URL(backendUrl), 'DKTK', '');
 
-	backend.send(cql, updateResponse, abortController, measures);
+        try {
+	    const response = await fetch(`${backendUrl}/exec`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(getAst()),
+        redirect: "manual", // Used to detect redirects
+    });
+
+	setSiteResult("dzif", await response.json())
+} catch (error) {
+          showToast("There was an error while quering", "error");
+
+}
 };
