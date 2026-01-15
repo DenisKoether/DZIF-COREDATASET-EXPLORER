@@ -1,7 +1,5 @@
 // VITE_TARGET_ENVIRONMENT should be set by the ci pipeline
 
-import type { MeasureGroup, MeasureItem } from '@samply/lens';
-
 import {
 	anamneseMeasure,
 	patientsMeasure,
@@ -21,7 +19,6 @@ export const genderHeaders: Map<string, string> = new Map<string, string>()
 	.set('YDM', 'Demenz')
 	.set('YMS', 'Multiple Sklerose')
 	.set('YOTH', 'andere')
-
 	.set('YNE', 'Neuromuskuläre Erkrankungen');
 
 
@@ -78,28 +75,13 @@ export const diseasesHeaders: Map<string, string> = new Map<string, string>()
 .set('IR', 'Tumor - in Remission');
 
 export const virusHeaders: Map<string,string>= new Map<string,string>()
-.set('chrVirusHIV', 'Chronische Virusinfektion (HIV)')
-.set('chrVirusHBV', 'Chronische Virusinfektion (HBV)')
-.set('chrVirusHCV', 'Chronische Virusinfektion (HCV)')
-.set('chrVirusOTHER', 'Chronische Virusinfektion (Andere)');
+.set('chr_virus_hiv', 'Chronische Virusinfektion (HIV)')
+.set('chr_virus_hbv', 'Chronische Virusinfektion (HBV)')
+.set('chr_virus_hcv', 'Chronische Virusinfektion (HCV)')
+.set('chr_virus_other', 'Chronische Virusinfektion (Andere)');
 
 
 export const barChartBackgroundColors: string[] = ['#4dc9f6', '#3da4c7'];
 
-/**
- * Array of measure groups for different backends
- */
-export const measures: MeasureGroup[] = [
-	{
-		name: 'DKTK',
-		measures: [
-			patientsMeasure as MeasureItem,
-			anamneseMeasure as MeasureItem,
-			specimenMeasure as MeasureItem,
-			studyMeasure as MeasureItem,
-			transplantMeasure as MeasureItem
-		]
-	}
-];
 
 export const backendMeasures = `define InInitialPopulation:\n`;

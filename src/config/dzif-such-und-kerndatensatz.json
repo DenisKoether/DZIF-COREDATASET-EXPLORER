@@ -9,7 +9,6 @@
         "name": "Affiliation TTU/TI",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "TI-AD",
@@ -90,7 +89,6 @@
         "name": "Affiliation Studie/Kohorte",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "TX",
@@ -151,7 +149,6 @@
         "name": "Studienstandort",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "BN",
@@ -232,7 +229,6 @@
         "name": "Einwilligungserklärung",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "BIO",
@@ -289,7 +285,6 @@
             "name": "Einwilligungserklärung",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -310,7 +305,6 @@
             "name": "Informed consent restriction",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "N",
@@ -333,18 +327,6 @@
                 "name": "Keine Freigabe Rekontaktierung Patient:in"
               },
               {
-                "key": "EU",
-                "name": "Keine Freigabe Weitergabe EU Ausland"
-              },
-              {
-                "key": "NEU",
-                "name": "Keine Freigabe Weitergabe Nicht-EU Ausland"
-              },
-              {
-                "key": "CU",
-                "name": "Keine Freigabe kommerzielle Nutzung"
-              },
-              {
                 "key": "OTHER",
                 "name": "Weitere Freigabe(n) entzogen"
               }
@@ -354,42 +336,6 @@
             "key": "CONSENT_SIGNDATE",
             "name": "Date of declaration of consent",
             "fieldType": "date",
-            "system": "",
-            "type": "BETWEEN"
-          },
-          {
-            "key": "CONSENT_VERSDATE",
-            "name": "Version date of signed declaration of consent",
-            "fieldType": "date",
-            "system": "",
-            "type": "BETWEEN"
-          },
-          {
-            "key": "WITHDRAWAL",
-            "name": "Withdrawal of the declaration of consent",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "ANO",
-                "name": "Anonymisierung"
-              },
-              {
-                "key": "DEL",
-                "name": "Löschung"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
-          },
-          {
-            "key": "WITHDRAWAL_DATE",
-            "name": "Date of withdrawal",
-            "fieldType": "date",
-            "system": "",
             "type": "BETWEEN"
           }
         ]
@@ -398,7 +344,6 @@
         "key": "PARTICIPANT_TYPE",
         "name": "Art der Teilnahme",
         "fieldType": "single-select",
-        "system": "",
         "type": "EQUALS",
         "criteria": [
           {
@@ -416,7 +361,6 @@
         "name": "Studienendpunkt",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "AK",
@@ -468,7 +412,6 @@
         "key": "DATE_OF_DEATH",
         "name": "Todeszeitpunkt",
         "fieldType": "date",
-        "system": "",
         "type": "BETWEEN"
       },
       {
@@ -481,7 +424,6 @@
             "name": "Identifizierendes Geschlecht",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "M",
@@ -514,7 +456,6 @@
         "key": "VISIT_START",
         "name": "Visitenbeginn",
         "fieldType": "date",
-        "system": "",
         "type": "BETWEEN"
       },
       {
@@ -525,7 +466,6 @@
           {
             "key": "VISIT_TYPE",
             "name": "Type of visit",
-            "system": "",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -564,103 +504,78 @@
     ]
   },
   {
-    "key": "ORGTRANPLANT",
+    "key": "TRANSPLANTATION_ORGAN",
     "name": "Transplantiertes Organ",
-    "fieldType": "group",
-    "childCategories": [
+    "fieldType": "single-select",
+    "type": "EQUALS",
+    "criteria": [
       {
-        "key": "TRANSPLANTATION",
-        "name": "Transplantation",
-        "fieldType": "single-select",
-        "type": "EQUALS",
-        "system": "",
-        "criteria": [
-          {
-            "key": "Y",
-            "name": "Ja"
-          },
-          {
-            "key": "N",
-            "name": "Nein"
-          }
-        ]
+        "key": "BV",
+        "name": "Blutgefäß"
       },
       {
-        "key": "TRANSPLANTATION_ORGAN",
-        "name": "Transplantiertes Organ",
-        "fieldType": "single-select",
-        "type": "EQUALS",
-        "system": "",
-        "criteria": [
-          {
-            "key": "BV",
-            "name": "Blutgefäß"
-          },
-          {
-            "key": "CLN",
-            "name": "Darm"
-          },
-          {
-            "key": "AO",
-            "name": "Gehörknöchelchen"
-          },
-          {
-            "key": "SKN",
-            "name": "Haut"
-          },
-          {
-            "key": "HRT",
-            "name": "Herz"
-          },
-          {
-            "key": "HRTV",
-            "name": "Herzklappen"
-          },
-          {
-            "key": "MEN",
-            "name": "Hirnhaut"
-          },
-          {
-            "key": "COR",
-            "name": "Hornhaut (Auge)"
-          },
-          {
-            "key": "BON",
-            "name": "Knochengewebe"
-          },
-          {
-            "key": "CAR",
-            "name": "Knorpelgewebe"
-          },
-          {
-            "key": "LIV",
-            "name": "Leber"
-          },
-          {
-            "key": "LUN",
-            "name": "Lunge"
-          },
-          {
-            "key": "KID",
-            "name": "Niere"
-          },
-          {
-            "key": "PAN",
-            "name": "Pankreas"
-          },
-          {
-            "key": "TEN",
-            "name": "Sehne"
-          },
-          {
-            "key": "STE",
-            "name": "Stammzellen"
-          },
-          {
-            "key": "OTHER",
-            "name": "ein anderes Organ/Gewebe"
-          }
-        ]
+        "key": "CLN",
+        "name": "Darm"
+      },
+      {
+        "key": "AO",
+        "name": "Gehörknöchelchen"
+      },
+      {
+        "key": "SKN",
+        "name": "Haut"
+      },
+      {
+        "key": "HRT",
+        "name": "Herz"
+      },
+      {
+        "key": "HRTV",
+        "name": "Herzklappen"
+      },
+      {
+        "key": "MEN",
+        "name": "Hirnhaut"
+      },
+      {
+        "key": "COR",
+        "name": "Hornhaut (Auge)"
+      },
+      {
+        "key": "BON",
+        "name": "Knochengewebe"
+      },
+      {
+        "key": "CAR",
+        "name": "Knorpelgewebe"
+      },
+      {
+        "key": "LIV",
+        "name": "Leber"
+      },
+      {
+        "key": "LUN",
+        "name": "Lunge"
+      },
+      {
+        "key": "KID",
+        "name": "Niere"
+      },
+      {
+        "key": "PAN",
+        "name": "Pankreas"
+      },
+      {
+        "key": "TEN",
+        "name": "Sehne"
+      },
+      {
+        "key": "STE",
+        "name": "Stammzellen"
+      },
+      {
+        "key": "OTHER",
+        "name": "ein anderes Organ/Gewebe"
       }
     ]
   },
@@ -674,7 +589,6 @@
         "name": "Rauchen",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -691,7 +605,7 @@
         ]
       },
       {
-        "key": "CARDVASC",
+        "key": "CARDVASC_GROUP",
         "name": "Herz-Kreislauf-Erkrankungen",
         "fieldType": "group",
         "childCategories": [
@@ -700,7 +614,6 @@
             "name": "Cardiovascular disease: Hypertension",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -717,7 +630,6 @@
             "name": " Coronary Heart Disease",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -733,7 +645,6 @@
             "key": "CARDVASC",
             "name": "Cardiovascular disease",
             "fieldType": "single-select",
-            "system": "",
             "type": "EQUALS",
             "criteria": [
               {
@@ -774,57 +685,49 @@
       },
       {
         "key": "CHR_LUNG",
-        "name": "chron. Lungenerkrankungen",
-        "fieldType": "group",
-        "childCategories": [
+        "name": "chron. lung disease",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "CHR_LUNG",
-            "name": "chron. lung disease",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "YA",
-                "name": "Ja, Astma"
-              },
-              {
-                "key": "YCOP",
-                "name": "Ja, COPD"
-              },
-              {
-                "key": "YPF",
-                "name": "Ja, Lungenfibrose"
-              },
-              {
-                "key": "YPH",
-                "name": "Ja, Lungenhochdruck/pulmonale Hypertonie"
-              },
-              {
-                "key": "YOHS",
-                "name": "Ja, Obesitas-Hyperventilationssyndrom (OHS)"
-              },
-              {
-                "key": "YSA",
-                "name": "Ja, Schlafapnoe"
-              },
-              {
-                "key": "YOSAS",
-                "name": "Ja, Schlafapnoesyndrom (OSAS)"
-              },
-              {
-                "key": "YCF",
-                "name": "Ja, Cystische Fibrose"
-              },
-              {
-                "key": "YOTHER",
-                "name": "Ja, eine andere"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "YA",
+            "name": "Astma"
+          },
+          {
+            "key": "YCOP",
+            "name": "COPD"
+          },
+          {
+            "key": "YPF",
+            "name": "Lungenfibrose"
+          },
+          {
+            "key": "YPH",
+            "name": "Lungenhochdruck/pulmonale Hypertonie"
+          },
+          {
+            "key": "YOHS",
+            "name": "Obesitas-Hyperventilationssyndrom (OHS)"
+          },
+          {
+            "key": "YSA",
+            "name": "Schlafapnoe"
+          },
+          {
+            "key": "YOSAS",
+            "name": "Schlafapnoesyndrom (OSAS)"
+          },
+          {
+            "key": "YCF",
+            "name": "Cystische Fibrose"
+          },
+          {
+            "key": "YOTHER",
+            "name": "andere Lungenerkrankung"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
@@ -838,15 +741,14 @@
             "name": "chron. Nierenerkrankung",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "YH",
-                "name": "Ja, mit Hämodialyse"
+                "name": "Mit Hämodialyse"
               },
               {
                 "key": "YWOH",
-                "name": "Ja, ohne Hämodialyse"
+                "name": "Ohne Hämodialyse"
               },
               {
                 "key": "N",
@@ -859,141 +761,109 @@
       {
         "key": "CHR_LIVERDIS",
         "name": "chron. Lebererkrankungen",
-        "fieldType": "group",
-        "childCategories": [
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "CHR_LIVERDIS",
-            "name": "chron. Lebererkrankungen",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "YFL",
-                "name": "Ja, Fettleber"
-              },
-              {
-                "key": "YLZ",
-                "name": "Ja, Leberzirrhose"
-              },
-              {
-                "key": "YCIH",
-                "name": "Ja, chronisch infektiöse Hepatitis"
-              },
-              {
-                "key": "YAL",
-                "name": "Ja, Autoimmune Lebererkrankungen"
-              },
-              {
-                "key": "YOTHER",
-                "name": "Ja, eine andere"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "YFL",
+            "name": "Fettleber"
+          },
+          {
+            "key": "YLZ",
+            "name": "Leberzirrhose"
+          },
+          {
+            "key": "YCIH",
+            "name": "chronisch infektiöse Hepatitis"
+          },
+          {
+            "key": "YAL",
+            "name": "Autoimmune Lebererkrankungen"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Andere Lebererkrankungen"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
       {
         "key": "RHEU_IMMU",
         "name": "rheumatolog. & immunolog. Erkrankungen",
-        "fieldType": "group",
-        "childCategories": [
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "RHEU_IMMU",
-            "name": "rheumatolog. & immunolog. Erkrankungen",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "YCIBD",
-                "name": "Ja, chronisch entzündliche Darmerkrankung"
-              },
-              {
-                "key": "YRA",
-                "name": "Ja, Rheumatoide Arthritis"
-              },
-              {
-                "key": "YCG",
-                "name": "Ja, Kollagenosen"
-              },
-              {
-                "key": "YVT",
-                "name": "Ja, Vaskulitiden"
-              },
-              {
-                "key": "YCGID",
-                "name": "Ja, angeborene Immundefekte"
-              },
-              {
-                "key": "YOTHER",
-                "name": "Ja, eine andere"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "YCIBD",
+            "name": "Ja, chronisch entzündliche Darmerkrankung"
+          },
+          {
+            "key": "YRA",
+            "name": "Ja, Rheumatoide Arthritis"
+          },
+          {
+            "key": "YCG",
+            "name": "Ja, Kollagenosen"
+          },
+          {
+            "key": "YVT",
+            "name": "Ja, Vaskulitiden"
+          },
+          {
+            "key": "YCGID",
+            "name": "Ja, angeborene Immundefekte"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Ja, eine andere"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
       {
         "key": "CHR_MYOBAKT",
-        "name": "chron. Mykobakteriose ",
-        "fieldType": "group",
-        "childCategories": [
+        "name": "Chronic mycobacteriosis",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "CHR_MYOBAKT",
-            "name": "Chronic mycobacteriosis",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "YT",
-                "name": "Ja, Tuberkulose"
-              },
-              {
-                "key": "YOTHER",
-                "name": "Ja, eine andere Mykobakteriose"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "YT",
+            "name": "Ja, Tuberkulose"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Ja, eine andere Mykobakteriose"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
       {
         "key": "MALARIA",
-        "name": "Malaria",
-        "fieldType": "group",
-        "childCategories": [
+        "name": "Malaria infection",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "MALARIA",
-            "name": "Malaria infection",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "Y",
-                "name": "Ja"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "Y",
+            "name": "Ja"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
       {
-        "key": "CHR_VIRUS_HIV",
+        "key": "CHR_VIRUS",
         "name": "chron. Virusinfektionen",
         "fieldType": "group",
         "childCategories": [
@@ -1002,7 +872,6 @@
             "name": "Chronic virus infection: HIV",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -1019,7 +888,6 @@
             "name": "Chronic virus infection: HBV",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -1036,7 +904,6 @@
             "name": "Chronic virus infection: HCV",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -1053,7 +920,6 @@
             "name": "Chronic virus infection: Other",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "Y",
@@ -1069,86 +935,70 @@
       },
       {
         "key": "NEURO",
-        "name": "chron. neurologische Erkrankungen",
-        "fieldType": "group",
-        "childCategories": [
+        "name": "chron. neurological disorders",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "NEURO",
-            "name": "chron. neurological disorders",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "YMP",
-                "name": "Ja, M. Parkinson"
-              },
-              {
-                "key": "YDM",
-                "name": "Ja, Demenz"
-              },
-              {
-                "key": "YMS",
-                "name": "Ja, Multiple Sklerose"
-              },
-              {
-                "key": "YNE",
-                "name": "Ja, Neuromuskuläre Erkrankungen"
-              },
-              {
-                "key": "YOTH",
-                "name": "Ja, eine andere"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "YMP",
+            "name": "Ja, M. Parkinson"
+          },
+          {
+            "key": "YDM",
+            "name": "Ja, Demenz"
+          },
+          {
+            "key": "YMS",
+            "name": "Ja, Multiple Sklerose"
+          },
+          {
+            "key": "YNE",
+            "name": "Ja, Neuromuskuläre Erkrankungen"
+          },
+          {
+            "key": "YOTH",
+            "name": "Ja, eine andere"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
       {
         "key": "DIABETES",
         "name": "Diabetes",
-        "fieldType": "group",
-        "childCategories": [
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
           {
-            "key": "DIABETES",
-            "name": "Diabetes",
-            "fieldType": "single-select",
-            "type": "EQUALS",
-            "system": "",
-            "criteria": [
-              {
-                "key": "1",
-                "name": "Typ 1"
-              },
-              {
-                "key": "2A",
-                "name": "Typ 2 ohne Insulin"
-              },
-              {
-                "key": "2B",
-                "name": "Typ2 mit Insulin"
-              },
-              {
-                "key": "3",
-                "name": "Typ 3"
-              },
-              {
-                "key": "4",
-                "name": "Typ 4/Gestationsdiabetes"
-              },
-              {
-                "key": "N",
-                "name": "Nein"
-              }
-            ]
+            "key": "1",
+            "name": "Typ 1"
+          },
+          {
+            "key": "2A",
+            "name": "Typ 2 ohne Insulin"
+          },
+          {
+            "key": "2B",
+            "name": "Typ2 mit Insulin"
+          },
+          {
+            "key": "3",
+            "name": "Typ 3"
+          },
+          {
+            "key": "4",
+            "name": "Typ 4/Gestationsdiabetes"
+          },
+          {
+            "key": "N",
+            "name": "Nein"
           }
         ]
       },
       {
-        "key": "TUMOR_ACTIVE",
+        "key": "TUMOR",
         "name": "Tumor-/Krebserkrankung",
         "fieldType": "group",
         "childCategories": [
@@ -1157,7 +1007,6 @@
             "name": "Active tumor disease",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "A",
@@ -1178,7 +1027,6 @@
             "name": "Morphology of tumor",
             "fieldType": "single-select",
             "type": "EQUALS",
-            "system": "",
             "criteria": [
               {
                 "key": "S",
@@ -1245,7 +1093,6 @@
         "name": "Medikation allgemein (Filterfrage)",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1262,7 +1109,6 @@
         "name": "Immunsuppressiva",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1279,7 +1125,6 @@
         "name": "Kortison",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1296,7 +1141,6 @@
         "name": "Antihypertensiva",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1313,7 +1157,6 @@
         "name": "Insulin",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1330,7 +1173,6 @@
         "name": "Asthma",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1347,7 +1189,6 @@
         "name": "Antihistaminika",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1364,7 +1205,6 @@
         "name": "Antikoagulanzien",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1381,7 +1221,6 @@
         "name": "Chemotherapie",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1398,7 +1237,6 @@
         "name": "Antiinfektiva",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "Y",
@@ -1407,115 +1245,6 @@
           {
             "key": "N",
             "name": "Nein"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "key": "BIOSAMPLECOLLECTION",
-    "name": "Bioprobenentnahme",
-    "fieldType": "group",
-    "childCategories": [
-      {
-        "key": "BIOSAMPLE_RETRIEVAL",
-        "name": "Bioprobenentnahme",
-        "fieldType": "single-select",
-        "type": "EQUALS",
-        "system": "",
-        "criteria": [
-          {
-            "key": "Y",
-            "name": "Ja"
-          },
-          {
-            "key": "N",
-            "name": "Nein"
-          }
-        ]
-      },
-      {
-        "key": "BIOSAMPLE_RETRIEVAL_LOCATION",
-        "name": "Bioprobenentnahmeort",
-        "fieldType": "single-select",
-        "type": "EQUALS",
-        "system": "",
-        "criteria": [
-          {
-            "key": "BN",
-            "name": "Bonn"
-          },
-          {
-            "key": "BOR",
-            "name": "Borstel"
-          },
-          {
-            "key": "BS",
-            "name": "Braunschweig"
-          },
-          {
-            "key": "GI",
-            "name": "Gießen"
-          },
-          {
-            "key": "H",
-            "name": "Hannover"
-          },
-          {
-            "key": "HD",
-            "name": "Heidelberg"
-          },
-          {
-            "key": "HHBNI",
-            "name": "Hamburg (BNI)"
-          },
-          {
-            "key": "HHUKE",
-            "name": "Hamburg (UKE)"
-          },
-          {
-            "key": "HL",
-            "name": "Lübeck"
-          },
-          {
-            "key": "K",
-            "name": "Köln"
-          },
-          {
-            "key": "MLMU",
-            "name": "München (LMU)"
-          },
-          {
-            "key": "MR",
-            "name": "Marburg"
-          },
-          {
-            "key": "MTUM",
-            "name": "München (TUM)"
-          },
-          {
-            "key": "TUE",
-            "name": "Tübingen"
-          },
-          {
-            "key": "OTHER",
-            "name": "Anderer Standort"
-          },
-          {
-            "key": "DUE",
-            "name": "Düsseldorf"
-          },
-          {
-            "key": "EIGEN",
-            "name": "Eigenentnahme (Proband)"
-          },
-          {
-            "key": "BSDSMZ",
-            "name": "Braunschweig – DSMZ"
-          },
-          {
-            "key": "AFRP",
-            "name": "African Partner Site"
           }
         ]
       }
@@ -1531,7 +1260,6 @@
         "name": "Probentyp",
         "fieldType": "single-select",
         "type": "EQUALS",
-        "system": "",
         "criteria": [
           {
             "key": "LIQUID-EDTA",
@@ -1652,30 +1380,6 @@
           {
             "key": "LIQUID-URI-SED",
             "name": "Urin-Sediment"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "key": "CLINLAB",
-    "name": "Klinisches Labor",
-    "fieldType": "group",
-    "childCategories": [
-      {
-        "key": "INFECTION_ACUTE",
-        "name": "Akute Infektionen",
-        "fieldType": "single-select",
-        "type": "EQUALS",
-        "system": "",
-        "criteria": [
-          {
-            "key": "Y",
-            "name": "Ja"
-          },
-          {
-            "key": "N",
-            "name": "Nein"
           }
         ]
       }

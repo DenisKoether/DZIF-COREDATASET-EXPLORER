@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { requestBackend } from "./services/backends/backend.service";
   import {
     cardvascHeaders,
     diabetesHeaders,
@@ -19,15 +18,18 @@
   import { writable } from "svelte/store";
   // Import Lens CSS and JS bundles
   import "@samply/lens/style.css";
-  import "./app.css";
 
   import "@samply/lens";
+
+  import "./app.css";
 
   import {
     setOptions,
     setCatalogue,
     type LensOptions,
     type Catalogue,
+    markSiteClaimed,
+    removeFailedSite,
   } from "@samply/lens";
   import options from "./config/options.json";
   import catalogue from "./config/dzif-such-und-kerndatensatz.json";
@@ -35,6 +37,132 @@
     setOptions(options as LensOptions);
     setCatalogue(catalogue as Catalogue);
   });
+
+  //import { buildLibrary, buildMeasure } from './cql-measure';
+  import { env } from "$env/dynamic/public";
+  import {
+    clearSiteResults,
+    getAst,
+    setSiteResult,
+    showToast,
+    type LensResult,
+  } from "@samply/lens";
+
+  let result: LensResult | null;
+
+  export function combineStratifiers(
+    lens: LensResult,
+    sourceNames: string[],
+    outName: string,
+  ): LensResult {
+    const combined: Record<string, number> = {};
+
+    // Combine source stratifiers
+    for (const name of sourceNames) {
+      const strat = lens.stratifiers[name];
+      if (!strat) {
+        throw new Error(`Stratifier "${name}" does not exist`);
+      }
+
+      for (const [bucket, value] of Object.entries(strat)) {
+        combined[bucket] = (combined[bucket] ?? 0) + value;
+      }
+    }
+
+    // Build new stratifiers object
+    const newStratifiers: LensResult["stratifiers"] = {};
+
+    for (const [name, strat] of Object.entries(lens.stratifiers)) {
+      if (!sourceNames.includes(name)) {
+        newStratifiers[name] = strat;
+      }
+    }
+
+    // Insert combined stratifier
+    newStratifiers[outName] = combined;
+
+    return {
+      stratifiers: newStratifiers,
+      totals: { ...lens.totals },
+    };
+  }
+
+  const requestBackend = async () => {
+    clearSiteResults();
+    markSiteClaimed("dzif");
+
+    let backendUrl: string | undefined;
+
+    backendUrl = env.PUBLIC_BACKEND_URL;
+    if (backendUrl === undefined) {
+      backendUrl = "http://localhost:3001";
+    }
+
+    try {
+      const response = await fetch(`${backendUrl}/exec`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(getAst()),
+        redirect: "manual", // Used to detect redirects
+      });
+
+      result = await response.json();
+      if (result != null) {
+        cardvasc();
+        anamneseOut();
+        virusout();
+        setSiteResult("dzif", result);
+        console.log(result);
+      }
+    } catch (error) {
+      showToast(
+        "There is an error while quering the backend. Please try it in a few minutes",
+        "error",
+      );
+      removeFailedSite("dzif");
+      result = null;
+    }
+  };
+
+  export function filterStratifierBuckets(
+    lens: LensResult,
+    stratifierName: string,
+    keepBuckets: string[],
+    outName: string,
+  ): LensResult {
+    const strat = lens.stratifiers[stratifierName];
+    if (!strat) {
+      throw new Error(`Stratifier "${stratifierName}" does not exist`);
+    }
+
+    const filtered: Record<string, number> = {};
+
+    for (const bucket of keepBuckets) {
+      if (bucket in strat) {
+        filtered[bucket] = strat[bucket];
+      }
+    }
+
+    const newStratifiers: LensResult["stratifiers"] = {};
+
+    // Remove original stratifier
+    for (const [name, value] of Object.entries(lens.stratifiers)) {
+      if (name !== stratifierName) {
+        newStratifiers[name] = value;
+      }
+    }
+
+    // Insert filtered stratifier
+    newStratifiers[outName] = filtered;
+
+    return {
+      stratifiers: newStratifiers,
+      totals: { ...lens.totals },
+    };
+  }
 
   let showHinweis = writable(true);
 
@@ -60,9 +188,6 @@
 
   let catalogueopen = false;
 
-  const catalogueUrl = "catalogues/dzif-such-und-kerndatensatz.json";
-  const optionsFilePath = "config/options.json";
-
   window.addEventListener("popstate", function () {
     window.location.reload();
   });
@@ -71,438 +196,117 @@
     requestBackend();
   });
 
-  window.addEventListener("lens-responses-updated", () => {
-    response = dataPasser?.getResponseAPI();
-    anamneseOut();
-    virusout();
-    cardvasc();
-    diabetes();
-    immu();
-    liver();
-    lung();
-    neuro();
-    trans();
-  });
-
-  type Subkey = { key: string; label: string };
-
-  type StratifierDefinition = {
-    key: string;
-    label: string;
-    subkeys?: Subkey[];
-    includeAsYes?: string[];
-  };
-
-  type AnamneseGroup = {
-    stratifier: {
-      code: { text: string }[];
-      stratum?: {
-        population?: {
-          count: number;
-          code: { coding: { code: string; system: string }[] };
-        }[];
-        value: { text: string };
-      }[];
-    }[];
-  };
-
-  function getMergedStratifier(
-    text: string,
-    anamneseGroup: AnamneseGroup,
-    stratifiers: StratifierDefinition[],
-  ) {
-    const mergedStratifier = {
-      code: [{ text: text }],
-      stratum: [] as NonNullable<AnamneseGroup["stratifier"][0]["stratum"]>,
-    };
-
-    stratifiers.forEach(({ key, subkeys = [] }) => {
-      const stratifier = anamneseGroup.stratifier.find((strat) =>
-        strat.code.some((c) => c.text === key),
-      );
-
-      if (!stratifier || !stratifier.stratum) {
-        console.warn(`Stratifier not found or empty for key: ${key}`);
-        return;
-      }
-
-      if (!subkeys.length) {
-        const filtered = stratifier.stratum
-          .filter((stratum) => {
-            const value = stratum.value?.text || "";
-            return !["X", "N", "null"].includes(value);
-          })
-          .map((stratum) => {
-            const value = stratum.value?.text || "";
-
-            // Replace 'Y' with the stratifier label (for display)
-            if (value === "Y") {
-              return {
-                ...stratum,
-                value: {
-                  ...stratum.value,
-                  text: stratifier.code[0].text, // stratifier's label replaces 'Y'
-                },
-              };
-            }
-
-            return stratum;
-          });
-
-        mergedStratifier.stratum.push(...filtered);
-      } else {
-        const filtered = stratifier.stratum.filter((stratum) => {
-          const value = stratum.value?.text;
-          const subkey = subkeys.find((s) => s.key === value);
-          const count = stratum.population?.[0]?.count ?? 0;
-          return subkey && count > 0;
-        });
-        mergedStratifier.stratum.push(...filtered);
-      }
-    });
-
-    return mergedStratifier;
-  }
-
   const cardvasc = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
+    if (result != null) {
+      result = combineStratifiers(
+        result,
+        ["cardvasc", "cardvaschd", "cardvasht"],
+        "card",
+      );
     }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers = [
-      {
-        key: "rheuImmu",
-        label: "",
-        subkeys: [
-          { key: "YOTHER", label: "andere" },
-          { key: "YCIBD", label: "chronisch entzündliche Darmerkrankung" },
-          { key: "YRA", label: "Rheumatoide Arthritis" },
-          { key: "YCG", label: "Kollagenosen" },
-          { key: "YVT", label: "Vaskulitiden" },
-          { key: "YCGID", label: "angeborene Immundefekte" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "cardvasc" },
-      stratifier: [getMergedStratifier("cardvasc", anamneseGroup, stratifiers)],
-    });
-  };
-
-  const immu = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
-    }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers = [
-      {
-        key: "rheuImmu",
-        label: "",
-        subkeys: [
-          { key: "YOTHER", label: "andere" },
-          { key: "YCIBD", label: "chronisch entzündliche Darmerkrankung" },
-          { key: "YRA", label: "Rheumatoide Arthritis" },
-          { key: "YCG", label: "Kollagenosen" },
-          { key: "YVT", label: "Vaskulitiden" },
-          { key: "YCGID", label: "angeborene Immundefekte" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "immu" },
-      stratifier: [getMergedStratifier("immu", anamneseGroup, stratifiers)],
-    });
-  };
-
-  let transplantCounter = 0;
-
-  const trans = () => {
-    transplantCounter = 0;
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
-    }
-
-    const transplatngroupe = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "transplant");
-
-    if (!transplatngroupe) return;
-
-    let total = 0;
-
-    for (const stratifier of transplatngroupe.stratifier) {
-      for (const stratum of stratifier.stratum) {
-        if (stratum.value.text !== "null") {
-          for (const pop of stratum.population) {
-            total += pop.count;
-          }
-        }
-      }
-    }
-
-    transplantCounter = total;
-  };
-
-  const neuro = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
-    }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers = [
-      {
-        key: "neuro",
-        label: "",
-        subkeys: [
-          { key: "YMP", label: "Parkinson" },
-          { key: "YDM", label: "Demenz" },
-          { key: "YMS", label: "Multiple Sklerose" },
-          { key: "YNE", label: "Neuromuskuläre Erkrankungen" },
-          { key: "YOTH", label: "andere" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "neuro" },
-      stratifier: [getMergedStratifier("neuro", anamneseGroup, stratifiers)],
-    });
-  };
-
-  const lung = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
-    }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers = [
-      {
-        key: "chrLung",
-        label: "",
-        subkeys: [
-          { key: "YA", label: "Asthma" },
-          { key: "YCOP", label: "COPD" },
-          { key: "YPF", label: "Lungenfibrose" },
-          { key: "YPH", label: "Lungenhochdruck/pulmonale Hypertonie" },
-          { key: "YOHS", label: "Obesitas-Hyperventilationssyndrom (OHS)" },
-          { key: "YSA", label: "Schlafapnoe" },
-          { key: "YOSAS", label: "Schlafapnoesyndrom (OSAS)" },
-          { key: "YCF", label: "Cystische Fibrose" },
-          { key: "YOTHER", label: "andere" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "lung" },
-      stratifier: [getMergedStratifier("lung", anamneseGroup, stratifiers)],
-    });
-  };
-
-  const liver = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
-    }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers = [
-      {
-        key: "chrLiverdis",
-        label: "",
-        subkeys: [
-          { key: "YFL", label: "Fettleber" },
-          { key: "YLZ", label: "Leberzirrhose" },
-          { key: "YCIH", label: "chronisch infektiöse Hepatitis" },
-          { key: "YAL", label: "Autoimmune Lebererkrankungen" },
-          { key: "YOTHER", label: "andere" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "liver" },
-      stratifier: [getMergedStratifier("liver", anamneseGroup, stratifiers)],
-    });
-  };
-
-  const diabetes = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
-    }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers = [
-      {
-        key: "Diabetes",
-        label: "",
-        subkeys: [
-          { key: "1", label: "Typ 1" },
-          { key: "2A", label: "Typ 2 ohne Insulin" },
-          { key: "2B", label: "Typ 2 mit Insulin" },
-          { key: "3", label: "Typ 3" },
-          { key: "4", label: "Typ 4/Gestationsdiabetes" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "diabites" },
-      stratifier: [getMergedStratifier("diabites", anamneseGroup, stratifiers)],
-    });
   };
 
   const virusout = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
+    if (result != null) {
+      let resulta = [];
+      let tmp = filterStratifierBuckets(
+        result,
+        "chr_virus_hiv",
+        ["Y"],
+        "chr_virus_hiv",
+      );
+
+      if (tmp.stratifiers.chr_virus_hiv.Y !== undefined) {
+        tmp = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            chr_virus_hiv: {
+              chr_virus_hiv: tmp.stratifiers.chr_virus_hiv.Y,
+            },
+          },
+        };
+
+        resulta.push("chr_virus_hiv");
+      }
+
+      tmp = filterStratifierBuckets(
+        tmp,
+        "chr_virus_hbv",
+        ["Y"],
+        "chr_virus_hbv",
+      );
+
+      if (tmp.stratifiers.chr_virus_hbv.Y !== undefined) {
+        tmp = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            chr_virus_hbv: {
+              chr_virus_hbv: tmp.stratifiers.chr_virus_hbv.Y,
+            },
+          },
+        };
+        resulta.push("chr_virus_hbv");
+      }
+
+      tmp = filterStratifierBuckets(
+        tmp,
+        "chr_virus_hcv",
+        ["Y"],
+        "chr_virus_hcv",
+      );
+
+      if (tmp.stratifiers.chr_virus_hcv.Y === undefined) {
+        tmp = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            chr_virus_hcv: {
+              chr_virus_hcv: tmp.stratifiers.chr_virus_hcv.Y,
+            },
+          },
+        };
+        resulta.push("chr_virus_hcv");
+      }
+
+      tmp = filterStratifierBuckets(
+        tmp,
+        "chr_virus_other",
+        ["Y"],
+        "chr_virus_other",
+      );
+
+      if (tmp.stratifiers.chr_virus_other.Y !== undefined) {
+        tmp = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            chr_virus_other: {
+              chr_virus_other: tmp.stratifiers.chr_virus_other.Y,
+            },
+          },
+        };
+
+        resulta.push("chr_virus_other");
+      }
+
+      result = combineStratifiers(
+        tmp,
+        resulta,
+        "virus",
+      );
     }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-
-    if (!anamneseGroup) return;
-
-    const stratifiers: StratifierDefinition[] = [
-      {
-        key: "chrVirusHIV",
-        label: "Chronische Virusinfektion (HIV)",
-        includeAsYes: ["Y"],
-      },
-      {
-        key: "chrVirusHBV",
-        label: "Chronische Virusinfektion (HBV)",
-        includeAsYes: ["Y"],
-      },
-      {
-        key: "chrVirusHCV",
-        label: "Chronische Virusinfektion (HCV)",
-        includeAsYes: ["Y"],
-      },
-      {
-        key: "chrVirusOTHER",
-        label: "Chronische Virusinfektion (Andere)",
-        includeAsYes: ["Y"],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "virus" },
-      stratifier: [getMergedStratifier("virus", anamneseGroup, stratifiers)],
-    });
   };
 
   const anamneseOut = () => {
-    if (response === null) {
-      return;
-    } else if (response.get("DKTK") === undefined) {
-      return;
-    } else if (response.get("DKTK")?.status !== "succeeded") {
-      return;
+    if (result != null) {
+      result = combineStratifiers(
+        result,
+        ["malaria", "chr_kidneyd", "chr_myobakt", "tumor_active"],
+        "diseases",
+      );
     }
-
-    const anamneseGroup = response
-      .get("DKTK")
-      ?.data.group.find((group) => group.code.text === "anamnese");
-    if (anamneseGroup === undefined) return;
-
-    const stratifiers: StratifierDefinition[] = [
-      { key: "malaria", label: "Malaria" },
-      {
-        key: "chrKidneyd",
-        label: "",
-        subkeys: [
-          { key: "YH", label: "Nierenerkrankung - mit Hämodialyse" },
-          { key: "YWOH", label: "Nierenerkrankung - ohne Hämodialyse" },
-        ],
-      },
-      {
-        key: "chrMyobakt",
-        label: "",
-        subkeys: [
-          { key: "YT", label: "Mykobakteriose - Tuberkulose" },
-          { key: "YOTHER", label: "Mykobakteriose - andere" },
-        ],
-      },
-      {
-        key: "tumorActive",
-        label: "",
-        subkeys: [
-          { key: "A", label: "Tumor - aktiv" },
-          { key: "IR", label: "Tumor - in Remission" },
-        ],
-      },
-    ];
-
-    response.get("DKTK")?.data.group.push({
-      code: { text: "diseases" },
-      stratifier: [getMergedStratifier("diseases", anamneseGroup, stratifiers)],
-    });
   };
 </script>
 
@@ -559,7 +363,7 @@
       <div class="charts">
         <div class="chart-wrapper result-summary">
           <div class="right">
-            <lens-query-spinner></lens-query-spinner>
+            <lens-query-spinner size="24px"></lens-query-spinner>
           </div>
           <div>
             <lens-result-summary></lens-result-summary>
@@ -581,6 +385,7 @@
             yAxisTitle="Patienten"
             backgroundColor={barChartBackgroundColors}
             displayLegends={false}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -594,6 +399,7 @@
             yAxisTitle="Patienten"
             backgroundColor={barChartBackgroundColors}
             displayLegends={false}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -616,6 +422,7 @@
             yAxisTitle="Anzahl Erkanungen"
             backgroundColor={barChartBackgroundColors}
             headers={diseasesHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -639,17 +446,19 @@
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={virusHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
         <div class="chart-wrapper chart-smoker">
           <lens-chart
             title="Herz-Kreislauf-Erkrankungen"
-            dataKey="cardvasc"
+            dataKey="card"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={cardvascHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -661,39 +470,43 @@
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={diabetesHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
         <div class="chart-wrapper chart-smoker">
           <lens-chart
             title="Rheumatologische / Immunologische Erkrankungen"
-            dataKey="immu"
+            dataKey="rheu_immu"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={immuHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
         <div class="chart-wrapper chart-smoker">
           <lens-chart
             title="Chron. Lebererkrankungen"
-            dataKey="liver"
+            dataKey="chr_liverdis"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={liverHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
         <div class="chart-wrapper chart-smoker">
           <lens-chart
             title="Chron. Lungenerkrankungen"
-            dataKey="lung"
+            dataKey="chr_lung"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={lungHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -705,19 +518,21 @@
             backgroundColor={barChartBackgroundColors}
             yAxisTitle="Anzahl Erkanungen"
             headers={neuroHeaders}
+            enableSorting={true}
           >
           </lens-chart>
         </div>
         <div class="chart-wrapper chart-alter">
           <lens-chart
             title="Alter bei Aufnahme"
-            dataKey="age"
+            dataKey="inclusionage"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             groupRange={10}
             filterRegex="^(1*[12]*[0-9])"
             xAxisTitle="Alter"
             yAxisTitle="Anzahl der Patienten"
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -725,26 +540,28 @@
         <div class="chart-wrapper chart-samples-liquid">
           <lens-chart
             title="Proben LIQUID"
-            dataKey="sample_kind"
+            dataKey="type"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             filterRegex="^[LIQUID|X].*"
             displayLegends={false}
             xAxisTitle="Probentyp"
             yAxisTitle="Anzahl der Proben"
+            enableSorting={true}
           >
           </lens-chart>
         </div>
         <div class="chart-wrapper chart-samples-tissue">
           <lens-chart
             title="Proben Tissue"
-            dataKey="sample_kind"
+            dataKey="type"
             chartType="bar"
             backgroundColor={barChartBackgroundColors}
             filterRegex="^[TISSUE].*"
             displayLegends={false}
             xAxisTitle="Probentyp"
             yAxisTitle="Anzahl der Proben"
+            enableSorting={true}
           >
           </lens-chart>
         </div>
@@ -752,17 +569,17 @@
         <div class="chart-wrapper chart-smoker">
           <lens-chart
             title="Transplantationen"
-            dataKey="transplant"
+            dataKey="transplantout"
             chartType="pie"
             backgroundColor={pieTransChartBackgroundColors}
           >
           </lens-chart>
-          Anzahl Transplantationen: {transplantCounter}
+          Anzahl Transplantationen: {result?.totals.transplat}
         </div>
 
-        <div class="chart-wrapper chart-sites-multi">
+        <!-- <div class="chart-wrapper chart-sites-multi">
           <SitesChart></SitesChart>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>

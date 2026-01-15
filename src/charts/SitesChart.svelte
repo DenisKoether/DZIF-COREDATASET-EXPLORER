@@ -2,14 +2,14 @@
 	import { onMount } from 'svelte';
 	import { Chart } from 'chart.js/auto';
 	import { ArcElement, Tooltip, Legend } from 'chart.js';
-	import type { LensDataPasser, Site } from '@samply/lens';
 	import { backgroundColor } from '../services/tools/chart-style';
 
 	Chart.register(ArcElement, Tooltip, Legend);
 
-	let dataPasser: LensDataPasser;
 	let chart: Chart | null = null;
 	let response: Map<string, Site> | null = null;
+
+	
 
 	window.addEventListener('lens-responses-updated', () => {
 		response = dataPasser?.getResponseAPI();
@@ -277,4 +277,3 @@ const studyColors = sites.flatMap((site) =>
 <div class="siteschart-subtitle"><hr>Das Diagramm zeigt im innersten Ring die Gesamtzahl der gefundenen Patienten pro Standort. Der mittlere Ring
     untergliedert diese Patienten weiter in TTU/TI, während der äußere Ring eine weitere Unterteilung nach den
     jeweiligen Studien vornimmt.</div>
-<lens-data-passer bind:this={dataPasser}></lens-data-passer>
