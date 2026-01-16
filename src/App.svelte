@@ -114,8 +114,37 @@
         cardvasc();
         anamneseOut();
         virusout();
+
+        result = filterStratifierBuckets(
+          result,
+          "diabetes",
+          ["1", "2A", "2B", "3","4"],
+          "diabetes",
+        );
+
+        result = filterStratifierBuckets(
+          result,
+          "neuro",
+          ["YMP", "YDM", "YMS", "YNE","YOTH"],
+          "neuro",
+        );
+
+          result = filterStratifierBuckets(
+          result,
+          "chr_liverdis",
+          ["YAL", "YCIH", "YFL", "YLZ","YOTHER"],
+          "chr_liverdis",
+        );
+
+        result = filterStratifierBuckets(
+          result,
+          "chr_lung",
+          ["YA", "YCOP", "YPF", "YPH", "YOHS", "YSA", "YOSAS", "YCF", "YOTHER"],
+          "chr_lung",
+        );
+
+
         setSiteResult("dzif", result);
-        console.log(result);
       }
     } catch (error) {
       showToast(
@@ -198,9 +227,53 @@
 
   const cardvasc = () => {
     if (result != null) {
+      let resulta = ["cardvasc"]
+
+     let tmp = filterStratifierBuckets(
+        result,
+        "cardvaschd",
+        ["Y"],
+        "cardvaschd",
+      );
+
+      if (tmp.stratifiers.cardvaschd.Y !== undefined) {
+        result = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            cardvaschd: {
+              cardvaschd: tmp.stratifiers.cardvaschd.Y,
+            },
+          },
+        };
+
+        resulta.push("cardvaschd");
+      }
+
+      tmp = filterStratifierBuckets(
+        result,
+        "cardvasht",
+        ["Y"],
+        "cardvasht",
+      );
+
+      if (tmp.stratifiers.cardvasht.Y !== undefined) {
+        result = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            cardvasht: {
+              cardvasht: tmp.stratifiers.cardvasht.Y,
+            },
+          },
+        };
+
+        resulta.push("cardvasht");
+      }
+
       result = combineStratifiers(
         result,
-        ["cardvasc", "cardvaschd", "cardvasht"],
+        resulta,
         "card",
       );
     }
@@ -291,21 +364,53 @@
         resulta.push("chr_virus_other");
       }
 
-      result = combineStratifiers(
-        tmp,
-        resulta,
-        "virus",
-      );
+      result = combineStratifiers(tmp, resulta, "virus");
     }
   };
 
   const anamneseOut = () => {
     if (result != null) {
-      result = combineStratifiers(
+      let resulta = ["chr_kidneyd", "chr_myobakt", "tumor_active"];
+
+      let tmp = filterStratifierBuckets(
         result,
-        ["malaria", "chr_kidneyd", "chr_myobakt", "tumor_active"],
-        "diseases",
+        "chr_myobakt",
+        ["YT", "YOTHER"],
+        "chr_myobakt",
       );
+
+      tmp = filterStratifierBuckets(
+        tmp,
+        "chr_kidneyd",
+        ["YH", "YWOH"],
+        "chr_kidneyd",
+      );
+
+      tmp = filterStratifierBuckets(
+        tmp,
+        "tumor_active",
+        ["A", "IR"],
+        "tumor_active",
+      );
+
+      tmp = filterStratifierBuckets(tmp, "malaria", ["Y"], "malaria");
+
+      if (tmp.stratifiers.malaria.Y !== undefined) {
+        tmp = {
+          ...tmp,
+          stratifiers: {
+            ...tmp.stratifiers,
+            malaria: {
+              malaria: tmp.stratifiers.malaria.Y,
+            },
+          },
+        };
+
+        resulta.push("malaria");
+      }
+      result = tmp;
+
+      result = combineStratifiers(result, resulta, "diseases");
     }
   };
 </script>
