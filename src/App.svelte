@@ -143,6 +143,13 @@
           "chr_lung",
         );
 
+        result = filterStratifierBuckets(
+          result,
+          "rheu_immu",
+          ["YCIBD", "YRA", "YCG", "YVT", "YCGID", "YOTHER"],
+          "rheu_immu",
+        );
+
 
         setSiteResult("dzif", result);
       }
