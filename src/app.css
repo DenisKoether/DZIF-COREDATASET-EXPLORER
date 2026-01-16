@@ -801,3 +801,13 @@ lens-search-modified-display::part(display-wrapper) {
     position: absolute; right: 0;
     padding-right: 20px;
 }
+
+lens-query-explain-button::part(lens-query-explain-button) {
+    background-color: white
+}
+
+
+.lens-chart-big {
+    width: 100%;
+    max-height: 400px;
+  }
