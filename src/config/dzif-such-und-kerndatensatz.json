@@ -261,10 +261,6 @@
           {
             "key": "OTHER",
             "name": "Weitere Freigabe(n)"
-          },
-          {
-            "key": "CONSENT_GENERAL_OTHER",
-            "name": "General approvals in informed consent: Other approvals"
           }
         ]
       }
@@ -611,7 +607,7 @@
         "childCategories": [
           {
             "key": "CARDVASC_HT",
-            "name": "Cardiovascular disease: Hypertension",
+            "name": "Hypertensive Herzkrankheit",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -627,7 +623,7 @@
           },
           {
             "key": "CARDVASC_CHD",
-            "name": " Coronary Heart Disease",
+            "name": "Koronare Herzkrankheit",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -643,7 +639,7 @@
           },
           {
             "key": "CARDVASC",
-            "name": "Cardiovascular disease",
+            "name": "Kardiovaskuläre Erkrankungen",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -685,7 +681,7 @@
       },
       {
         "key": "CHR_LUNG",
-        "name": "chron. lung disease",
+        "name": "Chronische Lungenerkrankung",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
@@ -733,12 +729,12 @@
       },
       {
         "key": "CHR_KIDNEYD",
-        "name": "chron. Nierenerkrankung",
+        "name": "Chronische Nierenerkrankung",
         "fieldType": "group",
         "childCategories": [
           {
             "key": "CHR_KIDNEYD",
-            "name": "chron. Nierenerkrankung",
+            "name": "Chronische Nierenerkrankung",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -760,7 +756,7 @@
       },
       {
         "key": "CHR_LIVERDIS",
-        "name": "chron. Lebererkrankungen",
+        "name": "Chronische Lebererkrankungen",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
@@ -792,7 +788,7 @@
       },
       {
         "key": "RHEU_IMMU",
-        "name": "rheumatolog. & immunolog. Erkrankungen",
+        "name": "Rheumatolog. & Immunolog. Erkrankungen",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
@@ -828,7 +824,7 @@
       },
       {
         "key": "CHR_MYOBAKT",
-        "name": "Chronic mycobacteriosis",
+        "name": "Chronische Mykobakteriose",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
@@ -848,7 +844,7 @@
       },
       {
         "key": "MALARIA",
-        "name": "Malaria infection",
+        "name": "Malaria",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
@@ -864,12 +860,12 @@
       },
       {
         "key": "CHR_VIRUS",
-        "name": "chron. Virusinfektionen",
+        "name": "Chronische Virusinfektionen",
         "fieldType": "group",
         "childCategories": [
           {
             "key": "CHR_VIRUS_HIV",
-            "name": "Chronic virus infection: HIV",
+            "name": "HIV",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -885,7 +881,7 @@
           },
           {
             "key": "CHR_VIRUS_HBV",
-            "name": "Chronic virus infection: HBV",
+            "name": "HBV",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -901,7 +897,7 @@
           },
           {
             "key": "CHR_VIRUS_HCV",
-            "name": "Chronic virus infection: HCV",
+            "name": "HCV",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -917,7 +913,7 @@
           },
           {
             "key": "CHR_VIRUS_OTHER",
-            "name": "Chronic virus infection: Other",
+            "name": "Andere",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -935,29 +931,29 @@
       },
       {
         "key": "NEURO",
-        "name": "chron. neurological disorders",
+        "name": "Chronische Neurologische Erkrankungen",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
           {
             "key": "YMP",
-            "name": "Ja, M. Parkinson"
+            "name": "M. Parkinson"
           },
           {
             "key": "YDM",
-            "name": "Ja, Demenz"
+            "name": "Demenz"
           },
           {
             "key": "YMS",
-            "name": "Ja, Multiple Sklerose"
+            "name": "Multiple Sklerose"
           },
           {
             "key": "YNE",
-            "name": "Ja, Neuromuskuläre Erkrankungen"
+            "name": "Neuromuskuläre Erkrankungen"
           },
           {
             "key": "YOTH",
-            "name": "Ja, eine andere"
+            "name": "Andere"
           },
           {
             "key": "N",
@@ -1004,7 +1000,7 @@
         "childCategories": [
           {
             "key": "TUMOR_ACTIVE",
-            "name": "Active tumor disease",
+            "name": "Aktive Tumor Erkankung",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
@@ -1024,17 +1020,17 @@
           },
           {
             "key": "TUMOR_MORPHOLOGY",
-            "name": "Morphology of tumor",
+            "name": "Morphology des Tumors",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [
               {
                 "key": "S",
-                "name": "solider Tumor"
+                "name": "Solider Tumor"
               },
               {
                 "key": "NS",
-                "name": "nicht solider Tumor"
+                "name": "Nicht solider Tumor"
               }
             ]
           }
@@ -1283,7 +1279,7 @@
           },
           {
             "key": "LIQUID-SER",
-            "name": "Serum(- Gel)"
+            "name": "Serum"
           },
           {
             "key": "LIQUID-URI",
@@ -1307,19 +1303,19 @@
           },
           {
             "key": "LIQUID-BSW",
-            "name": "Bukkaler Abstrich (buccal swab)"
+            "name": "Bukkaler Abstrich"
           },
           {
             "key": "LIQUID-PSW",
-            "name": "Peritonealer Abstrich (peritoneal swab)"
+            "name": "Peritonealer Abstrich"
           },
           {
             "key": "LIQUID-PHL",
-            "name": "Rachenspülwasser (pharyngeal lavage)"
+            "name": "Rachenspülwasser"
           },
           {
             "key": "LIQUID-FEC",
-            "name": "Fäkaler Abstrich (fecal swab)"
+            "name": "Fäkaler Abstrich"
           },
           {
             "key": "TISSUE-FF",
@@ -1340,10 +1336,6 @@
           {
             "key": "TISSUE-OTH",
             "name": "Andere Gewebeprobe"
-          },
-          {
-            "key": "X",
-            "name": "Unbekannt"
           },
           {
             "key": "LIQUID-TBS",

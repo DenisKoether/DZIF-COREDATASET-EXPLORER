@@ -21,13 +21,13 @@
 
   import "./app.css";
 
-  	import { Chart } from 'chart.js/auto';
-	import { ArcElement, Tooltip, Legend } from 'chart.js';
-	import { backgroundColor } from './services/tools/chart-style';
+  import { Chart } from "chart.js/auto";
+  import { ArcElement, Tooltip, Legend } from "chart.js";
+  import { backgroundColor } from "./services/tools/chart-style";
 
-	Chart.register(ArcElement, Tooltip, Legend);
+  Chart.register(ArcElement, Tooltip, Legend);
 
-	let chart: Chart | null = null;
+  let chart: Chart | null = null;
 
   import {
     setOptions,
@@ -47,54 +47,52 @@
     chart = new Chart(ctx.getContext("2d"), initialChartData);
   });
 
-  	const updateChart = () => {
+  const updateChart = () => {
+    if (result === null) {
+      return;
+    }
 
-		if (result === null) {
-			return;
-		} 
+    let sites: Site[] = [];
 
+    for (const [bucket, count] of Object.entries(result.stratifiers.orgout)) {
+      const values = bucket.split("#");
 
-		let sites: Site[] = [];
+      if (values.length === 3) {
+        let site = sites.find((s) => s.site === values[0]);
+        if (!site) {
+          site = {
+            site: values[0],
+            count: 0,
+            ttus: [],
+          };
+          sites.push(site);
+        }
+        site.count += 1;
 
-for (const [bucket, count] of Object.entries(result.stratifiers.orgout)) {
-					const values = bucket.split('#');
+        let ttu = site.ttus.find((t) => t.ttu === values[1]);
+        if (!ttu) {
+          ttu = {
+            ttu: values[1],
+            count: 0,
+            studies: [],
+          };
+          site.ttus.push(ttu);
+        }
+        ttu.count += 1;
 
-					if (values.length === 3) {
-						let site = sites.find((s) => s.site === values[0]);
-						if (!site) {
-							site = {
-								site: values[0],
-								count: 0,
-								ttus: []
-							};
-							sites.push(site);
-						}
-						site.count += 1;
-
-						let ttu = site.ttus.find((t) => t.ttu === values[1]);
-						if (!ttu) {
-							ttu = {
-								ttu: values[1],
-								count: 0,
-								studies: []
-							};
-							site.ttus.push(ttu);
-						}
-						ttu.count += 1;
-
-						let study = ttu.studies.find((s) => s.study === values[2]);
-						if (!study) {
-							study = {
-								study: values[2],
-								count: 0
-							};
-							ttu.studies.push(study);
-						}
-						study.count += 1;
-					}
-				}
-		renderChart(sites);
-	};
+        let study = ttu.studies.find((s) => s.study === values[2]);
+        if (!study) {
+          study = {
+            study: values[2],
+            count: 0,
+          };
+          ttu.studies.push(study);
+        }
+        study.count += 1;
+      }
+    }
+    renderChart(sites);
+  };
 
   const adjustColor = (color: string, factor: number) => {
     let r, g, b;
@@ -402,9 +400,10 @@ for (const [bucket, count] of Object.entries(result.stratifiers.orgout)) {
         );
 
         setSiteResult("dzif", result);
-        updateChart()
+        updateChart();
       }
     } catch (error) {
+      console.error(error);
       showToast(
         "There is an error while quering the backend. Please try it in a few minutes",
         "error",
@@ -706,11 +705,17 @@ for (const [bucket, count] of Object.entries(result.stratifiers.orgout)) {
       <div class="catalogue-wrapper">
         <div class="catalogue">
           <h2>Suchkriterien</h2>
-          <lens-info-button message={[`Information hinzufügen(TODO)`]}
-          ></lens-info-button>
           <lens-catalogue toggle={{ collapsable: false, open: catalogueopen }}
           ></lens-catalogue>
           <br />
+          <p>
+            Weitere Informationen zum kerndatensatz finden Sie im <a
+              href="https://mdr.dzif.de/#/details?concept=http:%2F%2Fdata.custom.de%2Font%2Fdwh%23Core_Dataset"
+              >Data&Tools Hub</a
+            >
+            oder als
+            <a href="https://mdm.mi.uni-heidelberg.de/46192">Formulare </a>
+          </p>
         </div>
       </div>
 
@@ -937,9 +942,9 @@ for (const [bucket, count] of Object.entries(result.stratifiers.orgout)) {
           <div class="siteschart-subtitle">
             <hr />
             Das Diagramm zeigt im innersten Ring die Gesamtzahl der gefundenen Patienten
-            pro Standort. Der mittlere Ring untergliedert diese Patienten weiter
-            in TTU/TI, während der äußere Ring eine weitere Unterteilung nach den
-            jeweiligen Studien vornimmt.
+            pro Standort. Der mittlere Ring untergliedert diese Patienten weiter in
+            TTU/TI, während der äußere Ring eine weitere Unterteilung nach den jeweiligen
+            Studien vornimmt.
           </div>
         </div>
       </div>

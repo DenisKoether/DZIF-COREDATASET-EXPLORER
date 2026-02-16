@@ -40,9 +40,6 @@
       }
     },
     "gender": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "male": "Männlich",
         "female": "Weiblich",
@@ -51,9 +48,6 @@
       }
     },
     "sites": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "BN": "Bonn",
         "BOR": "Borstel",
@@ -75,9 +69,6 @@
       }
     },
     "diabetes": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "1": "Typ1",
         "2A": "Typ2 ohne Insulin",
@@ -89,9 +80,6 @@
       }
     },
     "smoker": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "Y": "Yes",
         "N": "No",
@@ -99,20 +87,9 @@
         "X": "Keine Information verfügbar"
       }
     },
-    "diagnosis": {
-      "hintText": [
-        "TODO"
-      ]
-    },
-    "age": {
-      "hintText": [
-        "TODO"
-      ]
-    },
+    "diagnosis": {},
+    "age": {},
     "medicationStatements": {
-      "hintText": [
-        "Art der systemischen oder abwartenden Therapie (ADT Basisdatensatz Versionen 2014, 2021)"
-      ],
       "tooltips": {
         "CH": "Chemotherapie",
         "HO": "Hormontherapie",
@@ -217,7 +194,8 @@
         "title": "Patienten",
         "dataKey": "patients"
       }
-    ]  },
+    ]
+  },
   "resultSummaryOptions": {
     "title": "Ergebnisse",
     "dataTypes": [
