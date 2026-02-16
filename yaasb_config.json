@@ -1,1529 +1,1025 @@
 {
-    "queries": {
-        "gender": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.gender {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+  "criteria": {
+    "gender": {
+      "Patient": "gender"
+    },
+    "CONSENT_SIGN": {
+      "Patient": "consentsigndate"
+    },
+    "CONSENT_RESTRICTION": {
+      "Patient": "CONSENT_RESTRICTION"
+    },
+    "CONSENT_SIGNDATE": {
+      "Patient": "consentsigndate"
+    },
+    "CONSENT_VERSDATE": {
+      "Patient": "consentversdate"
+    },
+    "PARTICIPANT_TYPE": {
+      "Patient": "consentsigndate"
+    },
+    "STUDY_ENDPOINT": {
+      "Patient": "consentinclusionendpoint"
+    },
+    "DATE_OF_DEATH": {
+      "Patient": "deathdate"
+    },
+    "AFFILIATION_TTU_TI": {
+      "Study": "AFFILIATION_TTU_TI"
+    },
+    "AFFILATION_STUDY": {
+      "Study": "AFFILATION_STUDY"
+    },
+    "ORG_UNIT": {
+      "Study": "ORG_UNIT"
+    },
+    "CONSENT_GENERAL": {
+      "Study": "CONSENT_GENERAL"
+    },
+    "VISIT_START": {
+      "VISIT": "visit_type_start"
+    },
+    "VISIT_TYPE": {
+      "VISIT": "visit_type"
+    },
+    "TRANSPLANTATION_ORGAN": {
+      "TRANSPLANTATION_ORGAN": "TRANSPLANTATION_ORGAN"
+    },
+    "SMOKING_STATUS": {
+      "Anamnese": "smoker"
+    },
+    "CARDVASC_HT": {
+      "Anamnese": "cardvasht"
+    },
+    "CARDVASC_CHD": {
+      "Anamnese": "cardvaschd"
+    },
+    "CARDVASC": {
+      "Anamnese": "cardvasc"
+    },
+    "CHR_LUNG": {
+      "Anamnese": "chr_lung"
+    },
+    "CHR_LIVERDIS": {
+      "Anamnese": "chr_liverdis"
+    },
+    "CHR_MYOBAKT": {
+      "Anamnese": "chr_myobakt"
+    },
+    "RHEU_IMMU": {
+      "Anamnese": "rheu_immu"
+    },
+    "MALARIA": {
+      "Anamnese": "malaria"
+    },
+    "CHR_VIRUS_HIV": {
+      "Anamnese": "chr_virus_hiv"
+    },
+    "CHR_VIRUS_HBV": {
+      "Anamnese": "chr_virus_hbv"
+    },
+    "CHR_VIRUS_HCV": {
+      "Anamnese": "chr_virus_hcv"
+    },
+    "CHR_VIRUS_OTHER": {
+      "Anamnese": "chr_virus_other"
+    },
+    "NEURO": {
+      "Anamnese": "neuro"
+    },
+    "DIABETES": {
+      "Anamnese": "diabetes"
+    },
+    "TUMOR_ACTIVE": {
+      "Anamnese": "tumor_active"
+    },
+    "TUMOR_MORPHOLOGY": {
+      "Anamnese": "TUMOR_MORPHOLOGY"
+    },
+    "CLINICAL_INFECTION": {
+      "CLIN_CONF_INF": "CLINICAL_INFECTION"
+    },
+    "MEDS": {
+      "MEDICATION": "MEDS"
+    },
+    "MEDS_IMMUNSUPPR": {
+      "MEDICATION": "MEDS_IMMUNSUPPR"
+    },
+    "MEDS_CORTISONE": {
+      "MEDICATION": "MEDS_CORTISONE"
+    },
+    "MEDS_ANTIHYPERTENSIVES": {
+      "MEDICATION": "MEDS_ANTIHYPERTENSIVES"
+    },
+    "MEDS_INSULIN": {
+      "MEDICATION": "MEDS_INSULIN"
+    },
+    "MEDS_ASTHMA": {
+      "MEDICATION": "MEDS_ASTHMA"
+    },
+    "MEDS_ANTIHISTAMINES": {
+      "MEDICATION": "MEDS_ANTIHISTAMINES"
+    },
+    "MEDS_ANTICOAGULANT": {
+      "MEDICATION": "MEDS_ANTICOAGULANT"
+    },
+    "MEDS_CHEMO": {
+      "MEDICATION": "MEDS_CHEMO"
+    },
+    "MEDS_ANTIINFECTIVES": {
+      "MEDICATION": "MEDS_ANTIINFECTIVES"
+    },
+    "BIOSAMPLE_TYPE": {
+      "BIOSAMPLE": "type"
+    }
+  },
+  "stratifiers": {
+    "Patient": {
+      "gender": "gender",
+      "inclusionage": "CAST(inclusionage as VARCHAR)"
+    },
+    "STUDY": {
+      "studykohorte": "AFFILATION_STUDY",
+      "study": "AFFILIATION_TTU_TI",
+      "orgout": "CONCAT(org_unit, '#', AFFILIATION_TTU_TI, '#', AFFILATION_STUDY)"
+    },
+    "anamnese": {
+      "smoker": "smoker",
+      "diabetes": "diabetes",
+      "cardvasht": "cardvasht",
+      "cardvaschd": "cardvaschd",
+      "cardvasc": "cardvasc",
+      "chr_lung": "chr_lung",
+      "chr_kidneyd": "chr_kidneyd",
+      "chr_liverdis": "chr_liverdis",
+      "rheu_immu": "rheu_immu",
+      "chr_myobakt": "chr_myobakt",
+      "malaria": "malaria",
+      "chr_virus_hiv": "chr_virus_hiv",
+      "chr_virus_hbv": "chr_virus_hbv",
+      "chr_virus_hcv": "chr_virus_hcv",
+      "chr_virus_other": "chr_virus_other",
+      "neuro": "neuro",
+      "tumor_active": "tumor_active"
+    },
+    "biosample": {
+      "type": "type"
+    },
+    "TRANSPLANTATION": {
+      "transplantout": "transplantation"
+    }
+  },
+  "totals": {
+    "TRANSPLANTATION": {
+      "transplat": "ID"
+    },
+    "VISIT": {
+      "visits": "ID"
+    },
+    "biosample": {
+      "samples": "ID"
+    },
+    "Patient": {
+      "patients": "ID"
+    }
+  },
+  "tables": {
+    "Patient": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.id"
         },
-        "CONSENT_SIGN": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.consentsigndate {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+        "gender": {
+          "type": "string",
+          "nullable": true,
+          "max_length": 10,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/SEX')].valueString"
+        },
+        "consent": {
+          "type": "string",
+          "nullable": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT')].valueString"
         },
         "CONSENT_RESTRICTION": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.CONSENT_RESTRICTION {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+          "type": "string",
+          "nullable": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT_RESTRICTION')].valueString"
         },
-        "CONSENT_SIGNDATE": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.consentsigndate {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+        "consentsigndate": {
+          "type": "date",
+          "nullable": false,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT_SIGNDATE')].valueDate"
         },
-        "CONSENT_VERSDATE": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.consentversdate {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+        "consentwithdrawaldate": {
+          "type": "date",
+          "nullable": false,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL_DATE')].valueDate"
+        },
+        "consentwithdrawal": {
+          "type": "string",
+          "nullable": false,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL')].valueString"
         },
         "PARTICIPANT_TYPE": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.PARTICIPANT_TYPE {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+          "type": "string",
+          "nullable": false,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/PARTICIPANT_TYPE')].valueString"
         },
-        "STUDY_ENDPOINT": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.consentinclusionendpoint {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+        "consentinclusionendpoint": {
+          "type": "string",
+          "nullable": false,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/STUDY_ENDPOINT')].valueString"
         },
-        "DATE_OF_DEATH": {
-            "sql": "SELECT p.id as patient_id FROM Patient p WHERE p.deathdate {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                }
-            ]
+        "consentversdate": {
+          "type": "date",
+          "nullable": false,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT_VERSDATE')].valueDate"
+        },
+        "deathdate": {
+          "type": "date",
+          "nullable": false,
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/DATE_OF_DEATH')].valueDate"
+        },
+        "inclusionage": {
+          "type": "integer",
+          "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION')].valueInteger"
+        }
+      }
+    },
+    "VISIT": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.id"
+        },
+        "patient_id": {
+          "type": "string",
+          "nullable": false,
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "Patient",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.subject.reference"
+        },
+        "visit_type": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE')].valueString"
+        },
+        "visit_type_number": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE_NUMBER')].valueString"
+        },
+        "visit_type_unit": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE_UNIT')].valueString"
+        },
+        "visit_type_start": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_START')].valueDate"
+        }
+      }
+    },
+    "Study": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/VISIT_REF')].valueReference.reference"
         },
         "AFFILIATION_TTU_TI": {
-            "sql": "SELECT p.id as patient_id, s.id as study_id , v.id as visit_id FROM Study s join visit v on s.visit_id = v.id join Patient p on v.patient_id = p.id  WHERE s.AFFILIATION_TTU_TI {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "STUDY_IDS",
-                    "column_name": "study_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI')].code"
         },
         "AFFILATION_STUDY": {
-            "sql": "SELECT p.id as patient_id, s.id as study_id , v.id as visit_id FROM Study s join visit v on s.visit_id = v.id join Patient p on v.patient_id = p.id  WHERE s.AFFILATION_STUDY {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "STUDY_IDS",
-                    "column_name": "study_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY')].code"
         },
         "ORG_UNIT": {
-            "sql": "SELECT p.id as patient_id, s.id as study_id , v.id as visit_id FROM Study s join visit v on s.visit_id = v.id join Patient p on v.patient_id = p.id  WHERE s.ORG_UNIT {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "STUDY_IDS",
-                    "column_name": "study_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT')].code"
         },
         "CONSENT_GENERAL": {
-            "sql": "SELECT p.id as patient_id, s.id as study_id , v.id as visit_id FROM Study s join visit v on s.visit_id = v.id join Patient p on v.patient_id = p.id  WHERE s.CONSENT_GENERAL {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "STUDY_IDS",
-                    "column_name": "study_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/CONSENT_GENERAL')].code"
+        }
+      }
+    },
+    "Anamnese": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.id"
         },
-        "VISIT_START": {
-            "sql": "SELECT p.id as patient_id, v.id as visit_id FROM visit v join Patient p on v.patient_id = p.id  WHERE v.visit_type_start {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                }
-            ]
+        "visit_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/VISIT_REF')].valueReference.reference"
         },
-        "VISIT_TYPE": {
-            "sql": "SELECT p.id as patient_id, v.id as visit_id FROM visit v join Patient p on v.patient_id = p.id  WHERE v.visit_type {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                }
-            ]
-        },
-        "TRANSPLANTATION_ORGAN": {
-            "sql": "SELECT t.id as trans_id, p.id as patient_id FROM TRANSPLANTATION_ORGAN t join  patient p on t.patient_id = p.id  WHERE t.TRANSPLANTATION_ORGAN {CONDITION_PLACEHOLDER};",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "TRANSPLANTATION_ORGAN_IDS",
-                    "column_name": "trans_id"
-                }
-            ]
-        },
-        "SMOKING_STATUS": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.smoker {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CARDVASC_HT": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.cardvasht {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CARDVASC_CHD": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.cardvaschd {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CARDVASC": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.cardvasc {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_LUNG": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_lung {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_LIVERDIS": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_liverdis {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_MYOBAKT": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_myobakt {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "RHEU_IMMU": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.rheu_immu {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "MALARIA": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.malaria {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_VIRUS_HIV": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_virus_hiv {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_VIRUS_HBV": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_virus_hbv {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_VIRUS_HCV": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_virus_hcv {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
-        },
-        "CHR_VIRUS_OTHER": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.chr_virus_other {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
+        "rheu_immu": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/RHEU_IMMU')].code"
         },
         "NEURO": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.neuro {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO')].code"
+        },
+        "smoker": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/smoker')].code"
         },
         "DIABETES": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.diabetes {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES')].code"
         },
-        "TUMOR_ACTIVE": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.tumor_active {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
+        "CHR_VIRUS_HIV": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HIV')].code"
+        },
+        "CHR_VIRUS_HBV": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HBV')].code"
+        },
+        "CHR_VIRUS_HCV": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HCV')].code"
+        },
+        "CHR_VIRUS_OTHER": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER')].code"
+        },
+        "CARDVASC": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC')].code"
+        },
+        "cardvasht": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-HT')].code"
+        },
+        "cardvaschd": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-CHD')].code"
+        },
+        "CHR_KIDNEYD": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_KIDNEYD')].code"
+        },
+        "CHR_LIVERDIS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LIVERDIS')].code"
+        },
+        "CHR_LUNG": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LUNG')].code"
+        },
+        "height": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/height')].code"
+        },
+        "TUMOR_DIAG_YEAR": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_DIAG_YEAR')].code"
         },
         "TUMOR_MORPHOLOGY": {
-            "sql": "SELECT a.id as anamnese_id, v.id as visit_id, p.id as patient_id FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.TUMOR_MORPHOLOGY {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "ANAMNESE_IDS",
-                    "column_name": "anamnese_id"
-                }
-            ]
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_MORPHOLOGY')].code"
         },
-        "CLINICAL_INFECTION": {
-            "sql": "SELECT c.id as clinc_id, v.id as visit_id, p.id as patient_id FROM CLIN_CONF_INF c join visit v on c.visit_id = v.id join patient p on v.patient_id = p.id WHERE c.CLINICAL_INFECTION {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "CLIN_CONF_INF_IDS",
-                    "column_name": "clinc_id"
-                }
-            ]
+        "CHR_MYOBAKT": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_MYOBAKT')].code"
         },
-        "MEDS": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
+        "TUMOR_ACTIVE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_ACTIVE')].code"
         },
-        "MEDS_IMMUNSUPPR": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_IMMUNSUPPR {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_CORTISONE": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_CORTISONE {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_ANTIHYPERTENSIVES": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_ANTIHYPERTENSIVES {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_INSULIN": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_INSULIN {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_ASTHMA": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_ASTHMA {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_ANTIHISTAMINES": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_ANTIHISTAMINES {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_ANTICOAGULANT": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_ANTICOAGULANT {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_CHEMO": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_CHEMO {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "MEDS_ANTIINFECTIVES": {
-            "sql": "SELECT m.id as meds_id, v.id as visit_id, p.id as patient_id FROM MEDICATION m join visit v on m.visit_id = v.id join patient p on v.patient_id = p.id WHERE m.MEDS_ANTIINFECTIVES {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "VISIT_IDS",
-                    "column_name": "visit_id"
-                },
-                {
-                    "result_key": "MEDICATION_IDS",
-                    "column_name": "meds_id"
-                }
-            ]
-        },
-        "BIOSAMPLE_TYPE": {
-            "sql": "SELECT b.id as sample_id, p.id as patient_id FROM BIOSAMPLE b join patient p on b.patient_id = p.id WHERE b.type {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "BIOSAMPLE_IDS",
-                    "column_name": "sample_id"
-                }
-            ]
-        },
-        "INFECTION_ACUTE": {
-            "sql": "SELECT b.id as sample_id, p.id as patient_id FROM BIOSAMPLE b join patient p on b.patient_id = p.id WHERE b.type {CONDITION_PLACEHOLDER}",
-            "result_mappings": [
-                {
-                    "result_key": "PATIENT_IDS",
-                    "column_name": "patient_id"
-                },
-                {
-                    "result_key": "BIOSAMPLE_IDS",
-                    "column_name": "sample_id"
-                }
-            ]
+        "MALARIA": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/MALARIA')].code"
         }
+      }
     },
-    "stratifiers": {
-        "patients": {
-            "total": "SELECT 'patients' as key, COUNT(DISTINCT p.id) as count \n  FROM Patient p \n   WHERE p.id {PATIENT_IDS}",
-            "gender": "SELECT gender, COUNT(gender) AS count FROM Patient p\n    WHERE p.gender IS NOT NULL AND  p.id {PATIENT_IDS} GROUP BY gender;",
-            "inclusionage": "SELECT cast(p.inclusionage as TEXT), count(p.inclusionage) as count from Patient p where p.inclusionage is not null and p.id {PATIENT_IDS} GROUP BY inclusionage"
+    "VACCINATION": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.id"
         },
-        "study": {
-            "studykohorte": "SELECT AFFILATION_STUDY as studykohorte, COUNT(*) as count FROM Study s join visit v on s.visit_id = v.id join patient p on v.patient_id = p.id WHERE visit_id {VISIT_IDS} and p.id {PATIENT_IDS} GROUP BY AFFILATION_STUDY;",
-            "study": "SELECT AFFILIATION_TTU_TI as study, COUNT(*) as count FROM Study s join visit v on s.visit_id = v.id join patient p on v.patient_id = p.id WHERE s.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY study;",
-            "orgout": "select CONCAT(org_unit, '#', AFFILIATION_TTU_TI, '#', AFFILATION_STUDY) as orgout, COUNT(*) as count from Study s join visit v on s.visit_id = v.id join patient p on v.patient_id = p.id WHERE s.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY orgout"
+        "patient_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "Patient",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.subject.reference"
         },
-        "anamnese": {
-            "smoker": "SELECT smoker as smoker, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY smoker;",
-            "diabetes": "SELECT diabetes as diabetes, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY diabetes;",
-            "cardvasht": "SELECT cardvasht as cardvasht, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY cardvasht;",
-            "cardvaschd": "SELECT cardvaschd as cardvaschd, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY cardvaschd;",
-            "cardvasc": "SELECT cardvasc as cardvasc, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY cardvasc;",
-            "chr_lung": "SELECT chr_lung as chr_lung, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_lung;",
-            "chr_kidneyd": "SELECT chr_kidneyd as chr_kidneyd, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_kidneyd;",
-            "chr_liverdis": "SELECT chr_liverdis as chr_liverdis, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_liverdis;",
-            "rheu_immu": "SELECT rheu_immu as rheu_immu, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY rheu_immu;",
-            "chr_myobakt": "SELECT chr_myobakt as chr_myobakt, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_myobakt;",
-            "malaria": "SELECT malaria as malaria, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY malaria;",
-            "chr_virus_hiv": "SELECT chr_virus_hiv as chr_virus_hiv, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_virus_hiv;",
-            "chr_virus_hbv": "SELECT chr_virus_hbv as chr_virus_hbv, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_virus_hbv;",
-            "chr_virus_hcv": "SELECT chr_virus_hcv as chr_virus_hcv, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_virus_hcv;",
-            "chr_virus_other": "SELECT chr_virus_other as chr_virus_other, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY chr_virus_other;",
-            "neuro": "SELECT neuro as neuro, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY neuro;",
-            "tumor_active": "SELECT tumor_active as tumor_active, COUNT(*) as count FROM Anamnese a join visit v on a.visit_id = v.id join patient p on v.patient_id = p.id WHERE a.visit_id  {VISIT_IDS} and p.id {PATIENT_IDS}  GROUP BY tumor_active;"
+        "VACCOVID19_ATCSYSTEM": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACCOVID19_ATCSYSTEM')].code"
         },
-        "samples": {
-            "total": "SELECT 'samples' as key, COUNT(DISTINCT p.id) as count \n  FROM biosample a join patient p on a.patient_id = p.id \n   WHERE p.id {PATIENT_IDS}",
-            "type": "SELECT type as type, COUNT(*) as count FROM biosample a join patient p on a.patient_id = p.id WHERE p.id {PATIENT_IDS}  GROUP BY type;"
+        "VACCOVID19_DATE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACCOVID19_DATE')].code"
         },
-        "transplat": {
-            "total": "SELECT 'samples' as key, COUNT(DISTINCT p.id) as count \n  FROM TRANSPLANTATION t join  patient p on t.patient_id = p.id WHERE p.id {PATIENT_IDS}",
-            "transplantout": "SELECT transplantation as transplantout, COUNT(*) as count FROM TRANSPLANTATION t join patient p on t.patient_id = p.id WHERE p.id {PATIENT_IDS}  GROUP BY transplantout;"
+        "VACINFLUENZA_ATCSYSTEM": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACINFLUENZA_ATCSYSTEM')].code"
+        },
+        "VACINFLUENZA_DATE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACINFLUENZA_DATE')].code"
         }
+      }
     },
-    "tables": {
-        "Patient": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "nullable": false,
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.id"
-                },
-                "gender": {
-                    "type": "string",
-                    "nullable": true,
-                    "max_length": 10,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/SEX')].valueString"
-                },
-                "consent": {
-                    "type": "string",
-                    "nullable": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT')].valueString"
-                },
-                "CONSENT_RESTRICTION": {
-                    "type": "string",
-                    "nullable": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT_RESTRICTION')].valueString"
-                },
-                "consentsigndate": {
-                    "type": "date",
-                    "nullable": false,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT_SIGNDATE')].valueDate"
-                },
-                "consentwithdrawaldate": {
-                    "type": "date",
-                    "nullable": false,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL_DATE')].valueDate"
-                },
-                "consentwithdrawal": {
-                    "type": "string",
-                    "nullable": false,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/WITHDRAWAL')].valueString"
-                },
-                "PARTICIPANT_TYPE": {
-                    "type": "string",
-                    "nullable": false,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/PARTICIPANT_TYPE')].valueString"
-                },
-                "consentinclusionendpoint": {
-                    "type": "string",
-                    "nullable": false,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/STUDY_ENDPOINT')].valueString"
-                },
-                "consentversdate": {
-                    "type": "date",
-                    "nullable": false,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/CONSENT_VERSDATE')].valueDate"
-                },
-                "deathdate": {
-                    "type": "date",
-                    "nullable": false,
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/DATE_OF_DEATH')].valueDate"
-                },
-                "inclusionage": {
-                    "type": "integer",
-                    "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION')].valueInteger"
-                }
-            }
+    "TRANSPLANTATION": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.id"
         },
-        "VISIT": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.id"
-                },
-                "patient_id": {
-                    "type": "string",
-                    "nullable": false,
-                    "max_length": 64,
-                    "foreign_key_table": "Patient",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.subject.reference"
-                },
-                "visit_type": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE')].valueString"
-                },
-                "visit_type_number": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE_NUMBER')].valueString"
-                },
-                "visit_type_unit": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_TYPE_UNIT')].valueString"
-                },
-                "visit_type_start": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_START')].valueDate"
-                }
-            }
+        "patient_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "Patient",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.subject.reference"
         },
-        "Study": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/VISIT_REF')].valueReference.reference"
-                },
-                "AFFILIATION_TTU_TI": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/AFFILIATION_TTU_TI')].code"
-                },
-                "AFFILATION_STUDY": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/AFFILATION_STUDY')].code"
-                },
-                "ORG_UNIT": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/ORG_UNIT')].code"
-                },
-                "CONSENT_GENERAL": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/CONSENT_GENERAL')].code"
-                }
-            }
-        },
-        "Anamnese": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/VISIT_REF')].valueReference.reference"
-                },
-                "rheu_immu": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/RHEU_IMMU')].code"
-                },
-                "NEURO": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/NEURO')].code"
-                },
-                "smoker": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/smoker')].code"
-                },
-                "DIABETES": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/DIABETES')].code"
-                },
-                "CHR_VIRUS_HIV": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HIV')].code"
-                },
-                "CHR_VIRUS_HBV": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HBV')].code"
-                },
-                "CHR_VIRUS_HCV": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_HCV')].code"
-                },
-                "CHR_VIRUS_OTHER": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_VIRUS_OTHER')].code"
-                },
-                "CARDVASC": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC')].code"
-                },
-                "cardvasht": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-HT')].code"
-                },
-                "cardvaschd": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CARDVASC-CHD')].code"
-                },
-                "CHR_KIDNEYD": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_KIDNEYD')].code"
-                },
-                "CHR_LIVERDIS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LIVERDIS')].code"
-                },
-                "CHR_LUNG": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_LUNG')].code"
-                },
-                "height": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/height')].code"
-                },
-                "TUMOR_DIAG_YEAR": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_DIAG_YEAR')].code"
-                },
-                "TUMOR_MORPHOLOGY": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_MORPHOLOGY')].code"
-                },
-                "CHR_MYOBAKT": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/CHR_MYOBAKT')].code"
-                },
-                "TUMOR_ACTIVE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/TUMOR_ACTIVE')].code"
-                },
-                "MALARIA": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/MALARIA')].code"
-                }
-            }
-        },
-        "VACCINATION": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.id"
-                },
-                "patient_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "Patient",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.subject.reference"
-                },
-                "VACCOVID19_ATCSYSTEM": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACCOVID19_ATCSYSTEM')].code"
-                },
-                "VACCOVID19_DATE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACCOVID19_DATE')].code"
-                },
-                "VACINFLUENZA_ATCSYSTEM": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACINFLUENZA_ATCSYSTEM')].code"
-                },
-                "VACINFLUENZA_DATE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACINFLUENZA_DATE')].code"
-                }
-            }
+        "TRANSPLANTATION_EXDATE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_EXDATE')].code"
         },
         "TRANSPLANTATION": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.id"
-                },
-                "patient_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "Patient",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.subject.reference"
-                },
-                "TRANSPLANTATION_EXDATE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_EXDATE')].code"
-                },
-                "TRANSPLANTATION": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION')].code"
-                },
-                "TRANSPLANTATION_AMOUNT_OF_TRANSPLANS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_AMOUNT_OF_TRANSPLANS')].code"
-                }
-            }
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION')].code"
+        },
+        "TRANSPLANTATION_AMOUNT_OF_TRANSPLANS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_AMOUNT_OF_TRANSPLANS')].code"
+        }
+      }
+    },
+    "TRANSPLANTATION_ORGAN": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.id"
+        },
+        "patient_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "Patient",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.subject.reference"
         },
         "TRANSPLANTATION_ORGAN": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.id"
-                },
-                "patient_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "Patient",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.subject.reference"
-                },
-                "TRANSPLANTATION_ORGAN": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN')].code"
-                }
-            }
-        },
-        "VITAL_SIGNS": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VISIT_REF')].valueReference.reference"
-                },
-                "VITAL_BPD": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_BPD')].code"
-                },
-                "VITAL_BPS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_BPS')].code"
-                },
-                "VITAL_HR": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_HR')].code"
-                },
-                "VITAL_POS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_POS')].code"
-                },
-                "VITAL_RR": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_RR')].code"
-                },
-                "VITAL_TEMP": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_TEMP')].code"
-                }
-            }
-        },
-        "CLIN_CONF_INF": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/VISIT_REF')].valueReference.reference"
-                },
-                "CLINICAL_INFECTION": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/CLINICAL_INFECTION')].code"
-                },
-                "PTG_CULT_DATE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/PTG_CULT_DATE')].code"
-                },
-                "PTG_GENUS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/PTG_GENUS')].code"
-                },
-                "PTG_SPECIES": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/PTG_SPECIES')].code"
-                },
-                "effectiveDateTime": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.effectiveDateTime"
-                }
-            }
-        },
-        "VIROLOGY_LAB": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY/VISIT_REF')].valueReference.reference"
-                }
-            }
-        },
-        "IMAGING": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "max_length": 64,
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING/VISIT_REF')].valueReference.reference"
-                }
-            }
-        },
-        "ENVIRONMENT": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT/VISIT_REF')].valueReference.reference"
-                }
-            }
-        },
-        "SYMPTOMS": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Symptome/VISIT_REF')].valueReference.reference"
-                },
-                "SYMPTOM_ANOSMIA": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/SYMPTOM_ANOSMIA')].code"
-                }
-            }
-        },
-        "COMPLICATION": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/VISIT_REF')].valueReference.reference"
-                },
-                "COMPLICATIONS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/COMPLICATIONS')].code"
-                },
-                "COMPLICATIONS_DATE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/COMPLICATIONS_DATE')].code"
-                }
-            }
-        },
-        "MEDICATION": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "primary_key": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/VISIT_REF')].valueReference.reference"
-                },
-                "ANTIBIOTICS_12M": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/ANTIBIOTICS_12M')].code"
-                },
-                "MEDS": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS')].code"
-                },
-                "MEDS_IMMUNSUPPR": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_IMMUNSUPPR')].code"
-                },
-                "MEDS_CORTISONE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CORTISONE')].code"
-                },
-                "MEDS_ANTIHYPERTENSIVES": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHYPERTENSIVES')].code"
-                },
-                "MEDS_INSULIN": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_INSULIN')].code"
-                },
-                "MEDS_ASTHMA": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ASTHMA')].code"
-                },
-                "MEDS_ANTIHISTAMINES": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHISTAMINES')].code"
-                },
-                "MEDS_ANTICOAGULANT": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTICOAGULANT')].code"
-                },
-                "MEDS_CHEMO": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CHEMO')].code"
-                },
-                "MEDS_ANTIINFECTIVES": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIINFECTIVES')].code"
-                }
-            }
-        },
-        "Antibiogram": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "MEDICATION",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/CLINIC_REF')].valueReference.reference"
-                },
-                "PTG_AB_METHOD": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_METHOD')].code"
-                },
-                "PTG_AB_AGENT": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_AGENT')].code"
-                },
-                "PTG_AB_RESULT": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_RESULT')].code"
-                },
-                "PTG_AB_MIC": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_MIC')].code"
-                }
-            }
-        },
-        "BIOSAMPLE": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.id"
-                },
-                "type": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.type.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE')].code"
-                },
-                "patient_id": {
-                    "type": "string",
-                    "nullable": false,
-                    "max_length": 64,
-                    "foreign_key_table": "Patient",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.subject.reference"
-                }
-            }
-        },
-        "BIOSAMPLECOLLECTION": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "primary_key": true,
-                    "max_length": 64,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.id"
-                },
-                "visit_id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "foreign_key_table": "VISIT",
-                    "foreign_key_column": "id",
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/VISIT_REF')].valueReference.reference"
-                },
-                "PTG_AB_MIC": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_DATE')].code"
-                },
-                "RETRIEVAL_TIME": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_TIME')].code"
-                },
-                "SITE": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/SITE')].code"
-                },
-                "RETRIEVAL": {
-                    "type": "string",
-                    "max_length": 64,
-                    "nullable": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL')].code"
-                }
-            }
-        },
-        "MEDICAL_HISTORY": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "primary_key": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.id"
-                }
-            }
-        },
-        "CLINICAL_LAB": {
-            "fields": {
-                "id": {
-                    "type": "string",
-                    "max_length": 64,
-                    "primary_key": true,
-                    "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY')].resource.id"
-                }
-            }
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN')].code"
         }
+      }
     },
-    "setup": []
+    "VITAL_SIGNS": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VISIT_REF')].valueReference.reference"
+        },
+        "VITAL_BPD": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_BPD')].code"
+        },
+        "VITAL_BPS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_BPS')].code"
+        },
+        "VITAL_HR": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_HR')].code"
+        },
+        "VITAL_POS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_POS')].code"
+        },
+        "VITAL_RR": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_RR')].code"
+        },
+        "VITAL_TEMP": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_TEMP')].code"
+        }
+      }
+    },
+    "CLIN_CONF_INF": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/VISIT_REF')].valueReference.reference"
+        },
+        "CLINICAL_INFECTION": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/CLINICAL_INFECTION')].code"
+        },
+        "PTG_CULT_DATE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/PTG_CULT_DATE')].code"
+        },
+        "PTG_GENUS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/PTG_GENUS')].code"
+        },
+        "PTG_SPECIES": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion/PTG_SPECIES')].code"
+        },
+        "effectiveDateTime": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.effectiveDateTime"
+        }
+      }
+    },
+    "VIROLOGY_LAB": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY/VISIT_REF')].valueReference.reference"
+        }
+      }
+    },
+    "IMAGING": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING/VISIT_REF')].valueReference.reference"
+        }
+      }
+    },
+    "ENVIRONMENT": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT/VISIT_REF')].valueReference.reference"
+        }
+      }
+    },
+    "SYMPTOMS": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Symptome/VISIT_REF')].valueReference.reference"
+        },
+        "SYMPTOM_ANOSMIA": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/SYMPTOM_ANOSMIA')].code"
+        }
+      }
+    },
+    "COMPLICATION": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/VISIT_REF')].valueReference.reference"
+        },
+        "COMPLICATIONS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/COMPLICATIONS')].code"
+        },
+        "COMPLICATIONS_DATE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/COMPLICATIONS_DATE')].code"
+        }
+      }
+    },
+    "MEDICATION": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "max_length": 64,
+          "primary_key": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/VISIT_REF')].valueReference.reference"
+        },
+        "ANTIBIOTICS_12M": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/ANTIBIOTICS_12M')].code"
+        },
+        "MEDS": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS')].code"
+        },
+        "MEDS_IMMUNSUPPR": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_IMMUNSUPPR')].code"
+        },
+        "MEDS_CORTISONE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CORTISONE')].code"
+        },
+        "MEDS_ANTIHYPERTENSIVES": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHYPERTENSIVES')].code"
+        },
+        "MEDS_INSULIN": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_INSULIN')].code"
+        },
+        "MEDS_ASTHMA": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ASTHMA')].code"
+        },
+        "MEDS_ANTIHISTAMINES": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIHISTAMINES')].code"
+        },
+        "MEDS_ANTICOAGULANT": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTICOAGULANT')].code"
+        },
+        "MEDS_CHEMO": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_CHEMO')].code"
+        },
+        "MEDS_ANTIINFECTIVES": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIINFECTIVES')].code"
+        }
+      }
+    },
+    "Antibiogram": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "MEDICATION",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/CLINIC_REF')].valueReference.reference"
+        },
+        "PTG_AB_METHOD": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_METHOD')].code"
+        },
+        "PTG_AB_AGENT": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_AGENT')].code"
+        },
+        "PTG_AB_RESULT": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_RESULT')].code"
+        },
+        "PTG_AB_MIC": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_MIC')].code"
+        }
+      }
+    },
+    "BIOSAMPLE": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.id"
+        },
+        "type": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.type.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/BIOSAMPLE/TYPE')].code"
+        },
+        "patient_id": {
+          "type": "string",
+          "nullable": false,
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "Patient",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.subject.reference"
+        }
+      }
+    },
+    "BIOSAMPLECOLLECTION": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "primary_key": true,
+          "max_length": 64,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.id"
+        },
+        "visit_id": {
+          "type": "string",
+          "max_length": 64,
+          "reference": {
+            "foreign_key_table": "VISIT",
+            "foreign_key_column": "id"
+          },
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/VISIT_REF')].valueReference.reference"
+        },
+        "PTG_AB_MIC": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_DATE')].code"
+        },
+        "RETRIEVAL_TIME": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL_TIME')].code"
+        },
+        "SITE": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/SITE')].code"
+        },
+        "RETRIEVAL": {
+          "type": "string",
+          "max_length": 64,
+          "nullable": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL')].code"
+        }
+      }
+    },
+    "MEDICAL_HISTORY": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "max_length": 64,
+          "primary_key": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.id"
+        }
+      }
+    },
+    "CLINICAL_LAB": {
+      "fields": {
+        "id": {
+          "type": "string",
+          "max_length": 64,
+          "primary_key": true,
+          "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY')].resource.id"
+        }
+      }
+    }
+  },
+  "setup": []
 }
