@@ -47,6 +47,11 @@
     --font-size-xxl: 32px;
 
     --font-family: 'Open Sans', sans-serif;
+    
+    /* New variables for header sizing */
+    --header-height: 120px;
+    --header-height-scrolled: 55px;
+    --header-spacing: 1em;
 }
 
 /**
@@ -94,19 +99,29 @@ button {
     font-family: inherit;
 }
 
-/* Header Styling */
+/* Header Styling with smooth transitions */
 header {
     background-color: var(--ghost-white);
     position: sticky;
-    z-index: 1;
-    margin: 1em;
-    padding: var(--gap-xs);
+    z-index: 100;
+    margin: var(--header-spacing);
+    padding: var(--gap-s);
     border-radius: var(--border-radius-small);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
     top: 0px;
+    transition: padding 0.3s ease, margin 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Scrolled state for header - better visibility */
+header.scrolled {
+    padding: var(--gap-xxs) var(--gap-xs);
+    margin: var(--header-spacing) var(--header-spacing) 0 var(--header-spacing);
+    background: linear-gradient(135deg, var(--white) 0%, var(--ghost-white) 100%);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--lightest-gray);
 }
 
 header .header-logo {
@@ -119,6 +134,11 @@ header img {
     margin-left: 15px;
     width: 85px;
     height: auto;
+    transition: width 0.3s ease;
+}
+
+header.scrolled img {
+    width: 50px;
 }
 
 header h1 {
@@ -128,6 +148,11 @@ header h1 {
     font-size: var(--font-size-xxl);
     font-weight: 500;
     color: var(--blue);
+    transition: font-size 0.3s ease;
+}
+
+header.scrolled h1 {
+    font-size: var(--font-size-l);
 }
 
 /* Responsives Design */
@@ -140,6 +165,10 @@ header h1 {
     header h1 {
         margin-top: 10px;
         font-size: var(--font-size-xl);
+    }
+    
+    header.scrolled h1 {
+        font-size: var(--font-size-l);
     }
 }
 
@@ -157,49 +186,83 @@ header h1 {
     border: solid 1px var(--lightest-gray);
 }
 
+/* Search bar with improved sticky positioning and spacing */
 .search {
-    background-color: var(--ghost-white);
-    /*position: sticky; */
+    background: linear-gradient(to bottom, 
+        var(--color-site-background) 0%, 
+        var(--color-site-background) 20%, 
+        rgba(0, 30, 80, 0.98) 50%,
+        rgba(0, 30, 80, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: sticky;
-    top: 63px;
-    z-index: 1;
-    margin: 1em;
+    top: calc(var(--header-height) + var(--header-spacing));
+    z-index: 90;
+    margin: 0 var(--header-spacing) var(--gap-s) var(--header-spacing);
     border-radius: var(--border-radius-small);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: top 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Adjust search bar position when header is scrolled - closer gap */
+body.header-scrolled .search {
+    top: calc(var(--header-height-scrolled) + var(--gap-xxs));
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .search-wrapper {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto auto;
     grid-gap: var(--gap-s);
-    /* padding: var(--gap-xxs) 0; */
-    background-color: var(--color-site-background);
+    background-color: var(--ghost-white);
+    padding: var(--gap-s);
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Main grid with spacing from search bar */
 .grid {
     position: relative;
     display: grid;
     grid-template-columns: 400px 1fr;
     grid-gap: var(--gap-m);
     padding: 0 var(--gap-xs) var(--gap-xs);
-    margin: var(--gap-xxs);
+    margin: 0 var(--gap-xxs);
+    /* Add top margin for spacing below search bar */
+    margin-top: var(--gap-s);
 }
 
 .catalogue-wrapper {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white) 0%, var(--ghost-white) 100%);
     border: solid 1px var(--lightest-gray);
     border-radius: var(--border-radius-small);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease, top 0.3s ease, height 0.3s ease;
+    /* Make the entire wrapper sticky, not just inner content */
+    position: sticky;
+    top: calc(var(--header-height) + var(--header-spacing) + 100px);
+    height: calc(100vh - 280px);
+    /* Add bottom margin for spacing from footer */
+    margin-bottom: var(--gap-s);
+}
+
+/* Adjust when header is scrolled - closer to search bar */
+body.header-scrolled .catalogue-wrapper {
+    top: calc(var(--header-height-scrolled) + 105px);
+    height: calc(100vh - 185px);
+}
+
+.catalogue-wrapper:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .catalogue {
     border-radius: var(--border-radius-small);
     padding: var(--gap-s);
-    background-color: var(--white);
-    grid-row: 1/-1;
-    overflow-y: scroll;
-    height: calc(100vh - 226px);
-    position: sticky;
-    top: 131px;
-
+    background-color: transparent;
+    overflow-y: auto;
+    height: 100%;
+    /* Remove individual sticky positioning since wrapper is sticky now */
 }
 
 .history-item {
@@ -274,6 +337,8 @@ header h1 {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--gap-xs);
     grid-column: 2/3;
+    /* Add bottom margin so last chart has space from footer */
+    margin-bottom: var(--gap-s);
 }
 
 .siteschart-subtitle {
@@ -501,7 +566,6 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1em;
     padding: var(--gap-xs);
     background-color: var(--white);
     border-radius: var(--border-radius-small);
@@ -798,8 +862,116 @@ lens-search-modified-display::part(display-wrapper) {
 }
 
 .right {
-    position: absolute; right: 0;
+    position: absolute; 
+    right: 0;
     padding-right: 20px;
+    display: flex;
+    gap: var(--gap-xs);
+    align-items: center;
+}
+
+.chart-filter {
+    position: relative;
+    display: inline-block;
+}
+
+.chart-filter-button {
+    background-color: var(--light-blue);
+    color: var(--white);
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: var(--font-size-s);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.chart-filter-button:hover {
+    background-color: #006adb;
+}
+
+.chart-filter-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: var(--gap-xs);
+    min-width: 280px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.chart-filter-dropdown label {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: var(--border-radius-small);
+    transition: background-color 0.2s ease;
+    font-size: var(--font-size-s);
+}
+
+.chart-filter-dropdown label:hover {
+    background-color: var(--lightest-gray);
+}
+
+.chart-filter-dropdown input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.chart-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: var(--gap-xxs);
+}
+
+.chart-filter-header h3 {
+    margin: 0;
+    font-size: var(--font-size-m);
+    color: var(--dark-gray);
+    font-weight: 500;
+}
+
+.chart-filter-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chart-filter-actions button {
+    background: none;
+    border: none;
+    color: var(--light-blue);
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    padding: 4px 8px;
+    border-radius: var(--border-radius-small);
+    transition: background-color 0.2s ease;
+}
+
+.chart-filter-actions button:hover {
+    background-color: var(--lightest-gray);
+}
+
+.chart-filter-count {
+    font-size: var(--font-size-xs);
+    color: var(--gray);
+    padding: 8px 12px;
+    border-top: 1px solid var(--light-gray);
+    margin-top: var(--gap-xxs);
 }
 
 lens-query-explain-button::part(lens-query-explain-button) {

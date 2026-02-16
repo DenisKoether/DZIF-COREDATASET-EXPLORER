@@ -42,9 +42,35 @@
   onMount(() => {
     setOptions(options as LensOptions);
     setCatalogue(catalogue as Catalogue);
+
     const ctx = document.getElementById("multiRingChart2") as HTMLCanvasElement;
     Chart.defaults.font.size = 12;
     chart = new Chart(ctx.getContext("2d"), initialChartData);
+
+    // Handle header shrinking on scroll
+    const header = document.querySelector("header");
+    let lastScrollTop = 0;
+
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > 50) {
+        header?.classList.add("scrolled");
+        document.body.classList.add("header-scrolled");
+      } else {
+        header?.classList.remove("scrolled");
+        document.body.classList.remove("header-scrolled");
+      }
+
+      lastScrollTop = scrollTop;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   });
 
   const updateChart = () => {
@@ -299,6 +325,97 @@
 
   let result: LensResult | null;
 
+  // Chart filtering functionality
+  let showChartFilter = false;
+
+  // Define all available charts with their IDs and titles
+  const availableCharts = [
+    { id: "study-ttu", title: "Studie - TTU/TI", visible: true },
+    { id: "study-kohorte", title: "Studie/Kohorte", visible: true },
+    { id: "gender", title: "Identifizierendes Geschlecht", visible: true },
+    { id: "diseases", title: "Erkrankungen", visible: true },
+    { id: "smoker", title: "Raucher", visible: true },
+    { id: "virus", title: "Chron. Viruserkrankungen", visible: true },
+    {
+      id: "cardiovascular",
+      title: "Herz-Kreislauf-Erkrankungen",
+      visible: true,
+    },
+    { id: "diabetes", title: "Diabetes", visible: true },
+    {
+      id: "rheumatology",
+      title: "Rheumatologische / Immunologische Erkrankungen",
+      visible: true,
+    },
+    { id: "liver", title: "Chron. Lebererkrankungen", visible: true },
+    { id: "lung", title: "Chron. Lungenerkrankungen", visible: true },
+    { id: "neuro", title: "Chron. Neurologische-Erkrankungen", visible: true },
+    { id: "age", title: "Alter bei Aufnahme", visible: true },
+    { id: "samples-liquid", title: "Proben LIQUID", visible: true },
+    { id: "samples-tissue", title: "Proben Tissue", visible: true },
+    { id: "transplant", title: "Transplantationen", visible: true },
+    { id: "sites-multi", title: "Patienten pro Standort", visible: true },
+  ];
+
+  let chartVisibility = availableCharts.reduce(
+    (acc, chart) => {
+      acc[chart.id] = chart.visible;
+      return acc;
+    },
+    {} as Record<string, boolean>,
+  );
+
+  function toggleChartFilter() {
+    showChartFilter = !showChartFilter;
+  }
+
+  function toggleChart(chartId: string) {
+    chartVisibility[chartId] = !chartVisibility[chartId];
+  }
+
+  function showAllCharts() {
+    Object.keys(chartVisibility).forEach((key) => {
+      chartVisibility[key] = true;
+    });
+  }
+
+  function hideAllCharts() {
+    Object.keys(chartVisibility).forEach((key) => {
+      chartVisibility[key] = false;
+    });
+  }
+
+  $: visibleChartsCount = Object.values(chartVisibility).filter(
+    (v) => v,
+  ).length;
+  $: totalChartsCount = Object.keys(chartVisibility).length;
+
+  /**
+   * Helper function to check if a stratifier exists in the result
+   * @param lens - The LensResult to check
+   * @param stratifierName - The name of the stratifier to look for
+   * @returns true if the stratifier exists, false otherwise
+   */
+  export function hasStratifier(
+    lens: LensResult,
+    stratifierName: string,
+  ): boolean {
+    return lens?.stratifiers?.[stratifierName] !== undefined;
+  }
+
+  /**
+   * Helper function to check if multiple stratifiers exist
+   * @param lens - The LensResult to check
+   * @param stratifierNames - Array of stratifier names to check
+   * @returns true if ALL stratifiers exist, false if any are missing
+   */
+  export function hasAllStratifiers(
+    lens: LensResult,
+    stratifierNames: string[],
+  ): boolean {
+    return stratifierNames.every((name) => hasStratifier(lens, name));
+  }
+
   export function combineStratifiers(
     lens: LensResult,
     sourceNames: string[],
@@ -310,7 +427,10 @@
     for (const name of sourceNames) {
       const strat = lens.stratifiers[name];
       if (!strat) {
-        throw new Error(`Stratifier "${name}" does not exist`);
+        console.warn(
+          `Stratifier "${name}" does not exist in result. Skipping.`,
+        );
+        continue; // Skip this stratifier and continue with others
       }
 
       for (const [bucket, value] of Object.entries(strat)) {
@@ -420,8 +540,13 @@
     outName: string,
   ): LensResult {
     const strat = lens.stratifiers[stratifierName];
+
+    // If stratifier doesn't exist, return original result unchanged
     if (!strat) {
-      throw new Error(`Stratifier "${stratifierName}" does not exist`);
+      console.warn(
+        `Stratifier "${stratifierName}" does not exist in result. Skipping filter.`,
+      );
+      return lens;
     }
 
     const filtered: Record<string, number> = {};
@@ -484,6 +609,10 @@
 
   const cardvasc = () => {
     if (result != null) {
+      if (!hasStratifier(result, "cardvasc")) {
+        return;
+      }
+
       let resulta = ["cardvasc"];
 
       let tmp = filterStratifierBuckets(
@@ -529,6 +658,9 @@
 
   const virusout = () => {
     if (result != null) {
+      if (!hasStratifier(result, "chr_virus_hiv")) {
+        return;
+      }
       let resulta = [];
       let tmp = filterStratifierBuckets(
         result,
@@ -618,6 +750,9 @@
 
   const anamneseOut = () => {
     if (result != null) {
+      if (!hasStratifier(result, "chr_kidneyd")) {
+        return;
+      }
       let resulta = ["chr_kidneyd", "chr_myobakt", "tumor_active"];
 
       let tmp = filterStratifierBuckets(
@@ -676,8 +811,9 @@
       Fehlen Daten oder Suchelemente? Oder sind irrelevante Ergebnisse dabei?
       Dann freuen wir uns über euer Feedback an <a
         href="mailto:patrick.skowronek@medma.uni-heidelberg.de"
-        >patrick.skowronek@medma.uni-heidelberg.de</a
-      >.
+      >
+        patrick.skowronek@medma.uni-heidelberg.de</a
+      >
     </p>
   </div>
 {/if}
@@ -722,6 +858,48 @@
       <div class="charts">
         <div class="chart-wrapper result-summary">
           <div class="right">
+            <div class="chart-filter">
+              <button class="chart-filter-button" on:click={toggleChartFilter}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"
+                  />
+                </svg>
+                Diagramme filtern ({visibleChartsCount}/{totalChartsCount})
+              </button>
+
+              {#if showChartFilter}
+                <div class="chart-filter-dropdown">
+                  <div class="chart-filter-header">
+                    <h3>Diagramme auswählen</h3>
+                    <div class="chart-filter-actions">
+                      <button on:click={showAllCharts}>Alle</button>
+                      <button on:click={hideAllCharts}>Keine</button>
+                    </div>
+                  </div>
+
+                  {#each availableCharts as chart}
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={chartVisibility[chart.id]}
+                        on:change={() => toggleChart(chart.id)}
+                      />
+                      {chart.title}
+                    </label>
+                  {/each}
+
+                  <div class="chart-filter-count">
+                    {visibleChartsCount} von {totalChartsCount} Diagrammen angezeigt
+                  </div>
+                </div>
+              {/if}
+            </div>
             <lens-query-spinner size="24px"></lens-query-spinner>
           </div>
           <div>
@@ -735,222 +913,264 @@
           </div>
         </div>
 
-        <div class="chart-wrapper chart-study">
-          <lens-chart
-            title="Studie - TTU/TI"
-            dataKey="study"
-            chartType="bar"
-            xAxisTitle="Zugehörigkeit"
-            yAxisTitle="Patienten"
-            backgroundColor={barChartBackgroundColors}
-            displayLegends={false}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-
-        <div class="chart-wrapper chart-study">
-          <lens-chart
-            title="Studie/Kohorte"
-            dataKey="studykohorte"
-            chartType="bar"
-            xAxisTitle="Zugehörigkeit"
-            yAxisTitle="Patienten"
-            backgroundColor={barChartBackgroundColors}
-            displayLegends={false}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-
-        <div class="chart-wrapper chart-gender">
-          <lens-chart
-            title="Identifizierendes Geschlecht"
-            dataKey="gender"
-            chartType="pie"
-            displayLegends={true}
-            headers={genderHeaders}
-            backgroundColor={pieChartBackgroundColors}
-          ></lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Erkrankungen"
-            dataKey="diseases"
-            chartType="bar"
-            yAxisTitle="Anzahl Erkanungen"
-            backgroundColor={barChartBackgroundColors}
-            headers={diseasesHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Raucher"
-            dataKey="smoker"
-            chartType="pie"
-            displayLegends={true}
-            backgroundColor={pieChartBackgroundColors}
-          >
-          </lens-chart>
-        </div>
-
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Chron. Viruserkrankungen"
-            dataKey="virus"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={virusHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Herz-Kreislauf-Erkrankungen"
-            dataKey="card"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={cardvascHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Diabetes"
-            dataKey="diabetes"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={diabetesHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Rheumatologische / Immunologische Erkrankungen"
-            dataKey="rheu_immu"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={immuHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Chron. Lebererkrankungen"
-            dataKey="chr_liverdis"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={liverHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Chron. Lungenerkrankungen"
-            dataKey="chr_lung"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={lungHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Chron. Neurologische-Erkrankungen"
-            dataKey="neuro"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            yAxisTitle="Anzahl Erkanungen"
-            headers={neuroHeaders}
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-alter">
-          <lens-chart
-            title="Alter bei Aufnahme"
-            dataKey="inclusionage"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            groupRange={10}
-            filterRegex="^(1*[12]*[0-9])"
-            xAxisTitle="Alter"
-            yAxisTitle="Anzahl der Patienten"
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-
-        <div class="chart-wrapper chart-samples-liquid">
-          <lens-chart
-            title="Proben LIQUID"
-            dataKey="type"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            filterRegex="^[LIQUID|X].*"
-            displayLegends={false}
-            xAxisTitle="Probentyp"
-            yAxisTitle="Anzahl der Proben"
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-        <div class="chart-wrapper chart-samples-tissue">
-          <lens-chart
-            title="Proben Tissue"
-            dataKey="type"
-            chartType="bar"
-            backgroundColor={barChartBackgroundColors}
-            filterRegex="^[TISSUE].*"
-            displayLegends={false}
-            xAxisTitle="Probentyp"
-            yAxisTitle="Anzahl der Proben"
-            enableSorting={true}
-          >
-          </lens-chart>
-        </div>
-
-        <div class="chart-wrapper chart-smoker">
-          <lens-chart
-            title="Transplantationen"
-            dataKey="transplantout"
-            chartType="pie"
-            backgroundColor={pieTransChartBackgroundColors}
-          >
-          </lens-chart>
-          Anzahl Transplantationen: {result?.totals.transplat}
-        </div>
-
-        <div class="chart-wrapper chart-sites-multi">
-          <canvas id="multiRingChart2"></canvas>
-
-          <div class="siteschart-subtitle">
-            <hr />
-            Das Diagramm zeigt im innersten Ring die Gesamtzahl der gefundenen Patienten
-            pro Standort. Der mittlere Ring untergliedert diese Patienten weiter in
-            TTU/TI, während der äußere Ring eine weitere Unterteilung nach den jeweiligen
-            Studien vornimmt.
+        {#if chartVisibility["study-ttu"]}
+          <div class="chart-wrapper chart-study">
+            <lens-chart
+              title="Studie - TTU/TI"
+              dataKey="study"
+              chartType="bar"
+              xAxisTitle="Zugehörigkeit"
+              yAxisTitle="Patienten"
+              backgroundColor={barChartBackgroundColors}
+              displayLegends={false}
+              enableSorting={true}
+            >
+            </lens-chart>
           </div>
-        </div>
+        {/if}
+
+        {#if chartVisibility["study-kohorte"]}
+          <div class="chart-wrapper chart-study">
+            <lens-chart
+              title="Studie/Kohorte"
+              dataKey="studykohorte"
+              chartType="bar"
+              xAxisTitle="Zugehörigkeit"
+              yAxisTitle="Patienten"
+              backgroundColor={barChartBackgroundColors}
+              displayLegends={false}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["gender"]}
+          <div class="chart-wrapper chart-gender">
+            <lens-chart
+              title="Identifizierendes Geschlecht"
+              dataKey="gender"
+              chartType="pie"
+              displayLegends={true}
+              headers={genderHeaders}
+              backgroundColor={pieChartBackgroundColors}
+            ></lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["diseases"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Erkrankungen"
+              dataKey="diseases"
+              chartType="bar"
+              yAxisTitle="Anzahl Erkanungen"
+              backgroundColor={barChartBackgroundColors}
+              headers={diseasesHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["smoker"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Raucher"
+              dataKey="smoker"
+              chartType="pie"
+              displayLegends={true}
+              backgroundColor={pieChartBackgroundColors}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["virus"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Chron. Viruserkrankungen"
+              dataKey="virus"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={virusHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["cardiovascular"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Herz-Kreislauf-Erkrankungen"
+              dataKey="card"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={cardvascHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["diabetes"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Diabetes"
+              dataKey="diabetes"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={diabetesHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["rheumatology"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Rheumatologische / Immunologische Erkrankungen"
+              dataKey="rheu_immu"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={immuHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["liver"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Chron. Lebererkrankungen"
+              dataKey="chr_liverdis"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={liverHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["lung"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Chron. Lungenerkrankungen"
+              dataKey="chr_lung"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={lungHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["neuro"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Chron. Neurologische-Erkrankungen"
+              dataKey="neuro"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              yAxisTitle="Anzahl Erkanungen"
+              headers={neuroHeaders}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["age"]}
+          <div class="chart-wrapper chart-alter">
+            <lens-chart
+              title="Alter bei Aufnahme"
+              dataKey="inclusionage"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              groupRange={10}
+              filterRegex="^(1*[12]*[0-9])"
+              xAxisTitle="Alter"
+              yAxisTitle="Anzahl der Patienten"
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["samples-liquid"]}
+          <div class="chart-wrapper chart-samples-liquid">
+            <lens-chart
+              title="Proben LIQUID"
+              dataKey="type"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              filterRegex="^[LIQUID|X].*"
+              displayLegends={false}
+              xAxisTitle="Probentyp"
+              yAxisTitle="Anzahl der Proben"
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["samples-tissue"]}
+          <div class="chart-wrapper chart-samples-tissue">
+            <lens-chart
+              title="Proben Tissue"
+              dataKey="type"
+              chartType="bar"
+              backgroundColor={barChartBackgroundColors}
+              filterRegex="^[TISSUE].*"
+              displayLegends={false}
+              xAxisTitle="Probentyp"
+              yAxisTitle="Anzahl der Proben"
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
+        {#if chartVisibility["transplant"]}
+          <div class="chart-wrapper chart-smoker">
+            <lens-chart
+              title="Transplantationen"
+              dataKey="transplantout"
+              chartType="pie"
+              backgroundColor={pieTransChartBackgroundColors}
+            >
+            </lens-chart>
+            Anzahl Transplantationen: {result?.totals.transplat}
+          </div>
+        {/if}
+
+        {#if chartVisibility["sites-multi"]}
+          <div class="chart-wrapper chart-sites-multi">
+            <canvas id="multiRingChart2"></canvas>
+
+            <div class="siteschart-subtitle">
+              <hr />
+              Das Diagramm zeigt im innersten Ring die Gesamtzahl der gefundenen Patienten
+              pro Standort. Der mittlere Ring untergliedert diese Patienten weiter
+              in TTU/TI, während der äußere Ring eine weitere Unterteilung nach den
+              jeweiligen Studien vornimmt.
+            </div>
+          </div>
+        {/if}
       </div>
     </div>
   </main>
-
   <footer class="footer">
     <div class="footer__left-section">
       <div class="footer__made-with">
