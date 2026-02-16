@@ -36,6 +36,8 @@
     type Catalogue,
     markSiteClaimed,
     removeFailedSite,
+    selectSite,
+    unselectSite,
   } from "@samply/lens";
   import options from "./config/options.json";
   import catalogue from "./config/dzif-such-und-kerndatensatz.json";
@@ -457,6 +459,7 @@
   }
 
   const requestBackend = async () => {
+    unselectSite("dzif");
     clearSiteResults();
     markSiteClaimed("dzif");
 
@@ -521,6 +524,7 @@
 
         setSiteResult("dzif", result);
         updateChart();
+        selectSite("dzif");
       }
     } catch (error) {
       console.error(error);
@@ -580,22 +584,19 @@
   function closeHinweis() {
     showHinweis.set(false);
   }
-
-  const barChartBackgroundColors: string[] = ["#011e50", "#1e88e5", "#f9a825"];
-  const pieChartBackgroundColors: string[] = [
-    "#011e50",
-    "#1e88e5",
-    "#f9a825",
-    "#90a4ae",
-  ];
-  const pieTransChartBackgroundColors: string[] = [
-    "#011e50",
-    "#1e88e5",
-    "#f9a825",
-    "#5e35b1",
-    "#00838f",
-    "#90a4ae",
-  ];
+// Around line 559
+const ChartBackgroundColors: string[] = [
+  "#001e50",  // 1. DZIF Dark Navy (brand color)
+  "#0066a1",  // 2. Medium Blue
+  "#00a0c6",  // 3. Teal/Cyan
+  "#00b4a0",  // 4. Turquoise
+  "#26a69a",  // 5. Teal-Green ⭐ NEW - smooth transition
+  "#66bb6a",  // 6. Medium Green
+  "#9ccc65",  // 7. Yellow-Green
+  "#ffb74d",  // 8. Warm Orange ⭐ Softer than before
+  "#ff8a65",  // 9. Soft Coral ⭐ Softer than before
+  "#90a4ae",  // 10. Blue Grey - ties back to blues
+];
 
   let catalogueopen = false;
 
@@ -796,6 +797,7 @@
       result = combineStratifiers(result, resulta, "diseases");
     }
   };
+
 </script>
 
 {#if $showHinweis}
@@ -845,12 +847,12 @@
           ></lens-catalogue>
           <br />
           <p>
-            Weitere Informationen zum kerndatensatz finden Sie im <a
+            Weitere Informationen zum Kerndatensatz finden Sie im <a
               href="https://mdr.dzif.de/#/details?concept=http:%2F%2Fdata.custom.de%2Font%2Fdwh%23Core_Dataset"
               >Data&Tools Hub</a
             >
-            oder als
-            <a href="https://mdm.mi.uni-heidelberg.de/46192">Formulare </a>
+            oder als Formulare im 
+            <a href="https://mdm.mi.uni-heidelberg.de/46192">MDM</a>
           </p>
         </div>
       </div>
@@ -904,9 +906,7 @@
           </div>
           <div>
             <lens-result-summary></lens-result-summary>
-            <button class="datenBeantragen" id="datenBeantragen"
-              >Daten beantragen</button
-            >
+            <lens-negotiate-button title="Daten beantragen"></lens-negotiate-button>
             <lens-search-modified-display
               >Diagramme repräsentieren nicht mehr die aktuelle Suche!
             </lens-search-modified-display>
@@ -921,7 +921,7 @@
               chartType="bar"
               xAxisTitle="Zugehörigkeit"
               yAxisTitle="Patienten"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               displayLegends={false}
               enableSorting={true}
             >
@@ -937,7 +937,7 @@
               chartType="bar"
               xAxisTitle="Zugehörigkeit"
               yAxisTitle="Patienten"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               displayLegends={false}
               enableSorting={true}
             >
@@ -953,7 +953,7 @@
               chartType="pie"
               displayLegends={true}
               headers={genderHeaders}
-              backgroundColor={pieChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
             ></lens-chart>
           </div>
         {/if}
@@ -965,7 +965,7 @@
               dataKey="diseases"
               chartType="bar"
               yAxisTitle="Anzahl Erkanungen"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               headers={diseasesHeaders}
               enableSorting={true}
             >
@@ -980,7 +980,7 @@
               dataKey="smoker"
               chartType="pie"
               displayLegends={true}
-              backgroundColor={pieChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
             >
             </lens-chart>
           </div>
@@ -992,7 +992,7 @@
               title="Chron. Viruserkrankungen"
               dataKey="virus"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={virusHeaders}
               enableSorting={true}
@@ -1007,7 +1007,7 @@
               title="Herz-Kreislauf-Erkrankungen"
               dataKey="card"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={cardvascHeaders}
               enableSorting={true}
@@ -1022,7 +1022,7 @@
               title="Diabetes"
               dataKey="diabetes"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={diabetesHeaders}
               enableSorting={true}
@@ -1037,7 +1037,7 @@
               title="Rheumatologische / Immunologische Erkrankungen"
               dataKey="rheu_immu"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={immuHeaders}
               enableSorting={true}
@@ -1052,7 +1052,7 @@
               title="Chron. Lebererkrankungen"
               dataKey="chr_liverdis"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={liverHeaders}
               enableSorting={true}
@@ -1067,7 +1067,7 @@
               title="Chron. Lungenerkrankungen"
               dataKey="chr_lung"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={lungHeaders}
               enableSorting={true}
@@ -1082,7 +1082,7 @@
               title="Chron. Neurologische-Erkrankungen"
               dataKey="neuro"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               yAxisTitle="Anzahl Erkanungen"
               headers={neuroHeaders}
               enableSorting={true}
@@ -1097,7 +1097,7 @@
               title="Alter bei Aufnahme"
               dataKey="inclusionage"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               groupRange={10}
               filterRegex="^(1*[12]*[0-9])"
               xAxisTitle="Alter"
@@ -1114,7 +1114,7 @@
               title="Proben LIQUID"
               dataKey="type"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               filterRegex="^[LIQUID|X].*"
               displayLegends={false}
               xAxisTitle="Probentyp"
@@ -1131,7 +1131,7 @@
               title="Proben Tissue"
               dataKey="type"
               chartType="bar"
-              backgroundColor={barChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
               filterRegex="^[TISSUE].*"
               displayLegends={false}
               xAxisTitle="Probentyp"
@@ -1148,7 +1148,7 @@
               title="Transplantationen"
               dataKey="transplantout"
               chartType="pie"
-              backgroundColor={pieTransChartBackgroundColors}
+              backgroundColor={ChartBackgroundColors}
             >
             </lens-chart>
             Anzahl Transplantationen: {result?.totals.transplat}
