@@ -12,6 +12,9 @@
     "CONSENT_SIGNDATE": {
       "Patient": "consentsigndate"
     },
+    "CHR_KIDNEYD": {
+      "Anamnese": "CHR_KIDNEYD"
+    },
     "CONSENT_VERSDATE": {
       "Patient": "consentversdate"
     },
