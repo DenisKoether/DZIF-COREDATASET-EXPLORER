@@ -16,7 +16,7 @@
       "Patient": "consentversdate"
     },
     "PARTICIPANT_TYPE": {
-      "Patient": "consentsigndate"
+      "Patient": "PARTICIPANT_TYPE"
     },
     "STUDY_ENDPOINT": {
       "Patient": "consentinclusionendpoint"
@@ -189,7 +189,6 @@
         "id": {
           "type": "string",
           "nullable": false,
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.id"
         },
@@ -253,13 +252,15 @@
           "type": "integer",
           "mapping": "$.entry[?(@.resource.resourceType=='Patient')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/consent/AGE_AT_INCLUSION')].valueInteger"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "VISIT": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.id"
         },
@@ -297,13 +298,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VISITE')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VISITE/VISIT_START')].valueDate"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "Study": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.id"
         },
@@ -340,13 +343,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/CONSENT/CONSENT_GENERAL')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "Anamnese": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.id"
         },
@@ -479,13 +484,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese/MALARIA')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "VACCINATION": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.id"
         },
@@ -522,13 +529,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vac')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/VAC/VACINFLUENZA_DATE')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "TRANSPLANTATION": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.id"
         },
@@ -559,13 +568,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/ORGAN_TRANSPLANT_GENERAL/TRANSPLANTATION_AMOUNT_OF_TRANSPLANS')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "TRANSPLANTATION_ORGAN": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.id"
         },
@@ -584,13 +595,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/TRANSPLANTET_ORGAN/TRANSPLANTATION_ORGAN')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "VITAL_SIGNS": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.id"
         },
@@ -639,13 +652,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Vital')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Vital/VITAL_TEMP')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "CLIN_CONF_INF": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.id"
         },
@@ -688,13 +703,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Klinisch_gesicherte_Infektion')].resource.effectiveDateTime"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "VIROLOGY_LAB": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY')].resource.id"
         },
@@ -707,13 +724,15 @@
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/VIROLOGY_LABORATORY/VISIT_REF')].valueReference.reference"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "IMAGING": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING')].resource.id"
         },
@@ -726,13 +745,15 @@
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/IMAGING/VISIT_REF')].valueReference.reference"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "ENVIRONMENT": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT')].resource.id"
         },
@@ -745,13 +766,15 @@
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT')].resource.extension[?(@.url=='https://fhir.dzif.ti-bbd.de/Observation/ENVIRONMENT/VISIT_REF')].valueReference.reference"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "SYMPTOMS": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.id"
         },
@@ -770,13 +793,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Symptome')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/SYMPTOM_ANOSMIA')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "COMPLICATION": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.id"
         },
@@ -801,6 +826,9 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/COMPLICATIONS/COMPLICATIONS_DATE')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "MEDICATION": {
@@ -808,7 +836,6 @@
         "id": {
           "type": "string",
           "max_length": 64,
-          "primary_key": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.id"
         },
         "visit_id": {
@@ -886,13 +913,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/MEDICATION/MEDS_ANTIINFECTIVES')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "Antibiogram": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.id"
         },
@@ -929,13 +958,15 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/Antibiogram/PTG_AB_MIC')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "BIOSAMPLE": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.id"
         },
@@ -955,13 +986,15 @@
           },
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Specimen/BIOSAMPLE')].resource.subject.reference"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "BIOSAMPLECOLLECTION": {
       "fields": {
         "id": {
           "type": "string",
-          "primary_key": true,
           "max_length": 64,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.id"
         },
@@ -998,6 +1031,9 @@
           "nullable": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION')].resource.code.coding[?(@.system=='https://fhir.dzif.ti-bbd.de/Observation/BIOSAMPLECOLLECTION/RETRIEVAL')].code"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "MEDICAL_HISTORY": {
@@ -1005,9 +1041,11 @@
         "id": {
           "type": "string",
           "max_length": 64,
-          "primary_key": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/Anamnese')].resource.id"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     },
     "CLINICAL_LAB": {
@@ -1015,9 +1053,11 @@
         "id": {
           "type": "string",
           "max_length": 64,
-          "primary_key": true,
           "mapping": "$.entry[?(@.resource.meta.profile[0]=='https://fhir.dzif.ti-bbd.de/Observation/CLINICAL_LABORATORY')].resource.id"
         }
+      },
+      "primary_key": {
+        "primary_key_field": "id"
       }
     }
   },

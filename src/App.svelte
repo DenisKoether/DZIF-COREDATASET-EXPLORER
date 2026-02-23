@@ -44,7 +44,7 @@
 
   // Negotiate overlay state
   let showNegotiateOverlay = false;
-  let currentQueryUrl = '';
+  let currentQueryUrl = "";
 
   onMount(() => {
     setOptions(options as LensOptions);
@@ -71,28 +71,27 @@
       }
 
       lastScrollTop = scrollTop;
-
     };
 
     window.addEventListener("scroll", handleScroll);
-    toggleChart("sites-multi")
+    toggleChart("sites-multi");
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
 
-    window.addEventListener('lens-negotiate-triggered', () => {
-       // Get current URL with query parameters
+  window.addEventListener("lens-negotiate-triggered", () => {
+    // Get current URL with query parameters
     currentQueryUrl = window.location.href;
     showNegotiateOverlay = true;
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
+
     // Generate QR code after DOM updates
     setTimeout(() => {
-      const qrContainer = document.getElementById('qrcode');
+      const qrContainer = document.getElementById("qrcode");
       if (qrContainer) {
-        qrContainer.innerHTML = ''; // Clear previous QR code
+        qrContainer.innerHTML = ""; // Clear previous QR code
         new QRCode(qrContainer, {
           text: currentQueryUrl,
           width: 200,
@@ -102,30 +101,101 @@
         });
       }
     }, 100);
-    });
+  });
 
-   // Studies data
+  // Studies data
   const studies = [
-    { key: "TX", name: "Transplantations-Kohorte", link:"https://www.dzif.de/de/arbeitsgruppe/transplantationskohorte", contact: "daniela.schindler@tum.de" },
-    { key: "HIV", name: "HIV-Kohorte", link:"dzif.de", contact: "hiv-kohorte@dzif.de" },
-    { key: "FWS", name: "Fever Without Source", link:"dzif.de", contact: "fws@dzif.de" },
-    { key: "FWSC", name: "Fever Without Source - Children", link:"dzif.de", contact: "fwsc@dzif.de" },
-    { key: "TIARA", name: "MDRO colonization in complex surgical patients", link:"dzif.de", contact: "tiara@dzif.de" },
-    { key: "TBC", name: "Tuberkulose", link:"dzif.de", contact: "tbc@dzif.de" },
-    { key: "KS", name: "Eppstein Barr Virus", link:"dzif.de", contact: "ks@dzif.de" },
-    { key: "LACHMI", name: "Controlled Human Malaria Infection", link:"dzif.de", contact: "lachmi@dzif.de" },
-    { key: "HBV", name: "Hepatitis-Kohorte", link:"dzif.de", contact: "hbv@dzif.de" },
-    { key: "COVT", name: "COVID Autopsieregister", link:"dzif.de", contact: "covt@dzif.de" },
-    { key: "CRYO", name: "DZIF Gewebebank", link:"dzif.de", contact: "cryo@dzif.de" },
-    { key: "OTHER", name: "Andere Kohorte/Studie", link:"dzif.de", contact: "info@dzif.de" },
+    {
+      key: "TX",
+      name: "Transplantations-Kohorte",
+      link: "https://www.dzif.de/de/arbeitsgruppe/transplantationskohorte",
+      contact: "daniela.schindler@tum.de",
+    },
+    {
+      key: "HIV",
+      name: "HIV-Kohorte",
+      link: "dzif.de",
+      contact: "hiv-kohorte@dzif.de",
+    },
+    {
+      key: "FWS",
+      name: "Fever Without Source",
+      link: "dzif.de",
+      contact: "fws@dzif.de",
+    },
+    {
+      key: "FWSC",
+      name: "Fever Without Source - Children",
+      link: "dzif.de",
+      contact: "fwsc@dzif.de",
+    },
+    {
+      key: "TIARA",
+      name: "MDRO colonization in complex surgical patients",
+      link: "dzif.de",
+      contact: "tiara@dzif.de",
+    },
+    {
+      key: "TBC",
+      name: "Tuberkulose",
+      link: "dzif.de",
+      contact: "tbc@dzif.de",
+    },
+    {
+      key: "KS",
+      name: "Eppstein Barr Virus",
+      link: "dzif.de",
+      contact: "ks@dzif.de",
+    },
+    {
+      key: "LACHMI",
+      name: "Controlled Human Malaria Infection",
+      link: "dzif.de",
+      contact: "lachmi@dzif.de",
+    },
+    {
+      key: "HBV",
+      name: "Hepatitis-Kohorte",
+      link: "dzif.de",
+      contact: "hbv@dzif.de",
+    },
+    {
+      key: "COVT",
+      name: "COVID Autopsieregister",
+      link: "dzif.de",
+      contact: "covt@dzif.de",
+    },
+    {
+      key: "CRYO",
+      name: "DZIF Gewebebank",
+      link: "dzif.de",
+      contact: "cryo@dzif.de",
+    },
+    {
+      key: "OTHER",
+      name: "Andere Kohorte/Studie",
+      link: "dzif.de",
+      contact: "info@dzif.de",
+    },
   ];
-  
 
   // External databases
   const externalDatabases = [
-    { name: "BacDive", url: "https://bacdive.dsmz.de/", description: "Bacterial Diversity Metadatabase" },
-    { name: "EnteroBase", url: "https://enterobase.dsmz.de/", description: "Genomic Database for Enteric Pathogens" },
-    { name: "ZBR DZIF", url: "https://zbr.dzif.de/", description: "DZIF Zentrales Biorepository" },
+    {
+      name: "BacDive",
+      url: "https://bacdive.dsmz.de/",
+      description: "Bacterial Diversity Metadatabase",
+    },
+    {
+      name: "EnteroBase",
+      url: "https://enterobase.dsmz.de/",
+      description: "Genomic Database for Enteric Pathogens",
+    },
+    {
+      name: "ZBR DZIF",
+      url: "https://zbr.dzif.de/",
+      description: "DZIF Zentrales Biorepository",
+    },
   ];
 
   const updateChart = () => {
@@ -175,14 +245,14 @@
     renderChart(sites);
   };
 
-    function closeNegotiateOverlay() {
+  function closeNegotiateOverlay() {
     showNegotiateOverlay = false;
-    document.body.style.overflow = ''; // Restore scrolling
+    document.body.style.overflow = ""; // Restore scrolling
   }
 
   function copyUrlToClipboard() {
     navigator.clipboard.writeText(currentQueryUrl).then(() => {
-      alert('URL in Zwischenablage kopiert!');
+      alert("URL in Zwischenablage kopiert!");
     });
   }
 
@@ -546,6 +616,13 @@
       });
 
       result = await response.json();
+
+      if (isLensResultEmpty(result)) {
+        setSiteResult("dzif", result);
+        showToast("No results found for your query", "info");
+        return;
+      }
+
       if (result != null) {
         cardvasc();
         anamneseOut();
@@ -601,6 +678,24 @@
     }
   };
 
+  export function isLensResultEmpty(result: LensResult): boolean {
+    // Check each stratifier bucket is empty
+    for (const stratifier of Object.values(result.stratifiers)) {
+      if (Object.keys(stratifier).length > 0) {
+        return false;
+      }
+    }
+
+    // Check totals are all zero
+    for (const value of Object.values(result.totals)) {
+      if (value !== 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   export function filterStratifierBuckets(
     lens: LensResult,
     stratifierName: string,
@@ -648,19 +743,19 @@
   function closeHinweis() {
     showHinweis.set(false);
   }
-// Around line 559
-const ChartBackgroundColors: string[] = [
-  "#001e50",  // 1. DZIF Dark Navy (brand color)
-  "#0066a1",  // 2. Medium Blue
-  "#00a0c6",  // 3. Teal/Cyan
-  "#00b4a0",  // 4. Turquoise
-  "#26a69a",  // 5. Teal-Green ⭐ NEW - smooth transition
-  "#66bb6a",  // 6. Medium Green
-  "#9ccc65",  // 7. Yellow-Green
-  "#ffb74d",  // 8. Warm Orange ⭐ Softer than before
-  "#ff8a65",  // 9. Soft Coral ⭐ Softer than before
-  "#90a4ae",  // 10. Blue Grey - ties back to blues
-];
+  // Around line 559
+  const ChartBackgroundColors: string[] = [
+    "#001e50", // 1. DZIF Dark Navy (brand color)
+    "#0066a1", // 2. Medium Blue
+    "#00a0c6", // 3. Teal/Cyan
+    "#00b4a0", // 4. Turquoise
+    "#26a69a", // 5. Teal-Green ⭐ NEW - smooth transition
+    "#66bb6a", // 6. Medium Green
+    "#9ccc65", // 7. Yellow-Green
+    "#ffb74d", // 8. Warm Orange ⭐ Softer than before
+    "#ff8a65", // 9. Soft Coral ⭐ Softer than before
+    "#90a4ae", // 10. Blue Grey - ties back to blues
+  ];
 
   let catalogueopen = false;
 
@@ -861,7 +956,6 @@ const ChartBackgroundColors: string[] = [
       result = combineStratifiers(result, resulta, "diseases");
     }
   };
-
 </script>
 
 {#if $showHinweis}
@@ -915,7 +1009,7 @@ const ChartBackgroundColors: string[] = [
               href="https://mdr.dzif.de/#/details?concept=http:%2F%2Fdata.custom.de%2Font%2Fdwh%23Core_Dataset"
               >Data&Tools Hub</a
             >
-            oder als Formulare im 
+            oder als Formulare im
             <a href="https://mdm.mi.uni-heidelberg.de/46192">MDM</a>
           </p>
         </div>
@@ -970,7 +1064,8 @@ const ChartBackgroundColors: string[] = [
           </div>
           <div>
             <lens-result-summary></lens-result-summary>
-            <lens-negotiate-button title="Daten beantragen"></lens-negotiate-button>
+            <lens-negotiate-button title="Daten beantragen"
+            ></lens-negotiate-button>
             <lens-search-modified-display
               >Diagramme repräsentieren nicht mehr die aktuelle Suche!
             </lens-search-modified-display>
@@ -1255,111 +1350,150 @@ const ChartBackgroundColors: string[] = [
 
 <lens-toast></lens-toast>
 
-
 <!-- Negotiate Overlay -->
 {#if showNegotiateOverlay}
-<div class="negotiate-overlay" on:click={closeNegotiateOverlay}>
-  <div class="negotiate-modal" on:click|stopPropagation>
-    <button class="negotiate-close" on:click={closeNegotiateOverlay}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
+  <div class="negotiate-overlay" on:click={closeNegotiateOverlay}>
+    <div class="negotiate-modal" on:click|stopPropagation>
+      <button class="negotiate-close" on:click={closeNegotiateOverlay}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
 
-    <h2>Datenanfrage stellen</h2>
-    <p class="negotiate-subtitle">
-      Ihre Suchanfrage wurde erfasst. Verwenden Sie die unten stehenden Informationen, 
-      um Ihre Datenanfrage bei den entsprechenden Studien zu stellen.
-    </p>
-
-    <!-- Query URL Section -->
-    <div class="negotiate-section">
-      <h3>Ihre Suchanfrage-URL</h3>
-      <div class="url-container">
-        <input type="text" readonly value={currentQueryUrl} class="url-input" />
-        <button class="copy-button" on:click={copyUrlToClipboard}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-          </svg>
-          Kopieren
-        </button>
-      </div>
-      <div class="qr-code-container">
-        <div id="qrcode" class="qr-code"></div>
-        <p class="qr-hint">Scannen Sie den QR-Code mit Ihrem Smartphone</p>
-      </div>
-    </div>
-
-    <!-- Studies Table -->
-    <div class="negotiate-section">
-      <h3>Verfügbare Studien/Kohorten</h3>
-      <p class="section-description">
-        Kontaktieren Sie die entsprechenden Studien direkt für Ihre Datenanfrage:
+      <h2>Datenanfrage stellen</h2>
+      <p class="negotiate-subtitle">
+        Ihre Suchanfrage wurde erfasst. Verwenden Sie die unten stehenden
+        Informationen, um Ihre Datenanfrage bei den entsprechenden Studien zu
+        stellen.
       </p>
-      <div class="studies-table-container">
-        <table class="studies-table">
-          <thead>
-            <tr>
-              <th>Kürzel</th>
-              <th>Name</th>
-              <th>Link</th>
-              <th>Kontakt</th>
-              <th>Aktion</th>
-            </tr>
-          </thead>
-          <tbody>
-            {#each studies as study}
-            <tr>
-              <td><span class="study-badge">{study.key}</span></td>
-              <td>{study.name}</td>
-              <td><a href="{study.link}">Link</a></td>
-              <td><a href="mailto:{study.contact}">{study.contact}</a></td>
-              <td>
-                <button class="action-button" on:click={() => window.location.href = `mailto:${study.contact}?subject=Datenanfrage&body=Suchanfrage: ${currentQueryUrl}`}>
-                  Anfrage senden
-                </button>
-              </td>
-            </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
-    </div>
 
-    <!-- External Databases -->
-    <div class="negotiate-section">
-      <h3>Externe Datenbanken</h3>
-      <p class="section-description">
-        Weitere relevante Datenbanken für Ihre Forschung:
-      </p>
-      <div class="external-databases">
-        {#each externalDatabases as db}
-        <a href={db.url} target="_blank" rel="noopener noreferrer" class="database-card">
-          <div class="database-icon">🌐</div>
-          <div class="database-info">
-            <h4>{db.name}</h4>
-            <p>{db.description}</p>
-          </div>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="external-icon">
-            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
-            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
-          </svg>
-        </a>
-        {/each}
+      <!-- Query URL Section -->
+      <div class="negotiate-section">
+        <h3>Ihre Suchanfrage-URL</h3>
+        <div class="url-container">
+          <input
+            type="text"
+            readonly
+            value={currentQueryUrl}
+            class="url-input"
+          />
+          <button class="copy-button" on:click={copyUrlToClipboard}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
+              />
+              <path
+                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
+              />
+            </svg>
+            Kopieren
+          </button>
+        </div>
+        <div class="qr-code-container">
+          <div id="qrcode" class="qr-code"></div>
+          <p class="qr-hint">Scannen Sie den QR-Code mit Ihrem Smartphone</p>
+        </div>
       </div>
-    </div>
 
-    <div class="negotiate-footer">
-      <p>
-        <strong>Hinweis:</strong> Die Datenanfrage wird direkt an die jeweiligen Studienzentren gesendet. 
-        Bitte geben Sie in Ihrer Anfrage die oben stehende URL an.
-      </p>
+      <!-- Studies Table -->
+      <div class="negotiate-section">
+        <h3>Verfügbare Studien/Kohorten</h3>
+        <p class="section-description">
+          Kontaktieren Sie die entsprechenden Studien direkt für Ihre
+          Datenanfrage:
+        </p>
+        <div class="studies-table-container">
+          <table class="studies-table">
+            <thead>
+              <tr>
+                <th>Kürzel</th>
+                <th>Name</th>
+                <th>Link</th>
+                <th>Kontakt</th>
+                <th>Aktion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {#each studies as study}
+                <tr>
+                  <td><span class="study-badge">{study.key}</span></td>
+                  <td>{study.name}</td>
+                  <td><a href={study.link}>Link</a></td>
+                  <td><a href="mailto:{study.contact}">{study.contact}</a></td>
+                  <td>
+                    <button
+                      class="action-button"
+                      on:click={() =>
+                        (window.location.href = `mailto:${study.contact}?subject=Datenanfrage&body=Suchanfrage: ${currentQueryUrl}`)}
+                    >
+                      Anfrage senden
+                    </button>
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- External Databases -->
+      <div class="negotiate-section">
+        <h3>Externe Datenbanken</h3>
+        <p class="section-description">
+          Weitere relevante Datenbanken für Ihre Forschung:
+        </p>
+        <div class="external-databases">
+          {#each externalDatabases as db}
+            <a
+              href={db.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="database-card"
+            >
+              <div class="database-icon">🌐</div>
+              <div class="database-info">
+                <h4>{db.name}</h4>
+                <p>{db.description}</p>
+              </div>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="external-icon"
+              >
+                <path
+                  d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
+                />
+                <path
+                  d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
+                />
+              </svg>
+            </a>
+          {/each}
+        </div>
+      </div>
+
+      <div class="negotiate-footer">
+        <p>
+          <strong>Hinweis:</strong> Die Datenanfrage wird direkt an die jeweiligen
+          Studienzentren gesendet. Bitte geben Sie in Ihrer Anfrage die oben stehende
+          URL an.
+        </p>
+      </div>
     </div>
   </div>
-</div>
 {/if}
 
 <svelte:head>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"
+  ></script>
 </svelte:head>
