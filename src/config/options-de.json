@@ -81,8 +81,8 @@
     },
     "smoker": {
       "legendMapping": {
-        "Y": "Yes",
-        "N": "No",
+        "Y": "Ja",
+        "N": "Nein",
         "FS": "Ehemalig",
         "X": "Keine Information verfügbar"
       }

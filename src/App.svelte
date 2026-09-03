@@ -1,18 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import {
-    cardvascHeaders,
-    diabetesHeaders,
-    diseasesHeaders,
-    genderHeaders,
-    immuHeaders,
-    liverHeaders,
-    lungHeaders,
-    neuroHeaders,
-    virusHeaders,
-  } from "./config/environment";
+  import { getHeaders } from "./config/environment";
+  import { language, t } from "./config/i18n";
   import ScrollToTop from "./services/tools/top-anker.svelte";
+  import SiteFooter from "./services/tools/site-footer.svelte";
+  import LanguageSwitch from "./services/tools/language-switch.svelte";
   import { writable } from "svelte/store";
   // Import Lens CSS and JS bundles
   import "@samply/lens/style.css";
@@ -39,24 +32,40 @@
     selectSite,
     unselectSite,
   } from "@samply/lens";
-  import options from "./config/options.json";
-  import catalogue from "./config/dzif-such-und-kerndatensatz.json";
+  import optionsDe from "./config/options-de.json";
+  import optionsEn from "./config/options-en.json";
+  import catalogueDe from "./config/catalogue-de.json";
+  import catalogueEn from "./config/catalogue-en.json";
+  import { lensTexts } from "./config/translations";
 
   // Negotiate overlay state
   let showNegotiateOverlay = false;
   let currentQueryUrl = "";
 
-  onMount(() => {
-    setOptions(options as LensOptions);
-    setCatalogue(catalogue as Catalogue);
+  const catalogues = { de: catalogueDe, en: catalogueEn };
+  const lensOptions = { de: optionsDe, en: optionsEn };
 
+  /* Re-applied whenever the language changes so that Lens' own texts, the
+     options (chart legends, result summary) and the catalogue all follow the
+     switch without a reload. */
+  $: {
+    setOptions({
+      ...(lensOptions[$language] as LensOptions),
+      language: $language,
+      texts: lensTexts,
+    } as LensOptions);
+    setCatalogue(catalogues[$language] as Catalogue);
+  }
+
+  $: headers = getHeaders($language);
+
+  onMount(() => {
     const ctx = document.getElementById("multiRingChart2") as HTMLCanvasElement;
     Chart.defaults.font.size = 12;
     chart = new Chart(ctx.getContext("2d"), initialChartData);
 
     // Handle header shrinking on scroll
     const header = document.querySelector("header");
-    let lastScrollTop = 0;
 
     const handleScroll = () => {
       const scrollTop =
@@ -69,8 +78,6 @@
         header?.classList.remove("scrolled");
         document.body.classList.remove("header-scrolled");
       }
-
-      lastScrollTop = scrollTop;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -205,7 +212,7 @@
 
     let sites: Site[] = [];
 
-    for (const [bucket, count] of Object.entries(result.stratifiers.orgout)) {
+    for (const bucket of Object.keys(result.stratifiers.orgout)) {
       const values = bucket.split("#");
 
       if (values.length === 3) {
@@ -252,7 +259,7 @@
 
   function copyUrlToClipboard() {
     navigator.clipboard.writeText(currentQueryUrl).then(() => {
-      alert("URL in Zwischenablage kopiert!");
+      alert($t("negotiate_copied"));
     });
   }
 
@@ -319,26 +326,23 @@
     const ctx = document.getElementById("multiRingChart2");
     if (chart) chart.destroy();
 
-    const siteColorMap = new Map<string, string>();
-    sites.forEach((site, index) => {
-      siteColorMap.set(
-        site.site,
-        backgroundColor[index % backgroundColor.length],
-      );
-    });
+    // Each site gets a base colour by its position; the inner rings reuse the
+    // colour of the site they belong to, shaded lighter the deeper they sit.
+    const siteColor = (index: number): string =>
+      backgroundColor[index % backgroundColor.length];
 
     const siteLabels = sites.map((site) => site.site);
     const siteData = sites.map((site) => site.count);
-    const siteColors = sites.map((site) =>
-      adjustColor(siteColorMap.get(site.site), 2),
+    const siteColors = sites.map((_site, index) =>
+      adjustColor(siteColor(index), 2),
     );
 
     const ttuLabels = sites.flatMap((site) =>
       site.ttus.map((ttu) => `${site.site}-${ttu.ttu}`),
     );
     const ttuData = sites.flatMap((site) => site.ttus.map((ttu) => ttu.count));
-    const ttuColors = sites.flatMap((site) =>
-      site.ttus.map(() => adjustColor(siteColorMap.get(site.site), 1)),
+    const ttuColors = sites.flatMap((site, index) =>
+      site.ttus.map(() => adjustColor(siteColor(index), 1)),
     );
 
     const studyLabels = sites.flatMap((site) =>
@@ -349,9 +353,9 @@
     const studyData = sites.flatMap((site) =>
       site.ttus.flatMap((ttu) => ttu.studies.map((study) => study.count)),
     );
-    const studyColors = sites.flatMap((site) =>
+    const studyColors = sites.flatMap((site, index) =>
       site.ttus.flatMap((ttu) =>
-        ttu.studies.map(() => adjustColor(siteColorMap.get(site.site), 0.6)),
+        ttu.studies.map(() => adjustColor(siteColor(index), 0.6)),
       ),
     );
 
@@ -605,7 +609,7 @@
     }
 
     try {
-      const response = await fetch(`${backendUrl}/exec`, {
+      const response = await fetch(`${backendUrl}/query/lens/exec`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -619,11 +623,20 @@
 
       if (isLensResultEmpty(result)) {
         setSiteResult("dzif", result);
-        showToast("No results found for your query", "info");
+        showToast($t("results_empty"), "info");
         return;
       }
 
       if (result != null) {
+        /* Drop "N" (no) before cardvasc() merges this stratifier away - the
+           chart shows who has a cardiovascular finding, not who lacks one. */
+        result = filterStratifierBuckets(
+          result,
+          "cardvasc",
+          ["YHA", "YCA", "YHF", "YPAVK", "YRV", "YCS", "YOTHER"],
+          "cardvasc",
+        );
+
         cardvasc();
         anamneseOut();
         virusout();
@@ -669,10 +682,7 @@
       }
     } catch (error) {
       console.error(error);
-      showToast(
-        "There is an error while quering the backend. Please try it in a few minutes",
-        "error",
-      );
+      showToast($t("results_backend_error"), "error");
       removeFailedSite("dzif");
       result = null;
     }
@@ -870,7 +880,7 @@
         "chr_virus_hcv",
       );
 
-      if (tmp.stratifiers.chr_virus_hcv.Y === undefined) {
+      if (tmp.stratifiers.chr_virus_hcv.Y !== undefined) {
         tmp = {
           ...tmp,
           stratifiers: {
@@ -960,18 +970,16 @@
 
 {#if $showHinweis}
   <div class="hinweisBox">
-    <button class="closeBtn" on:click={closeHinweis}>&times;</button>
-    <p><strong>Hinweis zur Testversion</strong></p>
+    <button
+      class="closeBtn"
+      on:click={closeHinweis}
+      aria-label={$t("notice_close")}>&times;</button
+    >
+    <p><strong>{$t("notice_title")}</strong></p>
+    <p>{$t("notice_body")}</p>
     <p>
-      Diese Webapp befindet sich in einer Testphase und verwendet zufällig
-      generierte Testdaten ohne spezifische Verteilung. Dadurch kann es zu
-      Fehlern oder unerwarteten Ergebnissen kommen.
-    </p>
-    <p>
-      Fehlen Daten oder Suchelemente? Oder sind irrelevante Ergebnisse dabei?
-      Dann freuen wir uns über euer Feedback an <a
-        href="mailto:patrick.skowronek@medma.uni-heidelberg.de"
-      >
+      {$t("notice_feedback")}
+      <a href="mailto:patrick.skowronek@medma.uni-heidelberg.de">
         patrick.skowronek@medma.uni-heidelberg.de</a
       >
     </p>
@@ -980,36 +988,37 @@
 
 <div class="page">
   <header>
-    <img src="../assets/dzif-Logo.svg" alt="ogo des DZIF" />
-    <h1>DZIF-COREDATASET-EXPLORER (TESTDATEN)</h1>
-    <div></div>
+    <img src="../assets/dzif-Logo.svg" alt={$t("logo_alt")} />
+    <h1>{$t("app_title")}</h1>
+    <LanguageSwitch />
   </header>
   <main>
     <div class="search">
       <div class="search-wrapper">
         <lens-search-bar-multiple
-          noMatchesFoundMessage={"Keine Ergebnisse gefunden"}
+          noMatchesFoundMessage={$t("search_no_matches")}
+          placeholderText={$t("search_placeholder")}
         ></lens-search-bar-multiple>
-        <lens-query-explain-button
-          noQueryMessage="Leere Suchanfrage: Sucht nach allen Ergebnissen."
+        <lens-query-explain-button noQueryMessage={$t("search_empty_query")}
         ></lens-query-explain-button>
-        <lens-search-button title="Suchen"></lens-search-button>
+        <lens-search-button title={$t("search_button")}></lens-search-button>
       </div>
     </div>
 
     <div class="grid">
       <div class="catalogue-wrapper">
         <div class="catalogue">
-          <h2>Suchkriterien</h2>
+          <h2>{$t("catalogue_heading")}</h2>
           <lens-catalogue toggle={{ collapsable: false, open: catalogueopen }}
           ></lens-catalogue>
           <br />
           <p>
-            Weitere Informationen zum Kerndatensatz finden Sie im <a
+            {$t("catalogue_more_info_before")}
+            <a
               href="https://mdr.dzif.de/#/details?concept=http:%2F%2Fdata.custom.de%2Font%2Fdwh%23Core_Dataset"
               >Data&Tools Hub</a
             >
-            oder als Formulare im
+            {$t("catalogue_more_info_between")}
             <a href="https://mdm.mi.uni-heidelberg.de/46192">MDM</a>
           </p>
         </div>
@@ -1030,20 +1039,24 @@
                     d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"
                   />
                 </svg>
-                Diagramme filtern ({visibleChartsCount}/{totalChartsCount})
+                {$t("chart_filter_button")} ({visibleChartsCount}/{totalChartsCount})
               </button>
 
               {#if showChartFilter}
                 <div class="chart-filter-dropdown">
                   <div class="chart-filter-header">
-                    <h3>Diagramme auswählen</h3>
+                    <h3>{$t("chart_filter_heading")}</h3>
                     <div class="chart-filter-actions">
-                      <button on:click={showAllCharts}>Alle</button>
-                      <button on:click={hideAllCharts}>Keine</button>
+                      <button on:click={showAllCharts}
+                        >{$t("chart_filter_all")}</button
+                      >
+                      <button on:click={hideAllCharts}
+                        >{$t("chart_filter_none")}</button
+                      >
                     </div>
                   </div>
 
-                  {#each availableCharts as chart}
+                  {#each availableCharts as chart (chart.id)}
                     <label>
                       <input
                         type="checkbox"
@@ -1055,31 +1068,33 @@
                   {/each}
 
                   <div class="chart-filter-count">
-                    {visibleChartsCount} von {totalChartsCount} Diagrammen angezeigt
+                    {visibleChartsCount}
+                    {$t("chart_filter_count", { total: totalChartsCount })}
                   </div>
                 </div>
               {/if}
             </div>
-            <lens-query-spinner size="24px"></lens-query-spinner>
           </div>
-          <div>
+          <div class="result-summary__figures">
             <lens-result-summary></lens-result-summary>
-            <lens-negotiate-button title="Daten beantragen"
+            <lens-negotiate-button title={$t("results_request_data")}
             ></lens-negotiate-button>
-            <lens-search-modified-display
-              >Diagramme repräsentieren nicht mehr die aktuelle Suche!
-            </lens-search-modified-display>
           </div>
+          <!-- Own row: the warning only appears after the query changed, and
+               should not push the totals onto a second line when it does. -->
+          <lens-search-modified-display class="result-summary__modified"
+            >{$t("results_search_modified")}
+          </lens-search-modified-display>
         </div>
 
         {#if chartVisibility["study-ttu"]}
           <div class="chart-wrapper chart-study">
             <lens-chart
-              title="Studie - TTU/TI"
+              title={$t("chart_study_ttu")}
               dataKey="study"
               chartType="bar"
-              xAxisTitle="Zugehörigkeit"
-              yAxisTitle="Patienten"
+              xAxisTitle={$t("axis_affiliation")}
+              yAxisTitle={$t("axis_patients")}
               backgroundColor={ChartBackgroundColors}
               displayLegends={false}
               enableSorting={true}
@@ -1091,11 +1106,11 @@
         {#if chartVisibility["study-kohorte"]}
           <div class="chart-wrapper chart-study">
             <lens-chart
-              title="Studie/Kohorte"
+              title={$t("chart_study_cohort")}
               dataKey="studykohorte"
               chartType="bar"
-              xAxisTitle="Zugehörigkeit"
-              yAxisTitle="Patienten"
+              xAxisTitle={$t("axis_affiliation")}
+              yAxisTitle={$t("axis_patients")}
               backgroundColor={ChartBackgroundColors}
               displayLegends={false}
               enableSorting={true}
@@ -1107,11 +1122,11 @@
         {#if chartVisibility["gender"]}
           <div class="chart-wrapper chart-gender">
             <lens-chart
-              title="Identifizierendes Geschlecht"
+              title={$t("chart_gender")}
               dataKey="gender"
               chartType="pie"
               displayLegends={true}
-              headers={genderHeaders}
+              headers={headers.gender}
               backgroundColor={ChartBackgroundColors}
             ></lens-chart>
           </div>
@@ -1120,12 +1135,12 @@
         {#if chartVisibility["diseases"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Erkrankungen"
+              title={$t("chart_diseases")}
               dataKey="diseases"
               chartType="bar"
-              yAxisTitle="Anzahl Erkanungen"
+              yAxisTitle={$t("axis_disease_count")}
               backgroundColor={ChartBackgroundColors}
-              headers={diseasesHeaders}
+              headers={headers.diseases}
               enableSorting={true}
             >
             </lens-chart>
@@ -1135,7 +1150,7 @@
         {#if chartVisibility["smoker"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Raucher"
+              title={$t("chart_smoker")}
               dataKey="smoker"
               chartType="pie"
               displayLegends={true}
@@ -1148,12 +1163,12 @@
         {#if chartVisibility["virus"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Chron. Viruserkrankungen"
+              title={$t("chart_virus")}
               dataKey="virus"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={virusHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.virus}
               enableSorting={true}
             >
             </lens-chart>
@@ -1163,12 +1178,12 @@
         {#if chartVisibility["cardiovascular"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Herz-Kreislauf-Erkrankungen"
+              title={$t("chart_cardiovascular")}
               dataKey="card"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={cardvascHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.cardvasc}
               enableSorting={true}
             >
             </lens-chart>
@@ -1178,12 +1193,12 @@
         {#if chartVisibility["diabetes"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Diabetes"
+              title={$t("chart_diabetes")}
               dataKey="diabetes"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={diabetesHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.diabetes}
               enableSorting={true}
             >
             </lens-chart>
@@ -1193,12 +1208,12 @@
         {#if chartVisibility["rheumatology"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Rheumatologische / Immunologische Erkrankungen"
+              title={$t("chart_rheumatology")}
               dataKey="rheu_immu"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={immuHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.immu}
               enableSorting={true}
             >
             </lens-chart>
@@ -1208,12 +1223,12 @@
         {#if chartVisibility["liver"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Chron. Lebererkrankungen"
+              title={$t("chart_liver")}
               dataKey="chr_liverdis"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={liverHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.liver}
               enableSorting={true}
             >
             </lens-chart>
@@ -1223,12 +1238,12 @@
         {#if chartVisibility["lung"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Chron. Lungenerkrankungen"
+              title={$t("chart_lung")}
               dataKey="chr_lung"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={lungHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.lung}
               enableSorting={true}
             >
             </lens-chart>
@@ -1238,12 +1253,12 @@
         {#if chartVisibility["neuro"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Chron. Neurologische-Erkrankungen"
+              title={$t("chart_neuro")}
               dataKey="neuro"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              yAxisTitle="Anzahl Erkanungen"
-              headers={neuroHeaders}
+              yAxisTitle={$t("axis_disease_count")}
+              headers={headers.neuro}
               enableSorting={true}
             >
             </lens-chart>
@@ -1253,14 +1268,14 @@
         {#if chartVisibility["age"]}
           <div class="chart-wrapper chart-alter">
             <lens-chart
-              title="Alter bei Aufnahme"
+              title={$t("chart_age")}
               dataKey="inclusionage"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
               groupRange={10}
               filterRegex="^(1*[12]*[0-9])"
-              xAxisTitle="Alter"
-              yAxisTitle="Anzahl der Patienten"
+              xAxisTitle={$t("axis_age")}
+              yAxisTitle={$t("axis_patient_count")}
               enableSorting={true}
             >
             </lens-chart>
@@ -1270,14 +1285,15 @@
         {#if chartVisibility["samples-liquid"]}
           <div class="chart-wrapper chart-samples-liquid">
             <lens-chart
-              title="Proben LIQUID"
+              title={$t("chart_samples_liquid")}
               dataKey="type"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              filterRegex="^[LIQUID|X].*"
+              headers={headers.sampleType}
+              filterRegex="^(LIQUID|X)"
               displayLegends={false}
-              xAxisTitle="Probentyp"
-              yAxisTitle="Anzahl der Proben"
+              xAxisTitle={$t("axis_sample_type")}
+              yAxisTitle={$t("axis_sample_count")}
               enableSorting={true}
             >
             </lens-chart>
@@ -1287,14 +1303,15 @@
         {#if chartVisibility["samples-tissue"]}
           <div class="chart-wrapper chart-samples-tissue">
             <lens-chart
-              title="Proben Tissue"
+              title={$t("chart_samples_tissue")}
               dataKey="type"
               chartType="bar"
               backgroundColor={ChartBackgroundColors}
-              filterRegex="^[TISSUE].*"
+              headers={headers.sampleType}
+              filterRegex="^TISSUE"
               displayLegends={false}
-              xAxisTitle="Probentyp"
-              yAxisTitle="Anzahl der Proben"
+              xAxisTitle={$t("axis_sample_type")}
+              yAxisTitle={$t("axis_sample_count")}
               enableSorting={true}
             >
             </lens-chart>
@@ -1304,13 +1321,18 @@
         {#if chartVisibility["transplant"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
-              title="Transplantationen"
-              dataKey="transplantout"
-              chartType="pie"
+              title={$t("chart_transplants")}
+              dataKey="transplantorgan"
+              chartType="bar"
+              headers={headers.transplantOrgan}
               backgroundColor={ChartBackgroundColors}
+              displayLegends={false}
+              xAxisTitle={$t("axis_organ")}
+              yAxisTitle={$t("axis_patients")}
+              enableSorting={true}
             >
             </lens-chart>
-            Anzahl Transplantationen: {result?.totals.transplat}
+            {$t("transplat_number")}: {result?.totals.transplat}
           </div>
         {/if}
 
@@ -1330,21 +1352,7 @@
       </div>
     </div>
   </main>
-  <footer class="footer">
-    <div class="footer__left-section">
-      <div class="footer__made-with">
-        <lens-about></lens-about>
-      </div>
-      <div class="footer__logo">
-        <img src="../assets/dzg-logo-2022.svg" alt="Logo des DZG" />
-      </div>
-    </div>
-    <div class="footer__links">
-      <a href="/impressum">Impressum</a>
-      <a href="/kontakt">Kontakt</a>
-      <!--<a href="/datenschutz">Datenschutz</a>-->
-    </div>
-  </footer>
+  <SiteFooter />
 </div>
 <ScrollToTop />
 
@@ -1367,7 +1375,7 @@
         </svg>
       </button>
 
-      <h2>Datenanfrage stellen</h2>
+      <h2>{$t("negotiate_title")}</h2>
       <p class="negotiate-subtitle">
         Ihre Suchanfrage wurde erfasst. Verwenden Sie die unten stehenden
         Informationen, um Ihre Datenanfrage bei den entsprechenden Studien zu
@@ -1376,7 +1384,7 @@
 
       <!-- Query URL Section -->
       <div class="negotiate-section">
-        <h3>Ihre Suchanfrage-URL</h3>
+        <h3>{$t("negotiate_query_url")}</h3>
         <div class="url-container">
           <input
             type="text"
@@ -1393,47 +1401,50 @@
                 d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
               />
             </svg>
-            Kopieren
+            {$t("negotiate_copy")}
           </button>
         </div>
         <div class="qr-code-container">
           <div id="qrcode" class="qr-code"></div>
-          <p class="qr-hint">Scannen Sie den QR-Code mit Ihrem Smartphone</p>
+          <p class="qr-hint">{$t("negotiate_qr_hint")}</p>
         </div>
       </div>
 
       <!-- Studies Table -->
       <div class="negotiate-section">
-        <h3>Verfügbare Studien/Kohorten</h3>
+        <h3>{$t("negotiate_studies_heading")}</h3>
         <p class="section-description">
-          Kontaktieren Sie die entsprechenden Studien direkt für Ihre
-          Datenanfrage:
+          {$t("negotiate_studies_description")}
         </p>
         <div class="studies-table-container">
           <table class="studies-table">
             <thead>
               <tr>
-                <th>Kürzel</th>
-                <th>Name</th>
-                <th>Link</th>
-                <th>Kontakt</th>
-                <th>Aktion</th>
+                <th>{$t("negotiate_col_key")}</th>
+                <th>{$t("negotiate_col_name")}</th>
+                <th>{$t("negotiate_col_link")}</th>
+                <th>{$t("negotiate_col_contact")}</th>
+                <th>{$t("negotiate_col_action")}</th>
               </tr>
             </thead>
             <tbody>
-              {#each studies as study}
+              {#each studies as study (study.key)}
                 <tr>
                   <td><span class="study-badge">{study.key}</span></td>
                   <td>{study.name}</td>
-                  <td><a href={study.link}>Link</a></td>
+                  <td
+                    ><a href={study.link} rel="external"
+                      >{$t("negotiate_col_link")}</a
+                    ></td
+                  >
                   <td><a href="mailto:{study.contact}">{study.contact}</a></td>
                   <td>
                     <button
                       class="action-button"
                       on:click={() =>
-                        (window.location.href = `mailto:${study.contact}?subject=Datenanfrage&body=Suchanfrage: ${currentQueryUrl}`)}
+                        (window.location.href = `mailto:${study.contact}?subject=${$t("negotiate_mail_subject")}&body=${$t("negotiate_mail_body_prefix")}: ${currentQueryUrl}`)}
                     >
-                      Anfrage senden
+                      {$t("negotiate_send_request")}
                     </button>
                   </td>
                 </tr>
@@ -1445,16 +1456,16 @@
 
       <!-- External Databases -->
       <div class="negotiate-section">
-        <h3>Externe Datenbanken</h3>
+        <h3>{$t("negotiate_databases_heading")}</h3>
         <p class="section-description">
-          Weitere relevante Datenbanken für Ihre Forschung:
+          {$t("negotiate_databases_description")}
         </p>
         <div class="external-databases">
-          {#each externalDatabases as db}
+          {#each externalDatabases as db (db.url)}
             <a
               href={db.url}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="external noopener noreferrer"
               class="database-card"
             >
               <div class="database-icon">🌐</div>
@@ -1483,9 +1494,8 @@
 
       <div class="negotiate-footer">
         <p>
-          <strong>Hinweis:</strong> Die Datenanfrage wird direkt an die jeweiligen
-          Studienzentren gesendet. Bitte geben Sie in Ihrer Anfrage die oben stehende
-          URL an.
+          <strong>{$t("negotiate_hint_label")}</strong>
+          {$t("negotiate_hint_body")}
         </p>
       </div>
     </div>

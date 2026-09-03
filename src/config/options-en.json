@@ -1,0 +1,212 @@
+{
+  "siteMappings": {
+    "berlin-test": "Berlin",
+    "bonn": "Bonn",
+    "dresden": "Dresden",
+    "essen": "Essen",
+    "frankfurt": "Frankfurt",
+    "freiburg": "Freiburg",
+    "hannover": "Hanover",
+    "mainz": "Mainz",
+    "muenchen-lmu": "Munich (LMU)",
+    "muenchen-tum": "Munich (TUM)",
+    "ulm": "Ulm",
+    "wuerzburg": "Wuerzburg",
+    "mannheim": "Mannheim",
+    "dktk-test": "DKTK-Test",
+    "hamburg": "Hamburg",
+    "DKTK": "Denisburg"
+  },
+  "chartOptions": {
+    "patients": {
+      "legendMapping": {
+        "berlin": "Berlin",
+        "berlin-test": "Berlin",
+        "bonn": "Bonn",
+        "dresden": "Dresden",
+        "essen": "Essen",
+        "frankfurt": "Frankfurt",
+        "freiburg": "Freiburg",
+        "hannover": "Hanover",
+        "mainz": "Mainz",
+        "muenchen-lmu": "Munich (LMU)",
+        "muenchen-tum": "Munich (TUM)",
+        "ulm": "Ulm",
+        "wuerzburg": "Wuerzburg",
+        "mannheim": "Mannheim",
+        "dktk-test": "DKTK-Test",
+        "hamburg": "Hamburg",
+        "DKTK": "Denisburg"
+      }
+    },
+    "gender": {
+      "legendMapping": {
+        "male": "Male",
+        "female": "Female",
+        "unknown": "Unknown",
+        "other": "Diverse"
+      }
+    },
+    "sites": {
+      "legendMapping": {
+        "BN": "Bonn",
+        "BOR": "Borstel",
+        "BS": "Brunswick",
+        "GI": "Giessen",
+        "H": "Hanover",
+        "HD": "Heidelberg",
+        "HH": "Hamburg University",
+        "HHBNI": "Hamburg (BNI)",
+        "HHUKE": "Hamburg (UKE)",
+        "HL": "Luebeck",
+        "K": "Cologne",
+        "MLMU": "Munich (LMU)",
+        "MR": "Marburg",
+        "MTUM": "Munich (TUM)",
+        "RIEMS": "Riems",
+        "TUE": "Tuebingen",
+        "OTHER": "Other site"
+      }
+    },
+    "diabetes": {
+      "legendMapping": {
+        "1": "Type 1",
+        "2A": "Type 2 without insulin",
+        "2B": "Type 2 with insulin",
+        "3": "Type 3",
+        "4": "Type 4",
+        "N": "No",
+        "X": "No information available"
+      }
+    },
+    "smoker": {
+      "legendMapping": {
+        "Y": "Yes",
+        "N": "No",
+        "FS": "Former",
+        "X": "No information available"
+      }
+    },
+    "diagnosis": {},
+    "age": {},
+    "medicationStatements": {
+      "tooltips": {
+        "CH": "Chemotherapy",
+        "HO": "Hormone therapy",
+        "IM": "Immune/antibody therapy",
+        "KM": "Bone marrow transplant",
+        "ZS": "Targeted agents",
+        "CI": "Chemotherapy + immune/antibody therapy",
+        "CZ": "Chemotherapy + targeted agents",
+        "CIZ": "Chemotherapy + immune/antibody therapy + targeted agents",
+        "IZ": "Immune/antibody therapy + targeted agents",
+        "SZ": "Stem cell transplant (including bone marrow transplant)",
+        "AS": "Active Surveillance",
+        "WS": "Wait and see",
+        "WW": "Watchful Waiting",
+        "SO": "Other"
+      }
+    },
+    "sample_kind": {
+      "hintText": [
+        "Distribution of the sample types associated with the identified patients."
+      ],
+      "legendMapping": {
+        "LIQUID-EDTA": "EDTA",
+        "LIQUID-HEP": "Heparin",
+        "LIQUID-CIT": "Citrate",
+        "LIQUID-RNA-PAX": "PAXgene RNA tube",
+        "LIQUID-RNA-TEM": "Tempus RNA tube",
+        "LIQUID-SER": "Serum (gel)",
+        "LIQUID-URI": "Urine",
+        "LIQUID-STO-NAT": "Stool (native)",
+        "LIQUID-STO-STA": "Stool (stabilised)",
+        "LIQUID-SAL": "Saliva",
+        "LIQUID-BAL": "Bronchoalveolar lavage",
+        "LIQUID-BSW": "Buccal swab",
+        "LIQUID-PSW": "Peritoneal swab",
+        "LIQUID-PHL": "Pharyngeal lavage",
+        "LIQUID-FEC": "Faecal swab",
+        "TISSUE-FF": "Fresh frozen",
+        "TISSUE-FFPE": "FFPE (formalin-fixed)",
+        "TISSUE-PATH": "Pathogen",
+        "LIQUID-OTH": "Other liquid sample",
+        "TISSUE-OTH": "Other tissue sample",
+        "X": "Sample type unknown / no information available",
+        "LIQUID-TBS": "Thick blood smear",
+        "LIQUID-PLA": "EDTA plasma",
+        "LIQUID-CIT-BLU": "Citrate blood",
+        "LIQUID-CIT-PLA": "Citrate plasma",
+        "LIQUID-BC": "Buffy Coat",
+        "LIQUID-RNA": "RNA",
+        "LIQUID-DNA": "DNA",
+        "LIQUID-PBMC": "PBMC",
+        "LIQUID-URI-SED": "Urine sediment"
+      }
+    },
+    "study": {
+      "hintText": [
+        "-TI-AD(TI Academy)",
+        "-TI-API(TI African Partner Institutions)",
+        "-TI-BB(TI Biobanking)",
+        "-TI-BP(TI Bioinformatics Platform)",
+        "-TI-CTU(TI Clinical Trial Unit)",
+        "-TI-EPI(TI Epidemiology)",
+        "-TI-NA(TI Novel Antivirals)",
+        "-TI-PR(TI Pathogen Repository)",
+        "-TTU-EI(TTU Emerging Infections)",
+        "-TTU-GII(TTU Gastrointestinal Infections)",
+        "-TTU-HA(TTU HAARBI)",
+        "-TTU-HEP(TTU Hepatitis)",
+        "-TTU-HIV(TTU HIV)",
+        "-TTU-IICH(TTU Infections of Immunocompromised Host)",
+        "-TTU-MAL(TTU Malaria)",
+        "-TTU-NA(TTU Novel Antibiotics)",
+        "-TTU-TUB(TTU Tuberculosis)",
+        "-OTHER(Other TTU/TI)"
+      ]
+    },
+    "studyKohorte": {
+      "hintText": [
+        "-TX(Transplantation cohort)",
+        "-HIV(HIV cohort)",
+        "-FWS(Fever Without Source)",
+        "-FWSC(Fever Without Source - Children)",
+        "-TIARA(MDRO colonization in complex surgical patients)",
+        "-TBC(Tuberculosis)",
+        "-KS(Epstein-Barr virus)",
+        "-LACHMI(Controlled Human Malaria Infection)",
+        "-HBV(Hepatitis cohort)",
+        "-COVT(COVID autopsy registry)",
+        "-CRYO(DZIF tissue bank)",
+        "-OTHER(Other cohort/study)",
+        "-AFFILATION_STUDY_OTHER(Affiliation cohort/study: Other cohort/study)"
+      ]
+    }
+  },
+  "tableOptions": {
+    "headerData": [
+      {
+        "title": "Sites",
+        "dataKey": "site"
+      },
+      {
+        "title": "Patients",
+        "dataKey": "patients"
+      }
+    ]
+  },
+  "resultSummaryOptions": {
+    "title": "Results",
+    "dataTypes": [
+      {
+        "title": "Patients",
+        "dataKey": "patients"
+      },
+      {
+        "title": "Biosamples",
+        "dataKey": "samples"
+      }
+    ]
+  }
+}
