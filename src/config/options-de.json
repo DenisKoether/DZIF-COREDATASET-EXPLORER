@@ -17,128 +17,6 @@
     "hamburg": "Hamburg",
     "DKTK": "Denisburg"
   },
-  "catalogueKeyToResponseKeyMap": [
-    [
-      "gender",
-      "Gender"
-    ],
-    [
-      "sites",
-      "Sites"
-    ],
-    [
-      "transplant",
-      "transplant"
-    ],
-    [
-      "age",
-      "Age"
-    ],
-    [
-      "smoker",
-      "Smoker"
-    ],
-    [
-      "diabetes",
-      "Diabetes"
-    ],
-    [
-      "diagnosis",
-      "diagnosis"
-    ],
-    [
-      "medicationStatements",
-      "MedicationType"
-    ],
-    [
-      "sample_kind",
-      "sample_kind"
-    ],
-    [
-      "cardvascHT",
-      "cardvascHT"
-    ],
-    [
-      "cardvascCHD",
-      "cardvascCHD"
-    ],
-    [
-      "cardvasc",
-      "cardvasc"
-    ],
-    [
-      "chrLung",
-      "chrLung"
-    ],
-    [
-      "tumorActive",
-      "tumorActive"
-    ],
-    [
-      "chrKidneydSeverity",
-      "chrKidneydSeverity"
-    ],
-    [
-      "chrKidneyd",
-      "chrKidneyd"
-    ],
-    [
-      "chrLiverdis",
-      "chrLiverdis"
-    ],
-    [
-      "rheuImmu",
-      "rheuImmu"
-    ],
-    [
-      "chrMyobakt",
-      "chrMyobakt"
-    ],
-    [
-      "malaria",
-      "malaria"
-    ],
-    [
-      "chrVirusHIV",
-      "chrVirusHIV"
-    ],
-    [
-      "chrVirusHBV",
-      "chrVirusHBV"
-    ],
-    [
-      "chrVirusHCV",
-      "chrVirusHCV"
-    ],
-    [
-      "chrVirusOTHER",
-      "chrVirusOTHER"
-    ],
-    [
-      "neuro",
-      "neuro"
-    ],
-    [
-      "org",
-      "org"
-    ],
-    [
-      "study",
-      "study"
-    ],
-    [
-      "studyKohorte",
-      "studyKohorte"
-    ],
-    [
-      "therapy_of_tumor",
-      "ProcedureType"
-    ],
-    [
-      "75186-7",
-      "75186-7"
-    ]
-  ],
   "chartOptions": {
     "patients": {
       "legendMapping": {
@@ -162,9 +40,6 @@
       }
     },
     "gender": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "male": "Männlich",
         "female": "Weiblich",
@@ -173,9 +48,6 @@
       }
     },
     "sites": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "BN": "Bonn",
         "BOR": "Borstel",
@@ -197,9 +69,6 @@
       }
     },
     "diabetes": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
         "1": "Typ1",
         "2A": "Typ2 ohne Insulin",
@@ -211,30 +80,16 @@
       }
     },
     "smoker": {
-      "hintText": [
-        "TODO"
-      ],
       "legendMapping": {
-        "Y": "Yes",
-        "N": "No",
+        "Y": "Ja",
+        "N": "Nein",
         "FS": "Ehemalig",
         "X": "Keine Information verfügbar"
       }
     },
-    "diagnosis": {
-      "hintText": [
-        "TODO"
-      ]
-    },
-    "age": {
-      "hintText": [
-        "TODO"
-      ]
-    },
+    "diagnosis": {},
+    "age": {},
     "medicationStatements": {
-      "hintText": [
-        "Art der systemischen oder abwartenden Therapie (ADT Basisdatensatz Versionen 2014, 2021)"
-      ],
       "tooltips": {
         "CH": "Chemotherapie",
         "HO": "Hormontherapie",
@@ -339,10 +194,10 @@
         "title": "Patienten",
         "dataKey": "patients"
       }
-    ]  },
+    ]
+  },
   "resultSummaryOptions": {
     "title": "Ergebnisse",
-    "infoButtonText": "Um eine Re-Identifizierung zu erschweren, werden Standortergebnisse modifiziert und auf Zehnerstellen gerundet. Meldet ein Standort keinen Treffer, wird für diesen null angezeigt.",
     "dataTypes": [
       {
         "title": "Patienten",
@@ -350,7 +205,7 @@
       },
       {
         "title": "Bioproben",
-        "dataKey": "specimen"
+        "dataKey": "samples"
       }
     ]
   }

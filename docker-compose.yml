@@ -1,0 +1,41 @@
+services:
+
+  lens:
+    image: docker.verbis.dkfz.de/dashboard/dzif-explorer:latest
+    environment:
+      PUBLIC_BACKEND_URL: "http://http://bridgehead.dev.dzif.de/backend"
+
+  postgres:
+    image: postgres
+    volumes:
+      - lens-data:/var/lib/postgresql
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=user
+      - POSTGRES_DB=dzif
+
+  backend:
+    image: docker.verbis.dkfz.de/dashboard/rustsqltest
+    environment:
+      DATABASE_URL: postgres
+      DATABASE_USER: user
+      DATABASE_PASSWORD: test
+      DATABASE_NAME: dzif
+      FILEPATH: "/data/yaasb_config.json"
+      BASIC: ${BASIC}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.spot.loadbalancer.server.port=3001"
+      - "traefik.http.middlewares.corsheaders.headers.accesscontrolallowmethods=GET,OPTIONS,POST"
+      - "traefik.http.middlewares.corsheaders.headers.accesscontrolalloworiginlist=https://${GUI_HOST}/"
+      - "traefik.http.middlewares.corsheaders.headers.accesscontrolallowcredentials=true"
+      - "traefik.http.middlewares.corsheaders.headers.accesscontrolmaxage=-1"
+      - "traefik.http.routers.spot.rule=Host(`${GUI_HOST}`) && PathPrefix(`/backend`)"
+      - "traefik.http.middlewares.stripprefix_spot_prod.stripprefix.prefixes=/backend"
+      - "traefik.http.routers.spot.tls=true"
+      - "traefik.http.routers.spot.middlewares=corsheaders,stripprefix_spot_prod"
+  volumes:
+      - ${PWD}/yaasb_config.json:/data/yaasb_config.json
+
+volumes:
+  lens-data:

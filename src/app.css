@@ -28,6 +28,13 @@
     --orange: #e95713;
     --light-orange: #ffa750;
 
+    /* Traffic-light colours for the backend status indicator */
+    --status-green: #00992f;
+    --status-yellow: #e3a300;
+    --status-red: #d40000;
+
+    --dzif-blue: #001e50
+
     --border-radius-small: 5px;
 
     --gap-xxs: 5px;
@@ -47,6 +54,17 @@
     --font-size-xxl: 32px;
 
     --font-family: 'Open Sans', sans-serif;
+    
+    /* Footprint of the fixed scroll-to-top button, so the footer can keep
+       its content clear of it */
+    --scroll-to-top-size: 60px;
+    --scroll-to-top-height: 50px;
+    --scroll-to-top-offset: 20px;
+
+    /* New variables for header sizing */
+    --header-height: 120px;
+    --header-height-scrolled: 55px;
+    --header-spacing: 1em;
 }
 
 /**
@@ -94,19 +112,29 @@ button {
     font-family: inherit;
 }
 
-/* Header Styling */
+/* Header Styling with smooth transitions */
 header {
     background-color: var(--ghost-white);
     position: sticky;
-    z-index: 1;
-    margin: 1em;
-    padding: var(--gap-xs);
+    z-index: 100;
+    margin: var(--header-spacing);
+    padding: var(--gap-s);
     border-radius: var(--border-radius-small);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
     top: 0px;
+    transition: padding 0.3s ease, margin 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Scrolled state for header - better visibility */
+header.scrolled {
+    padding: var(--gap-xxs) var(--gap-xs);
+    margin: var(--header-spacing) var(--header-spacing) 0 var(--header-spacing);
+    background: linear-gradient(135deg, var(--white) 0%, var(--ghost-white) 100%);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--lightest-gray);
 }
 
 header .header-logo {
@@ -119,6 +147,11 @@ header img {
     margin-left: 15px;
     width: 85px;
     height: auto;
+    transition: width 0.3s ease;
+}
+
+header.scrolled img {
+    width: 50px;
 }
 
 header h1 {
@@ -128,6 +161,11 @@ header h1 {
     font-size: var(--font-size-xxl);
     font-weight: 500;
     color: var(--blue);
+    transition: font-size 0.3s ease;
+}
+
+header.scrolled h1 {
+    font-size: var(--font-size-l);
 }
 
 /* Responsives Design */
@@ -140,6 +178,10 @@ header h1 {
     header h1 {
         margin-top: 10px;
         font-size: var(--font-size-xl);
+    }
+    
+    header.scrolled h1 {
+        font-size: var(--font-size-l);
     }
 }
 
@@ -157,49 +199,83 @@ header h1 {
     border: solid 1px var(--lightest-gray);
 }
 
+/* Search bar with improved sticky positioning and spacing */
 .search {
-    background-color: var(--ghost-white);
-    /*position: sticky; */
+    background: linear-gradient(to bottom, 
+        var(--color-site-background) 0%, 
+        var(--color-site-background) 20%, 
+        rgba(0, 30, 80, 0.98) 50%,
+        rgba(0, 30, 80, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: sticky;
-    top: 63px;
-    z-index: 1;
-    margin: 1em;
+    top: calc(var(--header-height) + var(--header-spacing));
+    z-index: 90;
+    margin: 0 var(--header-spacing) var(--gap-s) var(--header-spacing);
     border-radius: var(--border-radius-small);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: top 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Adjust search bar position when header is scrolled - closer gap */
+body.header-scrolled .search {
+    top: calc(var(--header-height-scrolled) + var(--gap-xxs));
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .search-wrapper {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto auto;
     grid-gap: var(--gap-s);
-    /* padding: var(--gap-xxs) 0; */
-    background-color: var(--color-site-background);
+    background-color: var(--ghost-white);
+    padding: var(--gap-s);
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Main grid with spacing from search bar */
 .grid {
     position: relative;
     display: grid;
     grid-template-columns: 400px 1fr;
     grid-gap: var(--gap-m);
     padding: 0 var(--gap-xs) var(--gap-xs);
-    margin: var(--gap-xxs);
+    margin: 0 var(--gap-xxs);
+    /* Add top margin for spacing below search bar */
+    margin-top: var(--gap-s);
 }
 
 .catalogue-wrapper {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white) 0%, var(--ghost-white) 100%);
     border: solid 1px var(--lightest-gray);
     border-radius: var(--border-radius-small);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease, top 0.3s ease, height 0.3s ease;
+    /* Make the entire wrapper sticky, not just inner content */
+    position: sticky;
+    top: calc(var(--header-height) + var(--header-spacing) + 100px);
+    height: calc(100vh - 280px);
+    /* Add bottom margin for spacing from footer */
+    margin-bottom: var(--gap-s);
+}
+
+/* Adjust when header is scrolled - closer to search bar */
+body.header-scrolled .catalogue-wrapper {
+    top: calc(var(--header-height-scrolled) + 105px);
+    height: calc(100vh - 185px);
+}
+
+.catalogue-wrapper:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .catalogue {
     border-radius: var(--border-radius-small);
     padding: var(--gap-s);
-    background-color: var(--white);
-    grid-row: 1/-1;
-    overflow-y: scroll;
-    height: calc(100vh - 226px);
-    position: sticky;
-    top: 131px;
-
+    background-color: transparent;
+    overflow-y: auto;
+    height: 100%;
+    /* Remove individual sticky positioning since wrapper is sticky now */
 }
 
 .history-item {
@@ -274,6 +350,8 @@ header h1 {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--gap-xs);
     grid-column: 2/3;
+    /* Add bottom margin so last chart has space from footer */
+    margin-bottom: var(--gap-s);
 }
 
 .siteschart-subtitle {
@@ -290,8 +368,59 @@ header h1 {
     display: grid;
 }
 
+/* The summary bar sits above every chart, so keep it to a single compact row:
+   totals and the request button on the left, chart filter on the right. */
+/* Results, request and spinner on the left; chart filter pinned right. A grid
+   rather than a wrapping flex row, so the filter keeps its top-right slot even
+   when the left-hand group needs a second line. */
 .result-summary {
     grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--gap-xs);
+    padding: var(--gap-xs) var(--gap-s);
+}
+
+.result-summary__figures {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xs);
+}
+
+.result-summary .right {
+    grid-column: 2;
+    justify-self: end;
+}
+
+/* The totals heading ships with a large vertical margin, which set the height
+   of the whole bar. Trimmed through the part Lens exposes. */
+.result-summary__figures lens-result-summary::part(
+        lens-result-summary-header-title
+    ) {
+    margin: 0;
+}
+
+/* Reserve room for each count so the figures keep a constant width. Without
+   this the totals shrink to "0" while a search runs and the request button
+   slides left and back again. */
+.result-summary__figures lens-result-summary::part(
+        lens-result-summary-content-type
+    ) {
+    min-width: 9rem;
+}
+
+/* Takes a full row of its own so it never squeezes the totals onto a second
+   line. Lens hides it with `visibility: hidden`, which still reserves its
+   height, so drop the margin it adds on top of that. */
+.result-summary__modified {
+    grid-column: 1 / -1;
+}
+
+.result-summary__modified::part(lens-query-modified-display-wrapper) {
+    margin: 0;
 }
 
 .result-table {
@@ -412,10 +541,15 @@ header h1 {
     max-width: fit-content;
 }
 
+/* Rendered as an <a> so it always leads back to the search, rather than a
+   button calling history.back(), which does nothing when the page was opened
+   directly or reached from an external link. */
 .button-back {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
+    align-self: flex-start;
+    width: fit-content;
+    text-decoration: none;
     padding: 6px 14px;
     font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
     border-radius: 6px;
@@ -433,6 +567,7 @@ header h1 {
 .button-back:hover,
 .button-back:focus {
     background-color: #07c;
+    color: #fff;
 }
 
 .button-back:focus {
@@ -476,6 +611,164 @@ header h1 {
     flex-wrap: wrap;
 }
 
+/* Site / TTU / study chart with drill-down and two view modes */
+.site-chart {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xxs);
+    height: 100%;
+}
+
+.site-chart__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+}
+
+.site-chart__trail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xxs);
+    font-size: var(--font-size-xs);
+}
+
+.site-chart__crumb {
+    padding: 2px 6px;
+    background: none;
+    border: none;
+    border-radius: var(--border-radius-small);
+    font: inherit;
+    color: var(--blue);
+    cursor: pointer;
+}
+
+.site-chart__crumb:hover {
+    background-color: var(--lightest-gray);
+}
+
+.site-chart__crumb.is-current {
+    color: var(--dark-gray);
+    font-weight: 600;
+    cursor: default;
+}
+
+.site-chart__sep {
+    color: var(--gray);
+}
+
+.site-chart__views {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    background-color: var(--lightest-gray);
+    border-radius: var(--border-radius-small);
+}
+
+.site-chart__view {
+    padding: 3px 10px;
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: var(--font-size-xs);
+    color: var(--dark-gray);
+    cursor: pointer;
+}
+
+.site-chart__view.is-active {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.site-chart__hint {
+    margin: 0;
+    font-size: var(--font-size-xxs);
+    color: var(--gray);
+}
+
+.site-chart__canvas {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 320px;
+}
+
+.guide-outline {
+    display: block;
+    margin: 1em;
+    padding: var(--gap-xs);
+    background-color: var(--white);
+    border-radius: var(--border-radius-small);
+    position: relative;
+}
+
+.guide {
+    /* Prose, so cap the measure rather than using fit-content like the
+       legal pages - long lines are hard to read. */
+    max-width: 70ch;
+    margin: 0 auto;
+    padding: var(--gap-s) var(--gap-xs) var(--gap-m);
+    line-height: 1.6;
+}
+
+.guide h2 {
+    margin-top: var(--gap-m);
+    padding-bottom: var(--gap-xxs);
+    border-bottom: solid 1px var(--light-gray);
+    color: var(--dark-blue);
+    font-size: var(--font-size-l);
+}
+
+.guide h3 {
+    margin: 0 0 var(--gap-xxs);
+    font-size: var(--font-size-m);
+    color: var(--dark-gray);
+}
+
+.guide__intro {
+    font-size: var(--font-size-m);
+}
+
+.guide__note {
+    padding: var(--gap-xs);
+    background-color: var(--ghost-white);
+    border-left: solid 3px var(--blue);
+    border-radius: var(--border-radius-small);
+}
+
+.guide__steps {
+    padding-left: 1.4em;
+}
+
+.guide__steps > li {
+    margin-bottom: var(--gap-s);
+}
+
+.guide__steps > li::marker {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.guide__steps p {
+    margin: 0;
+}
+
+.guide__tips,
+.guide__links {
+    padding-left: 1.4em;
+}
+
+.guide__tips > li,
+.guide__links > li {
+    margin-bottom: var(--gap-xs);
+}
+
+.guide a {
+    color: var(--blue);
+}
+
 .impressum-outline {
     display: block;
     align-items: end;
@@ -501,8 +794,10 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1em;
     padding: var(--gap-xs);
+    /* The scroll-to-top button is fixed in the bottom right corner and would
+       otherwise cover the footer once the page is scrolled to the end. */
+    padding-right: calc(var(--scroll-to-top-size) + var(--scroll-to-top-offset) + var(--gap-xs));
     background-color: var(--white);
     border-radius: var(--border-radius-small);
     position: relative;
@@ -542,11 +837,159 @@ header h1 {
     color: var(--dark-blue);
 }
 
+.language-switch {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    background-color: var(--lightest-gray);
+    border-radius: var(--border-radius-small);
+}
+
+.language-switch__option {
+    padding: 4px 10px;
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--dark-gray);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.language-switch__option:hover {
+    background-color: var(--white);
+}
+
+.language-switch__option.is-active {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.backend-status {
+    position: relative;
+    font-size: var(--font-size-xs);
+    color: var(--dark-gray);
+}
+
+.backend-status__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xxs);
+    padding: 4px 8px;
+    background: transparent;
+    border: solid 1px var(--light-gray);
+    border-radius: var(--border-radius-small);
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.backend-status__toggle:hover {
+    background-color: var(--lightest-gray);
+    border-color: var(--gray);
+}
+
+.backend-status__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: var(--gray);
+    /* Label sits left, the LED is pushed to the right edge of the pill. */
+    margin-left: 2px;
+}
+
+.backend-status__dot--healthy {
+    background-color: var(--status-green);
+}
+
+.backend-status__dot--unhealthy {
+    background-color: var(--status-yellow);
+}
+
+.backend-status__dot--unreachable {
+    background-color: var(--status-red);
+}
+
+.backend-status__dot--checking {
+    animation: backend-status-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes backend-status-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* The colour carries the state visually; the wording stays available to
+   screen readers and in the button's tooltip. */
+.backend-status__state-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+.backend-status__chevron {
+    transition: transform 0.2s ease;
+}
+
+.backend-status__chevron.is-open {
+    transform: rotate(180deg);
+}
+
+.backend-status__details {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + var(--gap-xxs));
+    margin: 0;
+    padding: var(--gap-xs);
+    min-width: 220px;
+    background-color: var(--white);
+    border: solid 1px var(--light-gray);
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    text-align: left;
+    z-index: 10;
+}
+
+.backend-status__details div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+    padding: 2px 0;
+}
+
+.backend-status__details dt {
+    color: var(--gray);
+}
+
+.backend-status__details dd {
+    margin: 0;
+    text-align: right;
+}
+
+.backend-status__details code {
+    font-size: var(--font-size-xxs);
+}
+
 /* Responsives Design */
 @media (max-width: 768px) {
     .footer {
         flex-direction: column;
         text-align: center;
+        /* Stacked and centred here, so clear the fixed button below rather
+           than beside the content. */
+        padding-right: var(--gap-xs);
+        padding-bottom: calc(var(--scroll-to-top-height) + var(--scroll-to-top-offset));
     }
 
     .footer__left-section {
@@ -711,18 +1154,6 @@ lens-catalogue::part(number-input-formfield)::-webkit-inner-spin-button {
     margin: 0;
 }
 
-lens-catalogue::part(data-tree-element-toggle-icon) {
-    width: 24px;
-    transform: rotate(0deg);
-    left: -15px;
-    top: 0px;
-    filter: invert(29%) sepia(17%) saturate(327%) hue-rotate(163deg) brightness(92%) contrast(85%);
-}
-
-lens-catalogue::part(data-tree-element-toggle-icon-open) {
-    transform: rotate(90deg);
-}
-
 lens-catalogue::part(query-add-button-icon) {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(213deg) brightness(100%) contrast(100%);
     width: 21px;
@@ -777,14 +1208,14 @@ lens-catalogue::part(info-button-icon):hover {
 
 .scroll-to-top {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: var(--scroll-to-top-offset);
+    right: var(--scroll-to-top-offset);
     background-color: transparent;
     color: white;
     border: none;
     font-size: 30px;
-    width: 60px;
-    height: 50px;
+    width: var(--scroll-to-top-size);
+    height: var(--scroll-to-top-height);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -807,4 +1238,441 @@ lens-search-modified-display::part(display-wrapper) {
     padding: 10px;
     margin: 15px;
     /*display: inline-block;*/
+}
+
+/* Was absolutely positioned, which forced the summary onto its own row
+   underneath. Now it is just the right-hand item of the summary flex row. */
+.right {
+    display: flex;
+    gap: var(--gap-xs);
+    align-items: center;
+}
+
+.chart-filter {
+    position: relative;
+    display: inline-block;
+}
+
+.chart-filter-button {
+    background-color: var(--light-blue);
+    color: var(--white);
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: var(--font-size-s);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+    font-family: var(--font-family);
+}
+
+.chart-filter-button:hover {
+    background-color: #006adb;
+}
+
+.chart-filter-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: var(--gap-xs);
+    min-width: 280px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.chart-filter-dropdown label {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: var(--border-radius-small);
+    transition: background-color 0.2s ease;
+    font-size: var(--font-size-s);
+}
+
+.chart-filter-dropdown label:hover {
+    background-color: var(--lightest-gray);
+}
+
+.chart-filter-dropdown input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.chart-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: var(--gap-xxs);
+}
+
+.chart-filter-header h3 {
+    margin: 0;
+    font-size: var(--font-size-m);
+    color: var(--dark-gray);
+    font-weight: 500;
+}
+
+.chart-filter-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chart-filter-actions button {
+    background: none;
+    border: none;
+    color: var(--light-blue);
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    padding: 4px 8px;
+    border-radius: var(--border-radius-small);
+    transition: background-color 0.2s ease;
+}
+
+.chart-filter-actions button:hover {
+    background-color: var(--lightest-gray);
+}
+
+.chart-filter-count {
+    font-size: var(--font-size-xs);
+    color: var(--gray);
+    padding: 8px 12px;
+    border-top: 1px solid var(--light-gray);
+    margin-top: var(--gap-xxs);
+}
+
+lens-query-explain-button::part(lens-query-explain-button) {
+    background-color: white
+}
+
+
+.lens-chart-big {
+    width: 100%;
+    max-height: 400px;
+  }
+
+/* Negotiate Overlay Styles */
+.negotiate-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 30, 80, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.negotiate-modal {
+    background: white;
+    border-radius: 12px;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.negotiate-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.negotiate-close:hover {
+    background: #f5f5f5;
+    color: #001e50;
+}
+
+.negotiate-modal h2 {
+    margin: 0 0 10px 0;
+    color: #001e50;
+    font-size: 28px;
+}
+
+.negotiate-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.negotiate-section {
+    margin-bottom: 40px;
+}
+
+.negotiate-section h3 {
+    color: #0066a1;
+    font-size: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* URL Section */
+.url-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.url-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 14px;
+    background: #f9f9f9;
+}
+
+.copy-button {
+    padding: 12px 20px;
+    background: #0066a1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.copy-button:hover {
+    background: #004d7a;
+}
+
+.qr-code-container {
+    text-align: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.qr-code {
+    display: inline-block;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.qr-hint {
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Studies Table */
+.studies-table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.studies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.studies-table thead {
+    background: #f5f5f5;
+}
+
+.studies-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #001e50;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.studies-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.studies-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.study-badge {
+    background: #001e50;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.studies-table a {
+    color: #0066a1;
+    text-decoration: none;
+}
+
+.studies-table a:hover {
+    text-decoration: underline;
+}
+
+.action-button {
+    padding: 6px 12px;
+    background: #00a0c6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.action-button:hover {
+    background: #008ba8;
+}
+
+/* External Databases */
+.external-databases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.database-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+.database-card:hover {
+    background: #f0f7ff;
+    border-color: #0066a1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 161, 0.15);
+}
+
+.database-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.database-info {
+    flex: 1;
+}
+
+.database-info h4 {
+    margin: 0 0 5px 0;
+    color: #001e50;
+    font-size: 16px;
+}
+
+.database-info p {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.external-icon {
+    flex-shrink: 0;
+    color: #0066a1;
+}
+
+/* Footer */
+.negotiate-footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #fff8e1;
+    border-left: 4px solid #ffb74d;
+    border-radius: 8px;
+}
+
+.negotiate-footer p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .negotiate-modal {
+        padding: 20px;
+        max-height: 95vh;
+    }
+
+    .negotiate-modal h2 {
+        font-size: 22px;
+    }
+
+    .url-container {
+        flex-direction: column;
+    }
+
+    .studies-table-container {
+        overflow-x: scroll;
+    }
+
+    .external-databases {
+        grid-template-columns: 1fr;
+    }
 }

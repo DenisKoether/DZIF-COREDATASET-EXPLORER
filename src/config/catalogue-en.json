@@ -1,0 +1,1380 @@
+[
+  {
+    "key": "study",
+    "name": "Study",
+    "fieldType": "group",
+    "childCategories": [
+      {
+        "key": "AFFILIATION_TTU_TI",
+        "name": "Affiliation TTU/TI",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "TI-AD",
+            "name": "TI Academy"
+          },
+          {
+            "key": "TI-API",
+            "name": "TI African Partner Institutions"
+          },
+          {
+            "key": "TI-BB",
+            "name": "TI Biobanking"
+          },
+          {
+            "key": "TI-BP",
+            "name": "TI Bioinformatics Platform"
+          },
+          {
+            "key": "TI-CTU",
+            "name": "TI Clinical Trial Unit"
+          },
+          {
+            "key": "TI-EPI",
+            "name": "TI Epidemiology"
+          },
+          {
+            "key": "TI-NA",
+            "name": "TI Novel Antivirals"
+          },
+          {
+            "key": "TI-PR",
+            "name": "TI Pathogen Repository"
+          },
+          {
+            "key": "TTU-EI",
+            "name": "TTU Emerging Infections"
+          },
+          {
+            "key": "TTU-GII",
+            "name": "TTU Gastrointestinal Infections"
+          },
+          {
+            "key": "TTU-HA",
+            "name": "TTU HAARBI"
+          },
+          {
+            "key": "TTU-HEP",
+            "name": "TTU Hepatitis"
+          },
+          {
+            "key": "TTU-HIV",
+            "name": "TTU HIV"
+          },
+          {
+            "key": "TTU-IICH",
+            "name": "TTU Infections of Immunocompromised Host"
+          },
+          {
+            "key": "TTU-MAL",
+            "name": "TTU Malaria"
+          },
+          {
+            "key": "TTU-NA",
+            "name": "TTU Novel Antibiotics"
+          },
+          {
+            "key": "TTU-TUB",
+            "name": "TTU Tuberculosis"
+          },
+          {
+            "key": "OTHER",
+            "name": "Other TTU/TI"
+          }
+        ]
+      },
+      {
+        "key": "AFFILATION_STUDY",
+        "name": "Affiliation study/cohort",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "TX",
+            "name": "Transplantation cohort"
+          },
+          {
+            "key": "HIV",
+            "name": "HIV cohort"
+          },
+          {
+            "key": "FWS",
+            "name": "Fever Without Source"
+          },
+          {
+            "key": "FWSC",
+            "name": "Fever Without Source - Children"
+          },
+          {
+            "key": "TIARA",
+            "name": "MDRO colonization in complex surgical patients"
+          },
+          {
+            "key": "TBC",
+            "name": "Tuberculosis"
+          },
+          {
+            "key": "KS",
+            "name": "Epstein-Barr virus"
+          },
+          {
+            "key": "LACHMI",
+            "name": "Controlled Human Malaria Infection"
+          },
+          {
+            "key": "HBV",
+            "name": "Hepatitis cohort"
+          },
+          {
+            "key": "COVT",
+            "name": "COVID autopsy registry"
+          },
+          {
+            "key": "CRYO",
+            "name": "DZIF tissue bank"
+          },
+          {
+            "key": "OTHER",
+            "name": "Other cohort/study"
+          },
+          {
+            "key": "AFFILATION_STUDY_OTHER",
+            "name": "Affiliation cohort/study: Other cohort/study"
+          }
+        ]
+      },
+      {
+        "key": "ORG_UNIT",
+        "name": "Study site",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "BN",
+            "name": "Bonn"
+          },
+          {
+            "key": "BOR",
+            "name": "Borstel"
+          },
+          {
+            "key": "BS",
+            "name": "Brunswick"
+          },
+          {
+            "key": "GI",
+            "name": "Giessen"
+          },
+          {
+            "key": "H",
+            "name": "Hanover"
+          },
+          {
+            "key": "HD",
+            "name": "Heidelberg"
+          },
+          {
+            "key": "HH",
+            "name": "Hamburg University"
+          },
+          {
+            "key": "HHBNI",
+            "name": "Hamburg (BNI)"
+          },
+          {
+            "key": "HHUKE",
+            "name": "Hamburg (UKE)"
+          },
+          {
+            "key": "HL",
+            "name": "Luebeck"
+          },
+          {
+            "key": "K",
+            "name": "Cologne"
+          },
+          {
+            "key": "MLMU",
+            "name": "Munich (LMU)"
+          },
+          {
+            "key": "MR",
+            "name": "Marburg"
+          },
+          {
+            "key": "MTUM",
+            "name": "Munich (TUM)"
+          },
+          {
+            "key": "RIEMS",
+            "name": "Riems"
+          },
+          {
+            "key": "TUE",
+            "name": "Tuebingen"
+          },
+          {
+            "key": "OTHER",
+            "name": "Other site"
+          },
+          {
+            "key": "ORG_UNIT_OTHER",
+            "name": "Other organisational site"
+          }
+        ]
+      },
+      {
+        "key": "CONSENT_GENERAL",
+        "name": "Declaration of consent",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "BIO",
+            "name": "Biosample collection permitted"
+          },
+          {
+            "key": "CC",
+            "name": "Consent to contact co-treating physicians"
+          },
+          {
+            "key": "HI",
+            "name": "Consent to health insurance data"
+          },
+          {
+            "key": "RP",
+            "name": "Consent to re-contact the patient"
+          },
+          {
+            "key": "EU",
+            "name": "Consent to transfer within the EU"
+          },
+          {
+            "key": "NEU",
+            "name": "Consent to transfer outside the EU"
+          },
+          {
+            "key": "CU",
+            "name": "Consent to commercial use"
+          },
+          {
+            "key": "OTHER",
+            "name": "Further consent(s)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "person",
+    "name": "Person",
+    "fieldType": "group",
+    "childCategories": [
+      {
+        "key": "Einwilligungserklärung",
+        "name": "Declaration of consent",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "CONSENT_SIGN",
+            "name": "Declaration of consent",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              },
+              {
+                "key": "P",
+                "name": "Restricted"
+              }
+            ]
+          },
+          {
+            "key": "CONSENT_RESTRICTION",
+            "name": "Informed consent restriction",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "N",
+                "name": "No, no restrictions were made"
+              },
+              {
+                "key": "BIO",
+                "name": "Consent to biosample collection withdrawn"
+              },
+              {
+                "key": "CC",
+                "name": "No consent to contact co-treating physicians"
+              },
+              {
+                "key": "HI",
+                "name": "No consent to health insurance data"
+              },
+              {
+                "key": "RP",
+                "name": "No consent to re-contact the patient"
+              },
+              {
+                "key": "OTHER",
+                "name": "Further consent(s) withdrawn"
+              }
+            ]
+          },
+          {
+            "key": "CONSENT_SIGNDATE",
+            "name": "Date of declaration of consent",
+            "fieldType": "date",
+            "type": "BETWEEN"
+          }
+        ]
+      },
+      {
+        "key": "PARTICIPANT_TYPE",
+        "name": "Type of participation",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "P",
+            "name": "Patient"
+          },
+          {
+            "key": "C",
+            "name": "Control"
+          }
+        ]
+      },
+      {
+        "key": "STUDY_ENDPOINT",
+        "name": "Study endpoint",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "AK",
+            "name": "Patient is still active in the study"
+          },
+          {
+            "key": "AL",
+            "name": "Patient completed the study regularly, alive at home"
+          },
+          {
+            "key": "HO",
+            "name": "Patient was admitted to hospital"
+          },
+          {
+            "key": "RE",
+            "name": "Patient was discharged to rehabilitation"
+          },
+          {
+            "key": "LTCF",
+            "name": "Patient was transferred to a long-term care facility"
+          },
+          {
+            "key": "TR",
+            "name": "Patient was transferred to another facility [non-palliative]"
+          },
+          {
+            "key": "PA",
+            "name": "Patient was discharged or transferred for palliative care"
+          },
+          {
+            "key": "DE",
+            "name": "Patient has died"
+          },
+          {
+            "key": "X1",
+            "name": "Loss to follow-up: patient ended the study early"
+          },
+          {
+            "key": "X2",
+            "name": "Loss to follow-up: patient can no longer be reached / located"
+          },
+          {
+            "key": "X3",
+            "name": "Loss to follow-up, not otherwise specified"
+          }
+        ]
+      },
+      {
+        "key": "DATE_OF_DEATH",
+        "name": "Date of death",
+        "fieldType": "date",
+        "type": "BETWEEN"
+      },
+      {
+        "key": "SEX",
+        "name": "Gender",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "gender",
+            "name": "Gender identity",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "M",
+                "name": "Male"
+              },
+              {
+                "key": "F",
+                "name": "Female"
+              },
+              {
+                "key": "OTHER",
+                "name": "Diverse"
+              },
+              {
+                "key": "UNKOWN",
+                "name": "Unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "visite",
+    "name": "Visit",
+    "fieldType": "group",
+    "childCategories": [
+      {
+        "key": "VISIT_START",
+        "name": "Start of visit",
+        "fieldType": "date",
+        "type": "BETWEEN"
+      },
+      {
+        "key": "VISIT_TYPE",
+        "name": "Type of visit",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "VISIT_TYPE",
+            "name": "Type of visit",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "SCR",
+                "name": "Screening"
+              },
+              {
+                "key": "BASE",
+                "name": "Baseline"
+              },
+              {
+                "key": "RV",
+                "name": "Regular visit (acute phase)"
+              },
+              {
+                "key": "EOT",
+                "name": "End of treatment / acute observation (end of acute phase)"
+              },
+              {
+                "key": "EBV",
+                "name": "Event-based visit (additional visit due to study-specific rules)"
+              },
+              {
+                "key": "FU",
+                "name": "Follow-up"
+              },
+              {
+                "key": "OTHER",
+                "name": "Other"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "TRANSPLANTATION_ORGAN",
+    "name": "Transplanted organ",
+    "fieldType": "single-select",
+    "type": "EQUALS",
+    "criteria": [
+      {
+        "key": "BV",
+        "name": "Blood vessel"
+      },
+      {
+        "key": "CLN",
+        "name": "Intestine"
+      },
+      {
+        "key": "AO",
+        "name": "Ossicles"
+      },
+      {
+        "key": "SKN",
+        "name": "Skin"
+      },
+      {
+        "key": "HRT",
+        "name": "Heart"
+      },
+      {
+        "key": "HRTV",
+        "name": "Heart valves"
+      },
+      {
+        "key": "MEN",
+        "name": "Meninges"
+      },
+      {
+        "key": "COR",
+        "name": "Cornea (eye)"
+      },
+      {
+        "key": "BON",
+        "name": "Bone tissue"
+      },
+      {
+        "key": "CAR",
+        "name": "Cartilage tissue"
+      },
+      {
+        "key": "LIV",
+        "name": "Liver"
+      },
+      {
+        "key": "LUN",
+        "name": "Lung"
+      },
+      {
+        "key": "KID",
+        "name": "Kidney"
+      },
+      {
+        "key": "PAN",
+        "name": "Pancreas"
+      },
+      {
+        "key": "TEN",
+        "name": "Tendon"
+      },
+      {
+        "key": "STE",
+        "name": "Stem cells"
+      },
+      {
+        "key": "OTHER",
+        "name": "Another organ/tissue"
+      }
+    ]
+  },
+  {
+    "key": "ANAMNESE",
+    "name": "Medical history",
+    "fieldType": "group",
+    "childCategories": [
+      {
+        "key": "SMOKING_STATUS",
+        "name": "Smoking",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes, daily or occasional smoking (>= once a month)"
+          },
+          {
+            "key": "N",
+            "name": "Non-smoker, never smoked"
+          },
+          {
+            "key": "FS",
+            "name": "Former smoker, abstinent for more than 6 months"
+          }
+        ]
+      },
+      {
+        "key": "CARDVASC_GROUP",
+        "name": "Cardiovascular diseases",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "CARDVASC_HT",
+            "name": "Hypertensive heart disease",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          },
+          {
+            "key": "CARDVASC_CHD",
+            "name": "Coronary heart disease",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          },
+          {
+            "key": "CARDVASC",
+            "name": "Cardiovascular diseases",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "YHA",
+                "name": "Yes, history of myocardial infarction"
+              },
+              {
+                "key": "YCA",
+                "name": "Yes, cardiac arrhythmia"
+              },
+              {
+                "key": "YHF",
+                "name": "Yes, heart failure"
+              },
+              {
+                "key": "YPAVK",
+                "name": "Yes, peripheral arterial occlusive disease (PAOD)"
+              },
+              {
+                "key": "YRV",
+                "name": "Yes, history of revascularisation"
+              },
+              {
+                "key": "YCS",
+                "name": "Yes, carotid stenosis"
+              },
+              {
+                "key": "YOTHER",
+                "name": "Yes, another one"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "CHR_LUNG",
+        "name": "Chronic lung disease",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "YA",
+            "name": "Asthma"
+          },
+          {
+            "key": "YCOP",
+            "name": "COPD"
+          },
+          {
+            "key": "YPF",
+            "name": "Pulmonary fibrosis"
+          },
+          {
+            "key": "YPH",
+            "name": "Pulmonary hypertension"
+          },
+          {
+            "key": "YOHS",
+            "name": "Obesity hypoventilation syndrome (OHS)"
+          },
+          {
+            "key": "YSA",
+            "name": "Sleep apnoea"
+          },
+          {
+            "key": "YOSAS",
+            "name": "Obstructive sleep apnoea syndrome (OSAS)"
+          },
+          {
+            "key": "YCF",
+            "name": "Cystic fibrosis"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Another lung disease"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "CHR_KIDNEYD",
+        "name": "Chronic kidney disease",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "CHR_KIDNEYD",
+            "name": "Chronic kidney disease",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "YH",
+                "name": "With haemodialysis"
+              },
+              {
+                "key": "YWOH",
+                "name": "Without haemodialysis"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "CHR_LIVERDIS",
+        "name": "Chronic liver diseases",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "YFL",
+            "name": "Fatty liver"
+          },
+          {
+            "key": "YLZ",
+            "name": "Liver cirrhosis"
+          },
+          {
+            "key": "YCIH",
+            "name": "Chronic infectious hepatitis"
+          },
+          {
+            "key": "YAL",
+            "name": "Autoimmune liver diseases"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Other liver diseases"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "RHEU_IMMU",
+        "name": "Rheumatological & immunological diseases",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "YCIBD",
+            "name": "Yes, inflammatory bowel disease"
+          },
+          {
+            "key": "YRA",
+            "name": "Yes, rheumatoid arthritis"
+          },
+          {
+            "key": "YCG",
+            "name": "Yes, connective tissue diseases"
+          },
+          {
+            "key": "YVT",
+            "name": "Yes, vasculitides"
+          },
+          {
+            "key": "YCGID",
+            "name": "Yes, congenital immunodeficiencies"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Yes, another one"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "CHR_MYOBAKT",
+        "name": "Chronic mycobacteriosis",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "YT",
+            "name": "Yes, tuberculosis"
+          },
+          {
+            "key": "YOTHER",
+            "name": "Yes, another mycobacteriosis"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MALARIA",
+        "name": "Malaria",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "CHR_VIRUS",
+        "name": "Chronic viral infections",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "CHR_VIRUS_HIV",
+            "name": "HIV",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          },
+          {
+            "key": "CHR_VIRUS_HBV",
+            "name": "HBV",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          },
+          {
+            "key": "CHR_VIRUS_HCV",
+            "name": "HCV",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          },
+          {
+            "key": "CHR_VIRUS_OTHER",
+            "name": "Other",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "Y",
+                "name": "Yes"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "NEURO",
+        "name": "Chronic neurological diseases",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "YMP",
+            "name": "Parkinson's disease"
+          },
+          {
+            "key": "YDM",
+            "name": "Dementia"
+          },
+          {
+            "key": "YMS",
+            "name": "Multiple sclerosis"
+          },
+          {
+            "key": "YNE",
+            "name": "Neuromuscular diseases"
+          },
+          {
+            "key": "YOTH",
+            "name": "Other"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "DIABETES",
+        "name": "Diabetes",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "1",
+            "name": "Type 1"
+          },
+          {
+            "key": "2A",
+            "name": "Type 2 without insulin"
+          },
+          {
+            "key": "2B",
+            "name": "Type 2 with insulin"
+          },
+          {
+            "key": "3",
+            "name": "Type 3"
+          },
+          {
+            "key": "4",
+            "name": "Type 4 / gestational diabetes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "TUMOR",
+        "name": "Tumour/cancer disease",
+        "fieldType": "group",
+        "childCategories": [
+          {
+            "key": "TUMOR_ACTIVE",
+            "name": "Active tumour disease",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "A",
+                "name": "Active"
+              },
+              {
+                "key": "IR",
+                "name": "In remission"
+              },
+              {
+                "key": "N",
+                "name": "No"
+              }
+            ]
+          },
+          {
+            "key": "TUMOR_MORPHOLOGY",
+            "name": "Tumour morphology",
+            "fieldType": "single-select",
+            "type": "EQUALS",
+            "criteria": [
+              {
+                "key": "S",
+                "name": "Solid tumour"
+              },
+              {
+                "key": "NS",
+                "name": "Non-solid tumour"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "CLINICAL_INFECTION",
+    "name": "Clinically confirmed infection",
+    "fieldType": "single-select",
+    "type": "EQUALS",
+    "system": "",
+    "criteria": [
+      {
+        "key": "BSI",
+        "name": "Bloodstream infection"
+      },
+      {
+        "key": "PNE",
+        "name": "Pneumonia"
+      },
+      {
+        "key": "HWI",
+        "name": "Urinary tract infection"
+      },
+      {
+        "key": "ZNS",
+        "name": "CNS infection"
+      },
+      {
+        "key": "IAI",
+        "name": "Intra-abdominal infection"
+      },
+      {
+        "key": "WUI",
+        "name": "Wound infection"
+      },
+      {
+        "key": "OTHER",
+        "name": "Other"
+      },
+      {
+        "key": "N",
+        "name": "No"
+      }
+    ]
+  },
+  {
+    "key": "MEDICATION",
+    "name": "Medication",
+    "fieldType": "group",
+    "childCategories": [
+      {
+        "key": "MEDS",
+        "name": "Medication in general (filter question)",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_IMMUNSUPPR",
+        "name": "Immunosuppressants",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_CORTISONE",
+        "name": "Corticosteroids",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_ANTIHYPERTENSIVES",
+        "name": "Antihypertensives",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_INSULIN",
+        "name": "Insulin",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_ASTHMA",
+        "name": "Asthma medication",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_ANTIHISTAMINES",
+        "name": "Antihistamines",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_ANTICOAGULANT",
+        "name": "Anticoagulants",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_CHEMO",
+        "name": "Chemotherapy",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "key": "MEDS_ANTIINFECTIVES",
+        "name": "Anti-infectives",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Y",
+            "name": "Yes"
+          },
+          {
+            "key": "N",
+            "name": "No"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "BIOSAMPLE",
+    "name": "Biosample",
+    "fieldType": "group",
+    "childCategories": [
+      {
+        "key": "BIOSAMPLE_TYPE",
+        "name": "Sample type",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "LIQUID-EDTA",
+            "name": "EDTA liquid"
+          },
+          {
+            "key": "LIQUID-HEP",
+            "name": "Heparin liquid"
+          },
+          {
+            "key": "LIQUID-CIT",
+            "name": "Citrate liquid"
+          },
+          {
+            "key": "LIQUID-RNA-PAX",
+            "name": "PAXgene RNA tube liquid"
+          },
+          {
+            "key": "LIQUID-RNA-TEM",
+            "name": "Tempus RNA tube liquid"
+          },
+          {
+            "key": "LIQUID-SER",
+            "name": "Serum"
+          },
+          {
+            "key": "LIQUID-URI",
+            "name": "Urine"
+          },
+          {
+            "key": "LIQUID-STO-NAT",
+            "name": "Stool (native)"
+          },
+          {
+            "key": "LIQUID-STO-STA",
+            "name": "Stool (stabilised)"
+          },
+          {
+            "key": "LIQUID-SAL",
+            "name": "Saliva"
+          },
+          {
+            "key": "LIQUID-BAL",
+            "name": "Bronchoalveolar lavage"
+          },
+          {
+            "key": "LIQUID-BSW",
+            "name": "Buccal swab"
+          },
+          {
+            "key": "LIQUID-PSW",
+            "name": "Peritoneal swab"
+          },
+          {
+            "key": "LIQUID-PHL",
+            "name": "Throat wash"
+          },
+          {
+            "key": "LIQUID-FEC",
+            "name": "Faecal swab"
+          },
+          {
+            "key": "TISSUE-FF",
+            "name": "Tissue - fresh frozen"
+          },
+          {
+            "key": "TISSUE-FFPE",
+            "name": "FFPE (formalin-fixed)"
+          },
+          {
+            "key": "TISSUE-PATH",
+            "name": "Tissue - pathogen"
+          },
+          {
+            "key": "LIQUID-OTH",
+            "name": "Other liquid sample"
+          },
+          {
+            "key": "TISSUE-OTH",
+            "name": "Other tissue sample"
+          },
+          {
+            "key": "LIQUID-TBS",
+            "name": "Thick blood smear"
+          },
+          {
+            "key": "LIQUID-PLA",
+            "name": "EDTA plasma"
+          },
+          {
+            "key": "LIQUID-CIT-BLU",
+            "name": "Citrate blood"
+          },
+          {
+            "key": "LIQUID-CIT-PLA",
+            "name": "Citrate plasma"
+          },
+          {
+            "key": "LIQUID-BC",
+            "name": "Buffy coat"
+          },
+          {
+            "key": "LIQUID-RNA",
+            "name": "RNA"
+          },
+          {
+            "key": "LIQUID-DNA",
+            "name": "DNA"
+          },
+          {
+            "key": "LIQUID-PBMC",
+            "name": "PBMC"
+          },
+          {
+            "key": "LIQUID-URI-SED",
+            "name": "Urine sediment"
+          }
+        ]
+      }
+    ]
+  }
+]

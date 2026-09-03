@@ -1,37 +1,9 @@
 // VITE_TARGET_ENVIRONMENT should be set by the ci pipeline
 
-import type { MeasureGroup, MeasureItem } from '@samply/lens';
+/* Chart legend labels now live in `chart-labels.ts`, derived from the
+   catalogue, so the charts and the search criteria cannot drift apart. */
+export { getHeaders, type HeaderMaps } from "./chart-labels";
 
-import {
-	anamneseMeasure,
-	patientsMeasure,
-	specimenMeasure,
-	studyMeasure,
-	transplantMeasure
-} from '../measures';
-
-export const genderHeaders: Map<string, string> = new Map<string, string>()
-	.set('male', 'männlich')
-	.set('female', 'weiblich')
-	.set('other', 'Divers, Intersexuell')
-	.set('unknown', 'unbekannt');
-
-export const barChartBackgroundColors: string[] = ['#4dc9f6', '#3da4c7'];
-
-/**
- * Array of measure groups for different backends
- */
-export const measures: MeasureGroup[] = [
-	{
-		name: 'DKTK',
-		measures: [
-			patientsMeasure as MeasureItem,
-			anamneseMeasure as MeasureItem,
-			specimenMeasure as MeasureItem,
-			studyMeasure as MeasureItem,
-			transplantMeasure as MeasureItem
-		]
-	}
-];
+export const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
 
 export const backendMeasures = `define InInitialPopulation:\n`;
