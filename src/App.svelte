@@ -6,6 +6,7 @@
   import ScrollToTop from "./services/tools/top-anker.svelte";
   import SiteFooter from "./services/tools/site-footer.svelte";
   import LanguageSwitch from "./services/tools/language-switch.svelte";
+  import SiteChart from "./services/tools/site-chart.svelte";
   import { writable } from "svelte/store";
   // Import Lens CSS and JS bundles
   import "@samply/lens/style.css";
@@ -14,13 +15,8 @@
 
   import "./app.css";
 
-  import { Chart } from "chart.js/auto";
-  import { ArcElement, Tooltip, Legend } from "chart.js";
-  import { backgroundColor } from "./services/tools/chart-style";
-
-  Chart.register(ArcElement, Tooltip, Legend);
-
-  let chart: Chart | null = null;
+  /** Site -> TTU/TI -> study hierarchy handed to <SiteChart>. */
+  let siteHierarchy: Site[] = [];
 
   import {
     setOptions,
@@ -60,10 +56,6 @@
   $: headers = getHeaders($language);
 
   onMount(() => {
-    const ctx = document.getElementById("multiRingChart2") as HTMLCanvasElement;
-    Chart.defaults.font.size = 12;
-    chart = new Chart(ctx.getContext("2d"), initialChartData);
-
     // Handle header shrinking on scroll
     const header = document.querySelector("header");
 
@@ -81,7 +73,6 @@
     };
 
     window.addEventListener("scroll", handleScroll);
-    toggleChart("sites-multi");
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -212,7 +203,12 @@
 
     let sites: Site[] = [];
 
-    for (const bucket of Object.keys(result.stratifiers.orgout)) {
+    /* `orgout` buckets are "site#ttu#study" -> patient count. Add the count,
+       not 1: adding 1 per bucket counts distinct combinations, so a site with
+       one bucket of 40 patients looked the same as a site with one patient. */
+    for (const [bucket, patients] of Object.entries(
+      result.stratifiers.orgout,
+    )) {
       const values = bucket.split("#");
 
       if (values.length === 3) {
@@ -225,7 +221,7 @@
           };
           sites.push(site);
         }
-        site.count += 1;
+        site.count += patients;
 
         let ttu = site.ttus.find((t) => t.ttu === values[1]);
         if (!ttu) {
@@ -236,7 +232,7 @@
           };
           site.ttus.push(ttu);
         }
-        ttu.count += 1;
+        ttu.count += patients;
 
         let study = ttu.studies.find((s) => s.study === values[2]);
         if (!study) {
@@ -246,10 +242,10 @@
           };
           ttu.studies.push(study);
         }
-        study.count += 1;
+        study.count += patients;
       }
     }
-    renderChart(sites);
+    siteHierarchy = sites;
   };
 
   function closeNegotiateOverlay() {
@@ -262,165 +258,6 @@
       alert($t("negotiate_copied"));
     });
   }
-
-  const adjustColor = (color: string, factor: number) => {
-    let r, g, b;
-    if (color.startsWith("#")) {
-      r = parseInt(color.slice(1, 3), 16);
-      g = parseInt(color.slice(3, 5), 16);
-      b = parseInt(color.slice(5, 7), 16);
-    } else if (color.startsWith("rgb")) {
-      [r, g, b] = color.match(/\d+/g).map(Number);
-    } else {
-      return color;
-    }
-
-    r /= 255;
-    g /= 255;
-    b /= 255;
-    let max = Math.max(r, g, b),
-      min = Math.min(r, g, b);
-    let h,
-      s,
-      l = (max + min) / 2;
-
-    if (max === min) {
-      h = s = 0;
-    } else {
-      let d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
-      else if (max === g) h = (b - r) / d + 2;
-      else h = (r - g) / d + 4;
-      h /= 6;
-    }
-
-    s = Math.min(1, Math.max(0, s * factor));
-
-    if (factor < 1) {
-      l = l + (1 - factor) * 0.15;
-    } else {
-      l = l - (factor - 1) * 0.1;
-    }
-    l = Math.min(1, Math.max(0, l));
-
-    let hue2rgb = (p, q, t) => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-      return p;
-    };
-
-    let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    let p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1 / 3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1 / 3);
-
-    return `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
-  };
-
-  const renderChart = (sites: Site[]) => {
-    const ctx = document.getElementById("multiRingChart2");
-    if (chart) chart.destroy();
-
-    // Each site gets a base colour by its position; the inner rings reuse the
-    // colour of the site they belong to, shaded lighter the deeper they sit.
-    const siteColor = (index: number): string =>
-      backgroundColor[index % backgroundColor.length];
-
-    const siteLabels = sites.map((site) => site.site);
-    const siteData = sites.map((site) => site.count);
-    const siteColors = sites.map((_site, index) =>
-      adjustColor(siteColor(index), 2),
-    );
-
-    const ttuLabels = sites.flatMap((site) =>
-      site.ttus.map((ttu) => `${site.site}-${ttu.ttu}`),
-    );
-    const ttuData = sites.flatMap((site) => site.ttus.map((ttu) => ttu.count));
-    const ttuColors = sites.flatMap((site, index) =>
-      site.ttus.map(() => adjustColor(siteColor(index), 1)),
-    );
-
-    const studyLabels = sites.flatMap((site) =>
-      site.ttus.flatMap((ttu) =>
-        ttu.studies.map((study) => `${site.site}-${ttu.ttu}-${study.study}`),
-      ),
-    );
-    const studyData = sites.flatMap((site) =>
-      site.ttus.flatMap((ttu) => ttu.studies.map((study) => study.count)),
-    );
-    const studyColors = sites.flatMap((site, index) =>
-      site.ttus.flatMap((ttu) =>
-        ttu.studies.map(() => adjustColor(siteColor(index), 0.6)),
-      ),
-    );
-
-    chart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: siteLabels,
-        datasets: [
-          {
-            label: "Studies",
-            data: studyData,
-            backgroundColor: studyColors,
-            borderWidth: 1,
-          },
-          {
-            label: "TTUs",
-            data: ttuData,
-            backgroundColor: ttuColors,
-            borderWidth: 1,
-          },
-          {
-            label: "Sites",
-            data: siteData,
-            backgroundColor: siteColors,
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        cutout: "50%",
-        plugins: {
-          title: {
-            font: {
-              size: 16,
-            },
-            color: "#000000",
-            display: true,
-            text: "Patienten pro Standort",
-          },
-          legend: {
-            display: false,
-          },
-          tooltip: {
-            callbacks: {
-              label: (tooltipItem) => {
-                const dataset = chart.data.datasets[tooltipItem.datasetIndex];
-                let label = "";
-                if (tooltipItem.datasetIndex === 0) {
-                  label = studyLabels[tooltipItem.dataIndex];
-                } else if (tooltipItem.datasetIndex === 1) {
-                  label = ttuLabels[tooltipItem.dataIndex];
-                } else if (tooltipItem.datasetIndex === 2) {
-                  label = siteLabels[tooltipItem.dataIndex];
-                }
-
-                const value = dataset.data[tooltipItem.dataIndex];
-                return `${label}: ${value}`;
-              },
-            },
-          },
-        },
-      },
-    });
-  };
 
   //import { buildLibrary, buildMeasure } from './cql-measure';
   import { env } from "$env/dynamic/public";
@@ -449,57 +286,37 @@
     count: number;
   };
 
-  let initialChartData = {
-    type: "pie",
-    data: {
-      labels: ["", "", "", ""],
-      datasets: [
-        {
-          data: [1, 1, 1, 1],
-          backgroundColor: ["#E6E6E6"],
-          backgroundHoverColor: ["#E6E6E6"],
-        },
-      ],
-    },
-  };
-
   let result: LensResult | null;
 
   // Chart filtering functionality
   let showChartFilter = false;
 
   // Define all available charts with their IDs and titles
+  /* Titles come from the dictionary so the chart filter matches the chart
+     headings in both languages. */
   const availableCharts = [
-    { id: "study-ttu", title: "Studie - TTU/TI", visible: true },
-    { id: "study-kohorte", title: "Studie/Kohorte", visible: true },
-    { id: "gender", title: "Identifizierendes Geschlecht", visible: true },
-    { id: "diseases", title: "Erkrankungen", visible: true },
-    { id: "smoker", title: "Raucher", visible: true },
-    { id: "virus", title: "Chron. Viruserkrankungen", visible: true },
-    {
-      id: "cardiovascular",
-      title: "Herz-Kreislauf-Erkrankungen",
-      visible: true,
-    },
-    { id: "diabetes", title: "Diabetes", visible: true },
-    {
-      id: "rheumatology",
-      title: "Rheumatologische / Immunologische Erkrankungen",
-      visible: true,
-    },
-    { id: "liver", title: "Chron. Lebererkrankungen", visible: true },
-    { id: "lung", title: "Chron. Lungenerkrankungen", visible: true },
-    { id: "neuro", title: "Chron. Neurologische-Erkrankungen", visible: true },
-    { id: "age", title: "Alter bei Aufnahme", visible: true },
-    { id: "samples-liquid", title: "Proben LIQUID", visible: true },
-    { id: "samples-tissue", title: "Proben Tissue", visible: true },
-    { id: "transplant", title: "Transplantationen", visible: true },
-    { id: "sites-multi", title: "Patienten pro Standort", visible: true },
-  ];
+    { id: "study-ttu", titleKey: "chart_study_ttu" },
+    { id: "study-kohorte", titleKey: "chart_study_cohort" },
+    { id: "gender", titleKey: "chart_gender" },
+    { id: "diseases", titleKey: "chart_diseases" },
+    { id: "smoker", titleKey: "chart_smoker" },
+    { id: "virus", titleKey: "chart_virus" },
+    { id: "cardiovascular", titleKey: "chart_cardiovascular" },
+    { id: "diabetes", titleKey: "chart_diabetes" },
+    { id: "rheumatology", titleKey: "chart_rheumatology" },
+    { id: "liver", titleKey: "chart_liver" },
+    { id: "lung", titleKey: "chart_lung" },
+    { id: "neuro", titleKey: "chart_neuro" },
+    { id: "age", titleKey: "chart_age" },
+    { id: "samples-liquid", titleKey: "chart_samples_liquid" },
+    { id: "samples-tissue", titleKey: "chart_samples_tissue" },
+    { id: "transplant", titleKey: "chart_transplants" },
+    { id: "sites-multi", titleKey: "chart_sites_title" },
+  ] as const;
 
   let chartVisibility = availableCharts.reduce(
     (acc, chart) => {
-      acc[chart.id] = chart.visible;
+      acc[chart.id] = true;
       return acc;
     },
     {} as Record<string, boolean>,
@@ -1026,6 +843,11 @@
 
       <div class="charts">
         <div class="chart-wrapper result-summary">
+          <div class="result-summary__figures">
+            <lens-result-summary></lens-result-summary>
+            <lens-negotiate-button title={$t("results_request_data")}
+            ></lens-negotiate-button>
+          </div>
           <div class="right">
             <div class="chart-filter">
               <button class="chart-filter-button" on:click={toggleChartFilter}>
@@ -1063,7 +885,7 @@
                         checked={chartVisibility[chart.id]}
                         on:change={() => toggleChart(chart.id)}
                       />
-                      {chart.title}
+                      {$t(chart.titleKey)}
                     </label>
                   {/each}
 
@@ -1074,11 +896,6 @@
                 </div>
               {/if}
             </div>
-          </div>
-          <div class="result-summary__figures">
-            <lens-result-summary></lens-result-summary>
-            <lens-negotiate-button title={$t("results_request_data")}
-            ></lens-negotiate-button>
           </div>
           <!-- Own row: the warning only appears after the query changed, and
                should not push the totals onto a second line when it does. -->
@@ -1338,15 +1155,7 @@
 
         {#if chartVisibility["sites-multi"]}
           <div class="chart-wrapper chart-sites-multi">
-            <canvas id="multiRingChart2"></canvas>
-
-            <div class="siteschart-subtitle">
-              <hr />
-              Das Diagramm zeigt im innersten Ring die Gesamtzahl der gefundenen Patienten
-              pro Standort. Der mittlere Ring untergliedert diese Patienten weiter
-              in TTU/TI, während der äußere Ring eine weitere Unterteilung nach den
-              jeweiligen Studien vornimmt.
-            </div>
+            <SiteChart sites={siteHierarchy} />
           </div>
         {/if}
       </div>

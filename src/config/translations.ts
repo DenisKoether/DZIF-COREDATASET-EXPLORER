@@ -115,6 +115,34 @@ export const uiTexts = {
   },
   chart_age: { de: "Alter bei Aufnahme", en: "Age at enrolment" },
   chart_transplants: { de: "Transplantationen", en: "Transplants" },
+  chart_sites_title: {
+    de: "Patienten pro Standort, TTU/TI und Studie",
+    en: "Patients by site, TTU/TI and study",
+  },
+  sites_chart_all: { de: "Alle Standorte", en: "All sites" },
+  sites_chart_trail: { de: "Navigationspfad", en: "Breadcrumb" },
+  sites_chart_view: { de: "Darstellung", en: "View" },
+  sites_chart_rings: { de: "Ringe", en: "Rings" },
+  sites_chart_treemap: { de: "Treemap", en: "Treemap" },
+  sites_chart_drill_hint: {
+    de: "Auf ein Segment klicken, um eine Ebene tiefer zu gehen.",
+    en: "Click a segment to drill down one level.",
+  },
+  sites_chart_deepest: {
+    de: "Unterste Ebene - über den Pfad oben zurück.",
+    en: "Deepest level - use the breadcrumb above to go back.",
+  },
+  sites_chart_rings_explainer: {
+    de: "Der innere Ring zeigt die aktuelle Ebene, die äußeren Ringe deren Untergliederung.",
+    en: "The inner ring is the current level; the outer rings break it down further.",
+  },
+  sites_chart_treemap_explainer: {
+    de: "Die Fläche entspricht der Anzahl der Patienten.",
+    en: "Area is proportional to the number of patients.",
+  },
+  sites_chart_level_current: { de: "Aktuelle Ebene", en: "Current level" },
+  sites_chart_level_ttu: { de: "TTU/TI", en: "TTU/TI" },
+  sites_chart_level_study: { de: "Studie/Kohorte", en: "Study/cohort" },
   chart_samples_liquid: { de: "Proben LIQUID", en: "Samples - liquid" },
   chart_samples_tissue: { de: "Proben Tissue", en: "Samples - tissue" },
 

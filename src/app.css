@@ -370,28 +370,53 @@ body.header-scrolled .catalogue-wrapper {
 
 /* The summary bar sits above every chart, so keep it to a single compact row:
    totals and the request button on the left, chart filter on the right. */
+/* Results, request and spinner on the left; chart filter pinned right. A grid
+   rather than a wrapping flex row, so the filter keeps its top-right slot even
+   when the left-hand group needs a second line. */
 .result-summary {
     grid-column: 1/-1;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: var(--gap-xs);
     padding: var(--gap-xs) var(--gap-s);
 }
 
 .result-summary__figures {
+    grid-column: 1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--gap-s);
+    gap: var(--gap-xs);
+}
+
+.result-summary .right {
+    grid-column: 2;
+    justify-self: end;
+}
+
+/* The totals heading ships with a large vertical margin, which set the height
+   of the whole bar. Trimmed through the part Lens exposes. */
+.result-summary__figures lens-result-summary::part(
+        lens-result-summary-header-title
+    ) {
+    margin: 0;
+}
+
+/* Reserve room for each count so the figures keep a constant width. Without
+   this the totals shrink to "0" while a search runs and the request button
+   slides left and back again. */
+.result-summary__figures lens-result-summary::part(
+        lens-result-summary-content-type
+    ) {
+    min-width: 9rem;
 }
 
 /* Takes a full row of its own so it never squeezes the totals onto a second
    line. Lens hides it with `visibility: hidden`, which still reserves its
    height, so drop the margin it adds on top of that. */
 .result-summary__modified {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
 }
 
 .result-summary__modified::part(lens-query-modified-display-wrapper) {
@@ -584,6 +609,90 @@ body.header-scrolled .catalogue-wrapper {
     border-radius: var(--border-radius-small);
     position: relative;
     flex-wrap: wrap;
+}
+
+/* Site / TTU / study chart with drill-down and two view modes */
+.site-chart {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xxs);
+    height: 100%;
+}
+
+.site-chart__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+}
+
+.site-chart__trail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xxs);
+    font-size: var(--font-size-xs);
+}
+
+.site-chart__crumb {
+    padding: 2px 6px;
+    background: none;
+    border: none;
+    border-radius: var(--border-radius-small);
+    font: inherit;
+    color: var(--blue);
+    cursor: pointer;
+}
+
+.site-chart__crumb:hover {
+    background-color: var(--lightest-gray);
+}
+
+.site-chart__crumb.is-current {
+    color: var(--dark-gray);
+    font-weight: 600;
+    cursor: default;
+}
+
+.site-chart__sep {
+    color: var(--gray);
+}
+
+.site-chart__views {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    background-color: var(--lightest-gray);
+    border-radius: var(--border-radius-small);
+}
+
+.site-chart__view {
+    padding: 3px 10px;
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: var(--font-size-xs);
+    color: var(--dark-gray);
+    cursor: pointer;
+}
+
+.site-chart__view.is-active {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.site-chart__hint {
+    margin: 0;
+    font-size: var(--font-size-xxs);
+    color: var(--gray);
+}
+
+.site-chart__canvas {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 320px;
 }
 
 .guide-outline {
