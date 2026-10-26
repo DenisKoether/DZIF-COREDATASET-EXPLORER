@@ -36,6 +36,7 @@ export type HeaderMaps = {
   virus: Map<string, string>;
   transplantOrgan: Map<string, string>;
   sampleType: Map<string, string>;
+  infection: Map<string, string>;
   orgUnit: Map<string, string>;
   affiliationTtu: Map<string, string>;
   affiliationStudy: Map<string, string>;
@@ -114,6 +115,9 @@ const buildHeaders = (index: Map<string, Category>): HeaderMaps => {
        the options files is filed under "sample_kind", which Lens never matches
        against that dataKey, so these charts rendered raw codes. */
     sampleType: options("BIOSAMPLE_TYPE"),
+
+    /* Primary endpoint of an infection study: the confirmed infection itself. */
+    infection: options("CLINICAL_INFECTION"),
 
     /* Used by the site/TTU/study rings, which otherwise show raw codes
        like "HD" or "TTU-HIV". */

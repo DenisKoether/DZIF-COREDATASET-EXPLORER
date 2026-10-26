@@ -3,7 +3,7 @@ import ts from 'typescript-eslint';
 import svelte from 'eslint-plugin-svelte';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
-import svelteConfig from './svelte.config.js';
+import sveltePreprocess from 'svelte-preprocess';
 
 export default ts.config(
 	{
@@ -50,17 +50,8 @@ export default ts.config(
 			parserOptions: {
 				parser: ts.parser,
 				extraFileExtensions: ['.svelte'],
-				svelteConfig
-			}
-		}
-	},
-
-	{
-		// The QR code library is loaded from a <script> tag, not imported.
-		files: ['src/**/*.svelte'],
-		languageOptions: {
-			globals: {
-				QRCode: 'readonly'
+				// Mirrors the sveltekit() options in vite.config.ts.
+				svelteConfig: { preprocess: sveltePreprocess() }
 			}
 		}
 	}

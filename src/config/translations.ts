@@ -115,6 +115,11 @@ export const uiTexts = {
   },
   chart_age: { de: "Alter bei Aufnahme", en: "Age at enrolment" },
   chart_transplants: { de: "Transplantationen", en: "Transplants" },
+  chart_infection: {
+    de: "Klinisch gesicherte Infektionen",
+    en: "Clinically confirmed infections",
+  },
+  axis_infection: { de: "Infektionsart", en: "Type of infection" },
   chart_sites_title: {
     de: "Patienten pro Standort, TTU/TI und Studie",
     en: "Patients by site, TTU/TI and study",

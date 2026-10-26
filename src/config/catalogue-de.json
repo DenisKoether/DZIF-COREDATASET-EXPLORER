@@ -417,7 +417,7 @@
         "childCategories": [
           {
             "key": "gender",
-            "name": "Identifizierendes Geschlecht",
+            "name": "Geschlecht",
             "fieldType": "single-select",
             "type": "EQUALS",
             "criteria": [

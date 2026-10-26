@@ -8,6 +8,7 @@
   import LanguageSwitch from "./services/tools/language-switch.svelte";
   import SiteChart from "./services/tools/site-chart.svelte";
   import { writable } from "svelte/store";
+  import QRCode from "qrcode";
   // Import Lens CSS and JS bundles
   import "@samply/lens/style.css";
 
@@ -90,12 +91,12 @@
       const qrContainer = document.getElementById("qrcode");
       if (qrContainer) {
         qrContainer.innerHTML = ""; // Clear previous QR code
-        new QRCode(qrContainer, {
-          text: currentQueryUrl,
+        const canvas = document.createElement("canvas");
+        qrContainer.appendChild(canvas);
+        QRCode.toCanvas(canvas, currentQueryUrl, {
           width: 200,
-          height: 200,
-          colorDark: "#001e50",
-          colorLight: "#ffffff",
+          margin: 0,
+          color: { dark: "#001e50", light: "#ffffff" },
         });
       }
     }, 100);
@@ -310,6 +311,7 @@
     { id: "age", titleKey: "chart_age" },
     { id: "samples-liquid", titleKey: "chart_samples_liquid" },
     { id: "samples-tissue", titleKey: "chart_samples_tissue" },
+    { id: "infection", titleKey: "chart_infection" },
     { id: "transplant", titleKey: "chart_transplants" },
     { id: "sites-multi", titleKey: "chart_sites_title" },
   ] as const;
@@ -438,7 +440,7 @@
 
       result = await response.json();
 
-      if (isLensResultEmpty(result)) {
+      if (result != null && isLensResultEmpty(result)) {
         setSiteResult("dzif", result);
         showToast($t("results_empty"), "info");
         return;
@@ -491,6 +493,15 @@
           "rheu_immu",
           ["YCIBD", "YRA", "YCG", "YVT", "YCGID", "YOTHER"],
           "rheu_immu",
+        );
+
+        /* Das Diagramm zeigt die aufgetretenen Infektionen, nicht ihr
+           Ausbleiben - "N" (keine Infektion) gehoert nicht hinein. */
+        result = filterStratifierBuckets(
+          result,
+          "infection",
+          ["BSI", "PNE", "HWI", "ZNS", "IAI", "WUI", "OTHER"],
+          "infection",
         );
 
         setSiteResult("dzif", result);
@@ -1135,6 +1146,23 @@
           </div>
         {/if}
 
+        {#if chartVisibility["infection"]}
+          <div class="chart-wrapper chart-study">
+            <lens-chart
+              title={$t("chart_infection")}
+              dataKey="infection"
+              chartType="bar"
+              headers={headers.infection}
+              backgroundColor={ChartBackgroundColors}
+              displayLegends={false}
+              xAxisTitle={$t("axis_infection")}
+              yAxisTitle={$t("axis_patients")}
+              enableSorting={true}
+            >
+            </lens-chart>
+          </div>
+        {/if}
+
         {#if chartVisibility["transplant"]}
           <div class="chart-wrapper chart-smoker">
             <lens-chart
@@ -1310,9 +1338,3 @@
     </div>
   </div>
 {/if}
-
-<svelte:head>
-  <script
-    src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"
-  ></script>
-</svelte:head>

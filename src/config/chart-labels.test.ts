@@ -30,6 +30,8 @@ const chartBuckets: Record<string, string[]> = {
   diseases: ["YH", "YWOH", "YT", "YOTHER", "A", "IR", "malaria"],
   // virusout() produces one bucket per virus, named after the stratifier
   virus: ["chr_virus_hiv", "chr_virus_hbv", "chr_virus_hcv", "chr_virus_other"],
+  // CLIN_CONF_INF-Stratifier, ohne "N" (keine Infektion)
+  infection: ["BSI", "PNE", "HWI", "ZNS", "IAI", "WUI", "OTHER"],
   transplantOrgan: [
     "BV",
     "CLN",
